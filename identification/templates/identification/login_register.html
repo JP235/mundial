@@ -1,0 +1,66 @@
+{% extends "base_bootstrap.html" %} {% block head %} {% load static %}
+<link rel="stylesheet" href="{% static 'login_register.css' %}" />
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="{% static 'login_register.js' %}" defer></script>
+{% endblock %} {% block content %}
+<div class="form">
+	<ul class="tab-group">
+		<li class="tab"><a href="#signup">Crear usuario</a></li>
+		<li class="tab active"><a href="#login">Iniciar Sesion</a></li>
+	</ul>
+
+	<div class="tab-content">
+		<div id="signup">
+			<h2 class="margin-0-0-40">Crea un usuario para jugar!</h2>
+
+			<form action="/API/register" method="post">
+				{% csrf_token %} 
+				<div class="field-wrap">
+					<label> Username<span class="req">*</span> </label>
+					<input type="text" name="username" required="" autocomplete="off" />
+				</div>
+				
+				<div class="field-wrap">
+					<label> Set A Password<span class="req">*</span> </label>
+					<input
+						type="password"
+						name="password1"
+						required=""
+						autocomplete="off"
+					/>
+				</div>
+				<div class="field-wrap">
+					<label> Confirm Password<span class="req">*</span> </label>
+					<input
+						type="password"
+						name="password2"
+						required=""
+						autocomplete="off"
+					/>
+				</div>
+
+				<button type="submit" name="register" class="button button-block">
+					Get Started
+				</button>
+			</form>
+		</div>
+
+		<div id="login">
+			<h2 class="margin-0-0-40">Bienvenido otra vez!</h2>
+
+			<form action="/API/login" method="post">
+				{% csrf_token %}
+				<div class="field-wrap">
+					<label> Username<span class="req">*</span> </label>
+					<input type="text" name="username" required="" autocomplete="off" />
+				</div>
+				<div class="field-wrap">
+					<label> Password<span class="req">*</span> </label>
+					<input type="password" name="password" required="" autocomplete="off" />
+				</div>
+				<button class="button button-block">Log In</button>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %} 

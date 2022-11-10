@@ -1,0 +1,35 @@
+{% extends "base_bootstrap.html" %}
+{% block content %} 
+<h1>Current request.path {{ request.path }}</h1>
+{% if user.is_authenticated %}
+
+<p>You can <a href="{% url 'logout' %}?next={% url 'home:home' %}">Logout</a></p>
+
+{% else %}
+<p>You are not logged in</p>
+<p>You can <a href="{% url 'login' %}?next={{ request.path }}">Login</a> if you like.</p>
+{% endif %}
+<ul>
+    <li>
+        Go to <a href="{% url 'bracket:open' %}">{% url 'bracket:open' %}</a>
+        (no login required)
+    </li>
+    <li>
+        Go to <a href="{% url 'bracket:apereo' %}">{% url 'bracket:apereo' %}</a>
+            (no login required)
+        </li>
+    <li>
+        Go to <a href="{% url 'bracket:manual' %}">{% url 'bracket:manual' %}</a>
+        (protected by user.is_authenticated)
+    </li>
+    <li>
+        Go to <a href="{% url 'bracket:protect' %}">{% url 'bracket:protect' %}</a>
+            (protected by LoginRequiredMixin)
+        </li>
+        <li>
+            Go to <a href="{% url 'bracket:python' %}">{% url 'bracket:python' %}</a>
+            dump request.user data in python
+        </li>
+</ul>
+
+{% endblock %}

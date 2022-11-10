@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		{% load static %}
+		<link rel="stylesheet" href="{% static 'main.css' %}" />
+		<script src="{% static 'main.js' %}"></script>
+
+		{% block head %} {% endblock %}
+	</head>
+	<body>
+        {% block header %} {% include '_items/header.html' %} {% endblock %}
+        <div class="container">
+			{% block welcome %} {% endblock %} {% block messages %} {% if messages %}
+			{% for msg in messages %}
+			<div class="alert alert-{{msg.level_tag}}" role="alert">
+				{{msg.message}}
+			</div>
+			{% endfor %} {% endif %} {% endblock %} {% block content %} {% endblock %}
+		</div>
+		{% block footer %}{% endblock %}
+	</body>
+</html>
