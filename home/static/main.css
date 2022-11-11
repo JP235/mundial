@@ -8,7 +8,7 @@
 	--main: #1bb189;
 	--main-light: #1ab188;
 	--main-dark: #179b77;
-	--gray-light: #a0b3b0;
+	--gray-light: #c4cbca;
 	--gray-light-40: #a0b3b040;
 	--gray1: #c1bdba;
 	--gray2: #b5adad;
@@ -17,6 +17,11 @@
 	--bold: 600;
 	--br: 4px;
 	--font: "Titillium Web", sans-serif;
+    --size-big: 5.5vh;
+    --size-avg: 2vh;
+    --size-avg-plus: 2.1vh;
+    --size-avg-min: 1.8vh;
+
 }
 html {
 	overflow-y: scroll;
@@ -24,30 +29,36 @@ html {
 }
 body {
 	font-family: var(--font);
-	color: #b5adad;
-	background-color: var(--gray);
-	margin-top: 0;
+	color: var(--white);
+    font-size: var(--size-avg);;
+	background-color: var(--gray1);
+	/* margin-top: 0; */
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 }
+/* button {
+	font-size: 2vh;
+} */
 
 header {
-    width: inherit;
+	width: inherit;
 }
 
 nav {
-    max-width: 60%;
-    background: var(--light-blue);
-    min-width: max-content;
+	width: 90vw;
+	background: var(--light-blue);
+	min-width: max-content;
 }
 
 h1 {
 	text-align: center;
 	font-weight: 300;
+	font-size: var(--size-big);
 }
 h2 {
 	text-align: center;
+	font-size: 3vh;
 	color: var(--white);
 }
 .margin-0-0-40 {
@@ -56,14 +67,15 @@ h2 {
 
 .container {
 	margin: 0 auto;
-	display: block;
-    width: 60vw;
-    height: 60vh;
+	display: flex;
+	width: 80vw;
+    max-width: 500px;
+	height: 90vh;
 }
 
 .navbar-items {
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
-	padding: 10px;
+    justify-content: space-around;
+	padding: 1.3vh;
 }

@@ -23,7 +23,7 @@ for (let t of tabLinks) {
 }
 
 $(".tab a").on("click", function (e) {
-  // e.preventDefault();
+  e.preventDefault();
   
   // $(this).parent().addClass('active');
   // $(this).parent().siblings().removeClass('active');
