@@ -1,6 +1,5 @@
 :root {
-	--body-bg: #ffbdba;
-	--light-blue: #39566c;
+	--light-blue: #13232f9a;
 	--dark-blue: #13232f;
 	--dark-blue-40: #13232f40;
 	--white: #ffffff;
@@ -8,7 +7,7 @@
 	--main: #1bb189;
 	--main-light: #1ab188;
 	--main-dark: #179b77;
-	--gray-light: #c4cbca;
+	--gray-light: #a0b3b0;
 	--gray-light-40: #a0b3b040;
 	--gray1: #c1bdba;
 	--gray2: #b5adad;
@@ -17,11 +16,10 @@
 	--bold: 600;
 	--br: 4px;
 	--font: "Titillium Web", sans-serif;
-    --size-big: 5.5vh;
-    --size-avg: 2vh;
-    --size-avg-plus: 2.1vh;
-    --size-avg-min: 1.8vh;
-
+	--size-big: 5.5vh;
+	--size-avg: 2vh;
+	--size-avg-plus: 2.1vh;
+	--size-avg-min: 1.8vh;
 }
 html {
 	overflow-y: scroll;
@@ -30,25 +28,36 @@ html {
 body {
 	font-family: var(--font);
 	color: var(--white);
-    font-size: var(--size-avg);;
+	font-size: var(--size-avg);
 	background-color: var(--gray1);
-	/* margin-top: 0; */
+    margin: 0;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 }
-/* button {
-	font-size: 2vh;
-} */
+
+#SiteName {
+	padding-left: 2vh;
+}
+#SiteName a {
+	color: var(--gray1);
+	text-decoration: none;
+}
+#SiteName a:hover {
+	color: var(--main-light);
+}
 
 header {
-	width: inherit;
+	width: 80vw;
 }
 
 nav {
-	width: 90vw;
 	background: var(--light-blue);
 	min-width: max-content;
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+	justify-content: space-between;
 }
 
 h1 {
@@ -66,16 +75,100 @@ h2 {
 }
 
 .container {
-	margin: 0 auto;
+	/* margin: 0 auto; */
+    padding-top: 3vh;
+    background-color: var(--gray-light);
 	display: flex;
 	width: 80vw;
-    max-width: 500px;
-	height: 90vh;
+	/* height: 100vh; */
+	flex-direction: row;
+	justify-content: center;
+	flex-wrap: wrap;
 }
 
 .navbar-items {
 	display: flex;
 	align-items: center;
-    justify-content: space-around;
+	justify-content: space-around;
 	padding: 1.3vh;
+}
+
+table {
+	background-color: var(--dark-blue);
+	margin: 5vh;
+	margin-top: 0;
+	min-width: fit-content;
+	border-spacing: 0 1rem;
+	padding: 2vh;
+	padding-block-end: 1vh;
+}
+
+#partidosTable {
+	min-width: 40vw;
+}
+#leaderboardTable {
+	min-width: 28vw;
+}
+table caption {
+	text-transform: uppercase;
+	text-align: left;
+	font-size: var(--size-avg-plus);
+	background-color: inherit;
+	padding: 2.5vh 2.1vh 0;
+}
+
+/* center every element nested in a table row */
+table tr > * {
+	text-align: center;
+	padding: 0.5rem;
+}
+/* align every second item of each row to the left */
+table tr > *:nth-child(2) {
+	text-align: left;
+}
+
+/* style the headings to have thin uppercase titles for the columns */
+table th {
+	/* text-align: left; */
+	font-weight: 300;
+	letter-spacing: 0.04rem;
+	font-size: 0.9rem;
+	color: #eee;
+	text-transform: uppercase;
+	background-color: var(--main-dark);
+	margin-top: 0;
+	/* border: solid;
+    border-width: 0 1px; */
+}
+
+/* slightly increase the weight of the cell describing the position */
+table td.position {
+	font-weight: 500;
+}
+
+/* style the cell with the driver visually separating the first, last name and team */
+table td.driver {
+	padding-left: 1rem;
+	font-size: 1.1rem;
+	letter-spacing: 0.05rem;
+}
+table td.driver strong {
+	text-transform: uppercase;
+	font-weight: 500;
+}
+table td.driver span {
+	text-transform: capitalize;
+	margin-left: 0.75rem;
+	font-size: 0.8rem;
+	color: #999;
+	letter-spacing: initial;
+}
+
+/* style the span nested in the last cell to have the gap in a rounded rectangle */
+table td.gap span {
+	background: #38383f;
+	border-radius: 30px;
+	padding: 0.5rem 0.75rem;
+	font-size: 0.8rem;
+	text-transform: uppercase;
 }
