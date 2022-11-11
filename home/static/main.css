@@ -80,7 +80,7 @@ h2 {
     background-color: var(--gray-light);
 	display: flex;
 	width: 80vw;
-	/* height: 100vh; */
+	height: 100vh;
 	flex-direction: row;
 	justify-content: center;
 	flex-wrap: wrap;
