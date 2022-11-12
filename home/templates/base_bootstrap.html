@@ -14,13 +14,14 @@
 	<body>
         {% block header %} {% include '_items/header.html' %} {% endblock %}
         <div class="container">
-			{% comment %} {% block welcome %} {% endblock %} {% block messages %} {% if messages %}
-			{% for msg in messages %}
-			<div class="alert alert-{{msg.level_tag}}" role="alert">
-				{{msg.message}}
-			</div>
-			{% endfor %} {% endif %} {% endblock %}  {% endcomment %}
-            {% block content %} {% endblock %}
+			 {% block welcome %} {% endblock %}
+             {% block content %} {% endblock %}
+             {% block messages %} {% if messages %}
+             {% for msg in messages %}
+             <div class="alert alert-{{msg.level_tag}}" role="alert">
+                 {{msg.message}}
+             </div>
+             {% endfor %} {% endif %} {% endblock %} 
 		</div>
 		{% block footer %}{% endblock %}
 	</body>
