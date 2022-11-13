@@ -18,6 +18,7 @@
 	--font: "Titillium Web", sans-serif;
 	--size-big: 5.5vh;
 	--size-avg: 2vh;
+    --font-avg-width: 3vw;
 	--size-avg-plus: 2.1vh;
 	--size-avg-min: 1.8vh;
 }
@@ -28,7 +29,7 @@ html {
 body {
 	font-family: var(--font);
 	color: var(--white);
-	font-size: var(--size-avg);
+	font-size: min(var(--font-avg-width),var(--size-avg));
 	background-color: var(--gray1);
     margin: 0;
 	display: flex;

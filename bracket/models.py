@@ -82,9 +82,12 @@ class Prediction(models.Model):
 
     team_1 = "TEAM_1"
     team_2 = "TEAM_2"
-    teams = [(team_1, "team_1"), (team_1, "team_2")]
+    teams = [(team_1, "TEAM_1"), (team_1, "TEAM_2")]
 
     predicted_winner = models.CharField(max_length=6, choices=teams)
     predicted_score = models.CharField(max_length=5)
 
-    correct = models.IntegerField()
+    correct = models.IntegerField(blank=True,null=True)
+
+    def __str__(self) -> str:
+        return f'{self.predicted_score} {self.game}'

@@ -8,4 +8,4 @@ urlpatterns = [
     path("API/", include("API.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
     path("bracket/", include("bracket.urls")),
-]
+    ]

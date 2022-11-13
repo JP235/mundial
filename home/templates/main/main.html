@@ -1,43 +1,36 @@
-{% extends "base_bootstrap.html" %}
-{% block head %} 
-{% load static %}
-{% comment %} <script src = "https://d3js.org/d3.v4.min.js" charset="utf-8"></script> {% endcomment %}
-{% comment %} <link rel="stylesheet" href="{% static 'main.css' %}" /> {% endcomment %}
-{% endblock %}
-{% block content %} 
+{% extends "base_bootstrap.html" %} {% block head %} {% load static %} 
+{% endblock %} 
+{% block content %}
 <div class="partidos">
-    <table id="partidosTable">
-        <caption>Proximos partidos</caption>
-        <tr>
-          <th>
-            Team1
-          </th>
-          <th>
-            Team2
-          </th>
-          <th>
-            Score
-          </th>
-        </tr>
-      </table>
+	<table id="partidosTable">
+		<caption>
+			Proximos partidos
+		</caption>
+		<tr>
+			<th>
+				<span class="equipos" style="opacity: 0">Equipos</span>
+			</th>
+			{% comment %} <th>
+				<span style="opacity: 0">team 1</span>
+			</th> {% endcomment %}
+			<th>Fecha</th>
+			<th>Hora</th>
+		</tr>
+	</table>
 </div>
 
 <div class="leaderboard">
-    <table id="leaderboardTable">
-        <caption>Ranking</caption>
+	<table id="leaderboardTable">
+		<caption>
+			Ranking
+		</caption>
 
-        <tr>
-          <th>
-            #
-          </th>
-          <th>
-            Jugador
-          </th>
-          <th>
-            Puntos
-          </th>
-        </tr>
-      </table>
+		<tr>
+			<th>#</th>
+			<th>Jugador</th>
+			<th>Puntos</th>
+		</tr>
+	</table>
 </div>
 <script src="{% static 'main.js' %}" defer></script>
 
