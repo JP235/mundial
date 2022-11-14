@@ -1,37 +1,40 @@
-{% extends "base_bootstrap.html" %} {% block head %} {% load static %} 
+{% extends "base_bootstrap.html" %} {% block head %} {% load static %}
+<script src="{% static 'main.js' %}" defer></script> 
 {% endblock %} 
 {% block content %}
-<div class="partidos">
+<div class="tableContainer">
 	<table id="partidosTable">
 		<caption>
 			Proximos partidos
 		</caption>
-		<tr>
+		<thead class="fixedHeader">
 			<th>
-				<span class="equipos" style="opacity: 0">Equipos</span>
+				{% comment %} <span class="equipos" style="opacity: 0">Equipos</span> {% endcomment %}
 			</th>
-			{% comment %} <th>
-				<span style="opacity: 0">team 1</span>
-			</th> {% endcomment %}
 			<th>Fecha</th>
 			<th>Hora</th>
-		</tr>
+        </thead>
+        <tbody class="scrollContent">
+        </tbody>
+
 	</table>
 </div>
 
 <div class="leaderboard">
 	<table id="leaderboardTable">
-		<caption>
-			Ranking
-		</caption>
-
+        <thead class="fixedHeader">
+            <caption>
+                Ranking
+            </caption>
+        </thead>
 		<tr>
-			<th>#</th>
+            <th>#</th>
 			<th>Jugador</th>
 			<th>Puntos</th>
 		</tr>
+        {% comment %} <tbody class="scrollContent">
+        </tbody> {% endcomment %}
 	</table>
 </div>
-<script src="{% static 'main.js' %}" defer></script>
 
 {% endblock %}

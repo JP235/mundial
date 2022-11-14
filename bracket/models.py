@@ -23,7 +23,7 @@ class Country(models.Model):
         pass
 
     def __str__(self) -> str:
-        return f"{self.name}  {self.finish_rank if self.finish_rank else ''}"
+        return f"{self.name} {self.finish_rank if self.finish_rank else ''}"
 
 
 class Game(models.Model):
@@ -69,7 +69,7 @@ class UsersPoints(models.Model):
     points = models.IntegerField(default=0)
 
     def __str__(self) -> str:
-        return f'{self.owner.username} -> {self.points}'
+        return f"{self.owner.username} -> {self.points}"
 
 
 class Prediction(models.Model):
@@ -84,10 +84,39 @@ class Prediction(models.Model):
     team_2 = "TEAM_2"
     teams = [(team_1, "TEAM_1"), (team_1, "TEAM_2")]
 
-    predicted_winner = models.CharField(max_length=6, choices=teams)
+    # predicted_winner = models.CharField(max_length=6, choices=teams)
     predicted_score = models.CharField(max_length=5)
 
-    correct = models.IntegerField(blank=True,null=True)
+    correct = models.IntegerField(blank=True, null=True)
+    
+
+    def _mark_correct(self,score):
+        st1,st2 = score.split("-")
+        pst1,pst2 = self.predicted_score.split("-")
+        c = 0
+        if (st1 > st2) == (pst1 > pst2):
+            c+=1
+        if (st1 == pst1) and (st2 == pst2):
+            c+=1
+        self.correct = c
+        self.save(update_fields=["correct"])
+
+    @staticmethod
+    def format_prediction_dict(request,game_id):
+        pred_winner = None
+        if request.data.get('score_team_1') > request.data.get('score_team_2'):
+            pred_winner = Prediction.team_1
+        elif request.data.get('score_team_2') > request.data.get('score_team_1'):
+            pred_winner = Prediction.team_2
+
+        new_prediction = {
+            "owner":request.user.id,
+            "game":game_id,
+            "predicted_winner":pred_winner,
+            "predicted_score":"-".join([request.data.get('score_team_1'),request.data.get('score_team_2')])
+        }
+        return new_prediction
+
 
     def __str__(self) -> str:
-        return f'{self.predicted_score} {self.game}'
+        return f"{self.predicted_score} {self.game}"

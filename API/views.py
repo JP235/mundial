@@ -18,76 +18,98 @@ class UsersAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer = UserSerializer
 
-    def get(self,request):
+    def get(self, request):
         """list users"""
-        
+
         users = User.objects.all()
         serialized_users = self.serializer(users, many=True).data
-        return Response(data=serialized_users,status=status.HTTP_200_OK)
+        return Response(data=serialized_users, status=status.HTTP_200_OK)
 
 
 class GamesAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer = GameSerializer
 
-    def get(self,request):
+    def get(self, request):
         """list games"""
         games = Game.objects.all()
         serialized_games = self.serializer(games, many=True).data
-        return Response(data=serialized_games,status=status.HTTP_200_OK)
+        return Response(data=serialized_games, status=status.HTTP_200_OK)
+
+
+class GamePredictionsAPIView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer = PredictionSerializer
+
+    def get(self, request, game_id):
+        game_predictions = Prediction.objects.filter(game=game_id)
+        game_predictions_serial = self.serializer(game_predictions, many=True).data
+        return Response(data=game_predictions_serial, status=status.HTTP_200_OK)
+
 
 class PredictionAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer = PredictionSerializer
 
-    def get(self,request, id: int = None):
+    def get(self, request, userid=None):
         """Get predictions from one user"""
-        if id:
-            pred = Prediction.objects.get(pk = id)
-            pred_serial = self.serializer(pred).data
-        else:
-            pred = Prediction.objects.filter(owner = request.user)
-            pred_serial = self.serializer(pred, many=True).data
-        
-        return Response(data=pred_serial,status=status.HTTP_200_OK)  
-    
-    def post(self,request):
+        pred_user = userid if userid else request.user
+        print(request)
+        pred = Prediction.objects.filter(owner=pred_user)
+        pred_serial = self.serializer(pred, many=True).data
+        return Response(data=pred_serial, status=status.HTTP_200_OK)
+
+    def post(self, request, game_id):
         """Make new prediction"""
-        prediction_serial = self.serializer(request.data)
 
-        if prediction_serial.is_valid():
-            pred = prediction_serial.save()
-            return Response(data=pred.data, status=status.HTTP_200_OK) 
-        return Response(prediction_serial.errors, status=status.HTTP_400_BAD_REQUEST)
+        if len(p := Prediction.objects.filter(owner=request.user.id, game=game_id)) > 0:
+            print(p)
+            return self.put(request, p[0].pk, to_predictions=False)
 
-    def put(self, request, id):
-        """Change prediction"""
-        old_prediction = Prediction.objects.get(pk = id)
-        prediction_serial = self.serializer(old_prediction,request.data)
+        new_prediction = Prediction.format_prediction_dict(request, game_id)
+        prediction_serial = self.serializer(data=new_prediction)
 
         if prediction_serial.is_valid():
             prediction_serial.save()
-            return Response(data=prediction_serial.data,status=status.HTTP_200_OK)  
+            if next_url := request.POST.get("next"):
+                return redirect(next_url)
+            return redirect(f"/partido/{game_id+1}")
+
         return Response(prediction_serial.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self,request,id):
-        """Delete Prediction"""
-        old_prediction = Prediction.objects.get(pk = id)
-        old_prediction.delete()
-        return Response(
-        {'message': 'Prediction was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
+    def put(self, request, pred_id, to_predictions=True):
+        """Change prediction"""
+        old_prediction = Prediction.objects.get(id=pred_id)
+        prediction_serial = self.serializer(
+            old_prediction,
+            Prediction.format_prediction_dict(request, old_prediction.game.pk),
+        )
+
+        if prediction_serial.is_valid():
+            prediction_serial.save()
+            print("")
+            print("request")
+            print(request.POST)
+            print("")
+            if next_url := request.POST.get("next"):
+                return redirect(next_url)
+            if to_predictions:
+                return redirect(f"/mis_predicciones")
+            return redirect(f"/partido/{old_prediction.game.pk+1}")
+
 
 def login_request(request):
     if request.user.is_authenticated:
         return redirect("home:home")
-    username = request.POST.get('username')
-    password = request.POST.get('password')
+    username = request.POST.get("username")
+    password = request.POST.get("password")
     user = authenticate(request, username=username, password=password)
     if user is not None:
         login(request, user)
         return redirect("home:home")
-    messages.error(request, "Informacion Incorrecta.")  
+    messages.error(request, "Informacion Incorrecta.")
     return redirect("id:id")
+
 
 def register_request(request):
     if request.user.is_authenticated:
@@ -98,5 +120,5 @@ def register_request(request):
             user = form.save()
             login(request, user)
             return redirect("home:home")
-    messages.error(request, "Informacion Incorrecta.")  
+    messages.error(request, "Informacion Incorrecta.")
     return redirect("id:id")

@@ -18,7 +18,7 @@
 	--font: "Titillium Web", sans-serif;
 	--size-big: 5.5vh;
 	--size-avg: 2vh;
-    --font-avg-width: 3vw;
+	--font-avg-width: 3vw;
 	--size-avg-plus: 2.1vh;
 	--size-avg-min: 1.8vh;
 }
@@ -29,17 +29,17 @@ html {
 body {
 	font-family: var(--font);
 	color: var(--white);
-	font-size: min(var(--font-avg-width),var(--size-avg));
+	font-size: min(var(--font-avg-width), var(--size-avg));
 	background-color: var(--gray1);
-    margin: 0;
+	margin: 0;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 }
 .alert {
-    position: absolute;
-    margin-top: 1vh;
-    color: red
+	position: absolute;
+	margin-top: 1vh;
+	color: red;
 }
 
 #SiteName {
@@ -82,14 +82,15 @@ h2 {
 
 .container {
 	/* margin: 0 auto; */
-    padding-top: 3vh;
-    background-color: var(--gray-light);
+	padding-top: 3vh;
+	background-color: var(--gray-light);
 	display: flex;
 	width: 80vw;
 	height: 100vh;
 	flex-direction: row;
 	justify-content: center;
 	flex-wrap: wrap;
+	align-content: flex-start;
 }
 
 .navbar-items {
@@ -99,28 +100,47 @@ h2 {
 	padding: 1.3vh;
 }
 
+/* .tableContainer {
+	
+} */
 table {
+	display: inline-block;
+	max-height: 40vh;
+	overflow: auto;
 	background-color: var(--dark-blue);
 	margin: 5vh;
 	margin-top: 0;
-	min-width: fit-content;
-	border-spacing: 0 1rem;
-	padding: 2vh;
+	border-spacing: 0 0.5rem;
+	border: 2vh solid var(--dark-blue);
 	padding-block-end: 1vh;
 }
+.fixedHeader {
+	position: sticky;
+	top: 0;
+}
+.scrollcontent {
+	z-index: 0;
+}
 
-#partidosTable {
+::-webkit-scrollbar {
+	width: 0;
+	background: transparent;
+}
+/* #partidosTable {
 	min-width: 40vw;
 }
 #leaderboardTable {
 	min-width: 28vw;
-}
+} */
 table caption {
+	position: sticky;
+	top: 0;
+	/* padding: 0vh 0.5vh; */
 	text-transform: uppercase;
 	text-align: left;
 	font-size: var(--size-avg-plus);
 	background-color: inherit;
-	padding: 2.5vh 2.1vh 0;
+	width: max-content;
 }
 
 /* center every element nested in a table row */
@@ -128,11 +148,6 @@ table tr > * {
 	text-align: center;
 	padding: 0.5rem;
 }
-/* align every second item of each row to the left */
-table tr > *:nth-child(2) {
-	text-align: left;
-}
-
 /* style the headings to have thin uppercase titles for the columns */
 table th {
 	/* text-align: left; */
@@ -177,4 +192,12 @@ table td.gap span {
 	padding: 0.5rem 0.75rem;
 	font-size: 0.8rem;
 	text-transform: uppercase;
+}
+
+a, u {
+    text-decoration: none;
+    color: var(--gray1);
+}
+a:visited {
+    color: var(--gray2);
 }

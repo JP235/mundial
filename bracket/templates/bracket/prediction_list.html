@@ -1,0 +1,18 @@
+{% extends "base_bootstrap.html" %} {% block head %} {% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'predictions_page.css' %}" />
+<script src="{% static 'predictions_page.js' %}" defer></script>
+{% endblock %} {% block content %}
+<div class="tableList">
+	<table id="PredictionsTable">
+		<caption>
+			Predicciones de {{username}}
+		</caption>
+		<tr>
+			<th>Partido</th>
+			<th>Prediccion</th>
+		</tr>
+	</table>
+</div>
+{% endblock %}
+
+

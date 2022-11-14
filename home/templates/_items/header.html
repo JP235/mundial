@@ -6,7 +6,8 @@
 			
 			<div>
 				<p>
-					{{ user.username }}
+					
+					<a href="{% url 'home:my_predictions' %}">{{ user.username }}</a>
 					<a href="{% url 'logout' %}?next={% url 'home:home' %}">Logout</a>
 				</p>
 			</div>

@@ -8,7 +8,6 @@ urlpatterns = [
     path("games", views.GamesAPIView.as_view(), name="games" ),
     path("users", views.UsersAPIView.as_view(), name="users" ),
     path("predictions", views.PredictionAPIView.as_view(), name="prediction" ),
-    path("prediction/<int:id>/", views.PredictionAPIView.as_view(), name="prediction_by_id" ),
-
-    
+    path("predict/<int:game_id>/", views.PredictionAPIView.as_view(), name="prediction_by_id" ),
+    path("game_predictions/<int:game_id>", views.GamePredictionsAPIView.as_view(),name="predictions_by_game")
 ]

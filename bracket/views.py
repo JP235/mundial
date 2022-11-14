@@ -1,46 +1,46 @@
-from django.shortcuts import render, redirect
-from django.views import View
+from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.utils.http import urlencode
+from django.shortcuts import render, redirect, get_object_or_404
 
-class OpenView(View) :
-    def get(self, request):
-        return render(request, 'main/main.html')
+from .models import Game, Prediction
 
-class ApereoView(View) :
-    def get(self, request):
-        return render(request, 'main/main.html')
-
-class ManualProtect(View) :
-    def get(self, request):
-        if not request.user.is_authenticated :
-            loginurl = reverse('login')+'?'+urlencode({'next': request.path})
-            return redirect(loginurl)
-        return render(request, 'main/main.html')
-
-class ProtectView(LoginRequiredMixin, View) :
-    def get(self, request):
-        return render(request, 'main/main.html')
-
-from django.http import HttpResponse
-
-class DumpPython(View) :
-    def get(self, req):
-        resp = "<pre>\nUser Data in Python:\n\n"
-        resp += "Login url: " + reverse('login') + "\n"
-        resp += "Logout url: " + reverse('logout') + "\n\n"
-        if req.user.is_authenticated:
-            resp += "User: " + req.user.username + "\n"
-            resp += "Email: " + req.user.email + "\n"
-        else:
-            resp += "User is not logged in\n"
-
-        resp += "\n"
-        resp += "</pre>\n"
-        resp += """<a href="/">Go back</a>"""
-        return HttpResponse(resp)
+number_to_fase = {
+    0: "Grupos",
+    1: "Fase de 16",
+    2: "Cuartos de Final",
+    3: "Semi-Final",
+    4: "Final",
+}
 
 
-# https://docs.djangoproject.com/en/3.0/topics/auth/default/#authentication-in-web-requests
+class GameView(ListView):
+    """"""
 
+    model = Game
+    template_name = "bracket/game_page.html"
+
+    def get(self, request, id):
+        if len(game := Game.objects.filter(id=id)) > 0:
+            game = game[0] 
+            print(game)
+            ctx = {
+                "id": game.id,
+                "fase": number_to_fase[game.wc_round],
+                "team_1": game.team_1,
+                "team_2": game.team_2,
+            }
+            return render(request, self.template_name, ctx)
+        return redirect("home:home")
+
+
+class PredListView(ListView):
+    """"""
+    model = Prediction
+    template_name: str = "bracket/prediction_list.html"
+    def get(self,request,username = None):
+        ctx = {
+        "username":username if username else request.user
+        }
+        return render(request,self.template_name,ctx)
