@@ -2,12 +2,13 @@
     height: fit-content;
 }
 form {
-	background-color: var(--dark-blue);
-	margin: 5vh;
-	margin-top: 0;
-	border-spacing: 0 1rem;
-	padding: 2vh;
-	padding-block-end: 1vh;
+    background-color: var(--dark-blue);
+    margin: 5vh;
+    max-width: 65vw;
+    margin-top: 0;
+    border-spacing: 0 1rem;
+    padding: 2vh;
+    padding-block-end: 1vh;
 }
 
 #partidosTable {
@@ -40,16 +41,23 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none; 
   margin: 0; 
 }
-
+.match {
+    display: flex;
+    align-items: center;
+    padding: 1vh
+}
 #match_container{
     display: flex;
     justify-content: center;
     padding: 0.5vh;
     margin-top: 1vh;
+    flex-wrap: wrap;
  }
 .team_plus_score {
     display: flex;
-    align-items: center
+    align-items: center;
+    margin-right: 2vw;
+    margin-left: 2vw;
 }
 
 .name_team {

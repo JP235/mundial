@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
 
-# Create your models here.
+# Create your models here
 class Country(models.Model):
     """
     Represents a team competing in the WC
@@ -67,6 +68,11 @@ class Game(models.Model):
 class UsersPoints(models.Model):
     owner = models.OneToOneField(User, on_delete=models.CASCADE, related_name="points")
     points = models.IntegerField(default=0)
+    # all_predictions_done = models.BooleanField(default=False)
+
+    def _add_points(self, points):
+        self.points += points
+        self.save(update_fields=["points"])
 
     def __str__(self) -> str:
         return f"{self.owner.username} -> {self.points}"
@@ -88,35 +94,90 @@ class Prediction(models.Model):
     predicted_score = models.CharField(max_length=5)
 
     correct = models.IntegerField(blank=True, null=True)
-    
 
-    def _mark_correct(self,score):
-        st1,st2 = score.split("-")
-        pst1,pst2 = self.predicted_score.split("-")
-        c = 0
-        if (st1 > st2) == (pst1 > pst2):
-            c+=1
-        if (st1 == pst1) and (st2 == pst2):
-            c+=1
+    def _mark_correct(self, st1, st2):
+        pst1, pst2 = self.predicted_score.split("-")
+
+        c = calc_c(st1,st2,pst1,pst2)
+
+        
         self.correct = c
         self.save(update_fields=["correct"])
 
     @staticmethod
-    def format_prediction_dict(request,game_id):
+    def format_prediction_dict(request, game_id):
         pred_winner = None
-        if request.data.get('score_team_1') > request.data.get('score_team_2'):
+        if request.data.get("score_team_1") > request.data.get("score_team_2"):
             pred_winner = Prediction.team_1
-        elif request.data.get('score_team_2') > request.data.get('score_team_1'):
+        elif request.data.get("score_team_2") > request.data.get("score_team_1"):
             pred_winner = Prediction.team_2
 
         new_prediction = {
-            "owner":request.user.id,
-            "game":game_id,
-            "predicted_winner":pred_winner,
-            "predicted_score":"-".join([request.data.get('score_team_1'),request.data.get('score_team_2')])
+            "owner": request.user.id,
+            "game": game_id,
+            "predicted_winner": pred_winner,
+            "predicted_score": "-".join(
+                [request.data.get("score_team_1"), request.data.get("score_team_2")]
+            ),
         }
         return new_prediction
 
-
     def __str__(self) -> str:
         return f"{self.predicted_score} {self.game}"
+
+
+def update_predition_correct(sender, instance: Game, **kwargs):
+    # print("triggered update_predition_correct")
+    # print("------------------------------")
+    if instance.score_team_1 is not None and instance.score_team_2 is not None:
+        predictions = Prediction.objects.filter(game=instance)
+        for pred in predictions:
+            pred._mark_correct(instance.score_team_1, instance.score_team_2)
+
+
+def update_points(sender, instance: Prediction, **kwargs):
+    """
+    1: Acertar quien gana el partido sin el marcador 2 puntos.
+    2: Acertar el marcador 4 puntos por partido.
+    3: Acertar el orden de clasificación en cada grupo 3 puntos por cada grupo al finalizar la ronda de grupos.
+    Duplicar esos puntos para cada la siguiente fase (16 avos) y hacer lo mismo para las semifinales y finales."""
+    # print("triggered update_points")
+    if not instance.correct in (0,1,2):
+        return
+    owner = instance.owner
+    points = {
+        0: 0,
+        1: 2,
+        2: 4,
+    }
+    multiplier = {
+        Game.GR: 1,
+        Game.SECOND: 2,
+        Game.THIRD: 4,
+        Game.SEMI: 8,
+        Game.FINAL: 16,
+    }
+
+    p = points[instance.correct] * multiplier[instance.game.wc_round]
+    owner.points._add_points(p)
+
+def calc_c(r1,r2,p1,p2) -> int:
+    [r1,r2,p1,p2] = list(map(int,[r1,r2,p1,p2]))
+    # print(r1,r2,p1,p2,(r1 == p1),(r2 == p2))
+    if (r1 == p1) and (r2 == p2): #predicted everything
+        # print("predicted everything")
+        return 2
+    if (r1 == r2) and p1 == p2: #predicted tie
+        # print("predicted tie")
+        return 1
+    if (r1 > r2) and (p1 > p2): #predicted t1 wins
+        # print("predicted t1 wins")
+        return 1
+    if (r1 < r2) and (p1 < p2): #predicted t2 wins
+        # print("predicted t2 wins")
+        return 1
+    # print("predicted wrong")
+    return 0 #predicted wrong
+
+post_save.connect(update_predition_correct, sender=Game)
+post_save.connect(update_points, sender=Prediction)

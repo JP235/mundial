@@ -1,5 +1,9 @@
 {% extends "base_bootstrap.html" %} {% block head %} {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'predictions_page.css' %}" />
+<link
+	rel="stylesheet"
+	type="text/css"
+	href="{% static 'predictions_page.css' %}"
+/>
 <script src="{% static 'predictions_page.js' %}" defer></script>
 {% endblock %} {% block content %}
 <div class="tableList">
@@ -7,12 +11,14 @@
 		<caption>
 			Predicciones de {{username}}
 		</caption>
-		<tr>
-			<th>Partido</th>
-			<th>Prediccion</th>
-		</tr>
+
+		<thead class="fixedHeader">
+			<tr>
+				<th>Partido</th>
+				<th>Prediccion</th>
+			</tr>
+		</thead>
+		<tbody class="scrollContent"></tbody>
 	</table>
 </div>
 {% endblock %}
-
-

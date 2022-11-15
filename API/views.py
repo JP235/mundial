@@ -20,8 +20,7 @@ class UsersAPIView(APIView):
 
     def get(self, request):
         """list users"""
-
-        users = User.objects.all()
+        users = User.objects.all().order_by('-points__points')
         serialized_users = self.serializer(users, many=True).data
         return Response(data=serialized_users, status=status.HTTP_200_OK)
 
@@ -49,13 +48,13 @@ class GamePredictionsAPIView(APIView):
 
 class PredictionAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated]
-    serializer = PredictionSerializer
+    serializer = PredictionSerializer 
 
-    def get(self, request, userid=None):
+    def get(self, request, user_name=None):
         """Get predictions from one user"""
-        pred_user = userid if userid else request.user
-        print(request)
-        pred = Prediction.objects.filter(owner=pred_user)
+        user_name = user_name if user_name else request.user
+        print(user_name)
+        pred = User.objects.get(username = user_name).predictions.order_by('game__game_date', 'game__game_time')
         pred_serial = self.serializer(pred, many=True).data
         return Response(data=pred_serial, status=status.HTTP_200_OK)
 
@@ -63,7 +62,6 @@ class PredictionAPIView(APIView):
         """Make new prediction"""
 
         if len(p := Prediction.objects.filter(owner=request.user.id, game=game_id)) > 0:
-            print(p)
             return self.put(request, p[0].pk, to_predictions=False)
 
         new_prediction = Prediction.format_prediction_dict(request, game_id)
@@ -87,10 +85,6 @@ class PredictionAPIView(APIView):
 
         if prediction_serial.is_valid():
             prediction_serial.save()
-            print("")
-            print("request")
-            print(request.POST)
-            print("")
             if next_url := request.POST.get("next"):
                 return redirect(next_url)
             if to_predictions:

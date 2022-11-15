@@ -138,7 +138,7 @@ table caption {
 	/* padding: 0vh 0.5vh; */
 	text-transform: uppercase;
 	text-align: left;
-	font-size: var(--size-avg-plus);
+	font-size: var(--size-avg-min);
 	background-color: inherit;
 	width: max-content;
 }

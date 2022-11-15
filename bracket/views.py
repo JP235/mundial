@@ -21,10 +21,9 @@ class GameView(ListView):
     model = Game
     template_name = "bracket/game_page.html"
 
-    def get(self, request, id):
-        if len(game := Game.objects.filter(id=id)) > 0:
+    def get(self, request, game_id):
+        if len(game := Game.objects.filter(id=game_id)) > 0:
             game = game[0] 
-            print(game)
             ctx = {
                 "id": game.id,
                 "fase": number_to_fase[game.wc_round],
@@ -32,13 +31,14 @@ class GameView(ListView):
                 "team_2": game.team_2,
             }
             return render(request, self.template_name, ctx)
-        return redirect("home:home")
+        return redirect("home:my_predictions")
 
 
 class PredListView(ListView):
     """"""
     model = Prediction
     template_name: str = "bracket/prediction_list.html"
+
     def get(self,request,username = None):
         ctx = {
         "username":username if username else request.user

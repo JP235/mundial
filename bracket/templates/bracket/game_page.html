@@ -9,43 +9,45 @@
 			<span> {{fase}} </span>
 		</div>
 		<div id="match_container">
-			<div class="team_plus_score">
-				<div class="name_team team_1">{{team_1}}</div>
-                {{"&nbsp;"}}
-                <div>
+			<div class="match">
+				<div class="team_plus_score">
+					<div class="name_team team_1">{{team_1}}</div>
+					{{"&nbsp;"}}
+					<div>
+						<input
+							title="Goles"
+							type="number"
+							name="score_team_1"
+							required="true"
+							placeholder="-"
+							autocomplete="off"
+							min="0"
+						/>
+					</div>
+				</div>
+				<span> - </span>
+				<div class="team_plus_score">
 					<input
 						title="Goles"
 						type="number"
-						name="score_team_1"
+						name="score_team_2"
 						required="true"
 						placeholder="-"
 						autocomplete="off"
 						min="0"
 					/>
+					<div class="name_team team_2">{{team_2}}</div>
 				</div>
 			</div>
-			{{"&nbsp;-&nbsp;"}}
-			<div class="team_plus_score">
+			<div class="submint_buttons_container">
+				<input id="next_home" type="hidden" value="" />
+				<input type="submit" value="Enviar y siguiente" />
 				<input
-					title="Goles"
-					type="number"
-					name="score_team_2"
-					required="true"
-					placeholder="-"
-					autocomplete="off"
-					min="0"
+					type="submit"
+					value="Cancelar"
+					onclick="window.location.href='{% url 'home:home' %}';return false;"
 				/>
-				<div class="name_team team_2">{{team_2}}</div>
 			</div>
-            <div class="submint_buttons_container">
-                <input id="next_home" type="hidden" value="">
-                <input type="submit" value="Enviar y siguiente" />
-                <input
-                    type="submit"
-                    value="Cancelar"
-                    onclick="window.location.href='{% url 'home:home' %}';return false;"
-                />
-            </div>
 		</div>
 	</form>
 </div>

@@ -1,5 +1,5 @@
 async function get_game_predictions() {
-	const rawResponse = await fetch("/API/predictions", {
+	const rawResponse = await fetch(["/API/predictions",window.location.pathname.split("/")[2]].join("/"), {
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json",
@@ -13,8 +13,6 @@ async function get_game_predictions() {
 // console.log(loc)
 const predictions_data = get_game_predictions()
 predictions_data.then((d) => {
-  console.log("here")
-  console.log(d)
 	var main = d3.select("#PredictionsTable");
 	var t = main
 		.selectAll("tr.row")
