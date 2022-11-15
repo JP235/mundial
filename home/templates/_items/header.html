@@ -1,18 +1,30 @@
 <header>
-    {% if user.is_authenticated %}
-	<nav class="navbar color_accent">
-        <h2 id="SiteName"><a class="nav-link" href="/">Copa del Mundo <span class="sr-only"></span></a></h2>
-        <div class="navbar-items">
-			
-			<div>
-				<p>
-					
-					<a href="{% url 'home:my_predictions' %}">{{ user.username }}</a>
-					<a href="{% url 'logout' %}?next={% url 'home:home' %}">Logout</a>
-				</p>
+	{% if user.is_authenticated %}
+	<nav class="navbar">
+		<div class="top-row">
+			<h2 id="SiteName">
+				<a class="nav-link" href="/"
+					>Copa del Mundo <span class="sr-only"></span
+				></a>
+			</h2>
+			<div class="navbar-items">
+				<div>
+					<p><strong>{{ user.username }}</strong>
+						<a href="{% url 'logout' %}?next={% url 'home:home' %}"> Cerrar Sesion</a>
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="sec-row">
+			<div class="nav-items-2">
+				<div>
+					<p>
+						<a href="{% url 'home:my_predictions' %}">Mis Predicciones</a>
+						<a href="{% url 'home:home' %}">Grand-bracket</a>
+					</p>
+				</div>
 			</div>
 		</div>
 	</nav>
-    {% endif %}
-    
+	{% endif %}
 </header>

@@ -16,7 +16,7 @@ a:hover {
 .form {
   background: var(--dark-blue);
   padding: var(--size-big);;
-  width: 80vw; 
+  width: 70vw; 
   max-width: 500px;
   margin: auto;
   margin-top: 0;

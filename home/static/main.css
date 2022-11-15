@@ -1,16 +1,17 @@
 :root {
 	--light-blue: #13232f9a;
 	--dark-blue: #13232f;
-	--dark-blue-40: #13232f40;
+	--dark-blue-40: #3098e840;
+	--dark-blue-80: #13232f80;
 	--white: #ffffff;
 	--white-80: #ffffff80;
-	--main: #1bb189;
-	--main-light: #1ab188;
-	--main-dark: #179b77;
-	--gray-light: #a0b3b0;
-	--gray-light-40: #a0b3b040;
-	--gray1: #c1bdba;
-	--gray2: #b5adad;
+	--main: #0b6eb9;
+	--main-light: #3887c4;
+	--main-dark: #12588e;;
+	--gray-light: #89959e;
+	--gray-light-40: #89959e40;
+	--gray1: #ebe6e2;
+	--gray2: #d6cdcd;
 	--thin: 300;
 	--normal: 400;
 	--bold: 600;
@@ -30,7 +31,7 @@ body {
 	font-family: var(--font);
 	color: var(--white);
 	font-size: min(var(--font-avg-width), var(--size-avg));
-	background-color: var(--gray1);
+	background-color: var(--dark-blue-80);
 	margin: 0;
 	display: flex;
 	flex-direction: column;
@@ -61,11 +62,37 @@ nav {
 	background: var(--light-blue);
 	min-width: max-content;
 	display: flex;
-	flex-wrap: nowrap;
-	align-items: center;
+	flex-direction: column;
+}
+nav div {
+	display: flex;
+}
+nav * a,
+nav * a:visited {
+	color: var(--white);
+}
+nav * a:hover {
+	color: var(--white-80);
+}
+/* .container * a,
+.container * a:visited {
+	color: var(--white);
+}
+.container * a:hover {
+	color: var(--white-80);
+} */
+
+.top-row {
 	justify-content: space-between;
 }
-
+.sec-row {
+	justify-content: flex-end;
+	background: var(--dark-blue-80);
+}
+.nav-items-2 * {
+	padding: 0 1vw 0 1vw;
+	margin: 0.5vh auto;
+}
 h1 {
 	text-align: center;
 	font-weight: 300;
@@ -82,11 +109,11 @@ h2 {
 
 .container {
 	/* margin: 0 auto; */
-	padding-top: 3vh;
+	padding: 3vh 0 3vh 0vh;
 	background-color: var(--gray-light);
 	display: flex;
 	width: 80vw;
-	height: 100vh;
+	/* height: 100vh; */
 	flex-direction: row;
 	justify-content: center;
 	flex-wrap: wrap;
@@ -138,8 +165,7 @@ table caption {
 	/* padding: 0vh 0.5vh; */
 	text-transform: uppercase;
 	text-align: left;
-	font-size: var(--size-avg-min);
-	background-color: inherit;
+	font-size: var(--size-avg-plus);
 	width: max-content;
 }
 
@@ -153,7 +179,7 @@ table th {
 	/* text-align: left; */
 	font-weight: 300;
 	letter-spacing: 0.04rem;
-	font-size: 0.9rem;
+	font-size: var(--size-avg-plus);
 	color: #eee;
 	text-transform: uppercase;
 	background-color: var(--main-dark);
@@ -194,10 +220,14 @@ table td.gap span {
 	text-transform: uppercase;
 }
 
-a, u {
-    text-decoration: none;
-    color: var(--gray1);
+a,
+u {
+	text-decoration: none;
+	color: var(--gray2);
 }
 a:visited {
-    color: var(--gray2);
+	color: var(--gray2);
+}
+a:hover {
+	color: var(--gray1);
 }
