@@ -61,7 +61,9 @@ games_data.then((d) => {
 
 const users_data = get_users();
 users_data.then((d) => {
-	var main = d3.select("#leaderboardTable");
+	var main = d3.select("#leaderboardTable tbody");
+	main.attr("class", "scrollcontent");
+
 	var t = main
 		.selectAll("tr.row")
 		.data(d)
@@ -80,4 +82,46 @@ users_data.then((d) => {
 		.text(({ points }) => points);
 });
 
-// https://stackoverflow.com/questions/54519758/flag-emojis-not-rendering
+const up_arrow_partidos = $(up_partidos);
+const down_arrow_partidos = $(down_partidos);
+
+if ($(partidos_scroll).height() > 1.1 * $(partidosTable).height()) {
+	down_arrow_partidos.removeClass("hide");
+}
+
+$(partidosTable).scroll(function () {
+	const scroll_pt = $(partidosTable).scrollTop();
+	if (scroll_pt > 0.2 * $(partidosTable).height()) {
+		up_arrow_partidos.removeClass("hide");
+	} else {
+		up_arrow_partidos.addClass("hide");
+	}
+	if (scroll_pt + $(partidosTable).height() > 1.1*$(partidos_scroll).height()) {
+		down_arrow_partidos.addClass("hide");
+	} else {
+		down_arrow_partidos.removeClass("hide");
+	}
+});
+
+const up_arrow_leaderboard = $(up_leaderboard);
+const down_arrow_leaderboard = $(down_leaderboard);
+
+if ($(leaderboard_scroll).height() > 1.1 * $(leaderboardTable).height()) {
+	down_arrow_partidos.removeClass("hide");
+}
+$(leaderboardTable).scroll(function () {
+	const scroll = $(leaderboardTable).scrollTop();
+	if (scroll > 0.2 * $(leaderboardTable).height()) {
+		up_arrow_leaderboard.removeClass("hide");
+	} else {
+		up_arrow_leaderboard.addClass("hide");
+	}
+	if (
+		scroll + $(leaderboardTable).height() >
+		1.2 * $(leaderboard_scroll).height()
+	) {
+		down_arrow_leaderboard.addClass("hide");
+	} else {
+		down_arrow_leaderboard.removeClass("hide");
+	}
+});

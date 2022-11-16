@@ -13,7 +13,8 @@ async function get_game_predictions() {
 // console.log(loc)
 const predictions_data = get_game_predictions()
 predictions_data.then((d) => {
-	var main = d3.select("#PredictionsTable");
+	var main = d3.select("#predictionsTable tbody");
+  main.attr("class", "scrollcontent");
 	var t = main
 		.selectAll("tr.row")
 		.data(d)
@@ -32,3 +33,24 @@ predictions_data.then((d) => {
 		.text(({ predicted_score }) => predicted_score);
 
 }).catch(e => {console.log(e)})
+
+const up_arrow_predictions = $(up_predictions);
+const down_arrow_predictions = $(down_predictions);
+
+if ($(predictions_scroll).height() > 1.1 * $(predictionsTable).height()) {
+	down_arrow_predictions.removeClass("hide");
+}
+
+$(predictionsTable).scroll(function () {
+	const scroll_pt = $(predictionsTable).scrollTop();
+	if (scroll_pt > 0.2 * $(predictionsTable).height()) {
+		up_arrow_predictions.removeClass("hide");
+	} else {
+		up_arrow_predictions.addClass("hide");
+	}
+	if (scroll_pt + $(predictionsTable).height() > 1.1*$(predictions_scroll).height()) {
+		down_arrow_predictions.addClass("hide");
+	} else {
+		down_arrow_predictions.removeClass("hide");
+	}
+});

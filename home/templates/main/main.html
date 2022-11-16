@@ -2,20 +2,22 @@
 <script src="{% static 'main.js' %}" defer></script>
 {% endblock %} {% block content %}
 <div class="tableContainer">
-	<table id="partidosTable">
-		<caption>
-			Proximos partidos
+    <table id="partidosTable">
+        <caption>
+            Proximos partidos
 		</caption>
 		<thead class="fixedHeader">
-			<th></th>
+            <th></th>
 			<th>Fecha</th>
 			<th>Hora</th>
 		</thead>
-		<tbody class="scrollContent"></tbody>
+		<tbody id="partidos_scroll" class="scrollContent"></tbody>
 	</table>
+    <i id = "up_partidos" class="up-arrow fa fa-sort-asc fa-2x hide"aria-hidden="true"></i>
+    <i id = "down_partidos" class="down-arrow fa fa-sort-desc fa-2x"aria-hidden="true"></i>
 </div>
 
-<div class="leaderboard">
+<div class="tableContainer">
 	<table id="leaderboardTable">
 		<caption>
 			Ranking
@@ -27,8 +29,10 @@
 				<th>Puntos</th>
 			</tr>
 		</thead>
-		<tbody class="scrollContent"></tbody>
+		<tbody id="leaderboard_scroll"class="scrollContent"></tbody>
 	</table>
+    <i id = "up_leaderboard" class="up-arrow fa fa-sort-asc fa-2x hide"aria-hidden="true"></i>
+    <i id = "down_leaderboard" class="down-arrow fa fa-sort-desc fa-2x"aria-hidden="true"></i>
 </div>
-
+ 
 {% endblock %}

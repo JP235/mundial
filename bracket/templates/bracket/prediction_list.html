@@ -6,19 +6,21 @@
 />
 <script src="{% static 'predictions_page.js' %}" defer></script>
 {% endblock %} {% block content %}
-<div class="tableList">
-	<table id="PredictionsTable">
+<div class="tableContainer">
+	<table id="predictionsTable">
 		<caption>
 			Predicciones de {{username}}
 		</caption>
-
 		<thead class="fixedHeader">
 			<tr>
 				<th>Partido</th>
 				<th>Prediccion</th>
+				<th>Puntos</th>
 			</tr>
 		</thead>
-		<tbody class="scrollContent"></tbody>
+		<tbody id="predictions_scroll" class="scrollContent"></tbody>
 	</table>
+    <i id = "up_predictions" class="up-arrow fa fa-sort-asc fa-2x hide"aria-hidden="true"></i>
+    <i id = "down_predictions" class="down-arrow fa fa-sort-desc fa-2x"aria-hidden="true"></i>
 </div>
 {% endblock %}
