@@ -1,14 +1,14 @@
 <header>
 	{% if user.is_authenticated %}
 	<link
-		href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css"
 		rel="stylesheet"
 		type="text/css"
 	/>
 	<div class="header">
 		<div class="top-row">
 			<h2 id="SiteName">
-				<a class="nav-link" href="/"
+				<a class="nav-link" href="{% url 'home:home' %}"
 					>Copa del Mundo <span class="sr-only"></span
 				></a>
 			</h2>
@@ -16,17 +16,17 @@
 	</div>
 	<div class="navbar">
 		<div class="nav-items">
-			<div class="dropdown">
+			<div id="menudropdown" class="dropdown">
 				<button type="button" class="dropbtn">
-					Menu <span class="hidden-xs"></span>
-					<i class="fa fa-caret-down"></i>
+					<i id="menu_logo_closed" class="fa fa-bars"></i>
+                    <i id="menu_logo_open" class="fa fa-angle-down fa-lg hide-display" aria-hidden="true"></i>
+					Menu 
 				</button>
 				<div class="dropdown-content">
-					<a href="{% url 'home:home' %}">Reglas</a>
+					<a href="{% url 'home:rules' %}">Reglas</a>
 					<a href="{% url 'home:my_predictions' %}">Mis Predicciones</a>
-					<a href="{% url 'home:home' %}">Grand-bracket</a>
+					<a href="{% url 'home:home' %}">Clasifictoria</a>
 					<a href="{% url 'home:home' %}">Partidos Pasados</a>
-					<a href="{% url 'home:home' %}">Proximos Partidos</a>
 				</div>
 			</div>
 			<div class="user-info">
@@ -37,5 +37,10 @@
 			</div>
 		</div>
 	</div>
+    {% else %}
+    <br/>
+    <br/>
+    <br/>
+    <br/>
 	{% endif %}
 </header>

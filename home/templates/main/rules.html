@@ -1,0 +1,68 @@
+{% extends "base_bootstrap.html" %}
+{% block head %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'rules.css' %}" />
+{% endblock %}
+{% block content %}
+    <div class="rulesContainer">
+        <h2>Bienvenidos al juego del mundial de fútbol 2022!</h2>
+        <h3>Reglas de juego</h3>
+        <p>
+            El ganador del juego será aquella persona que logre acumular la mayor cantidad
+            de puntos al finalizar el mundial Catar 2022.
+        </p>
+        <p>
+            Si se produce un empate en el puntaje máximo, la bolsa se dividirá entre el numero de
+            personas que alcanzaron dicho resultado.
+        </p>
+        <p>Las puntos seran otorgados siguiendo las siguientes pautas:</p>
+        <h4>Prediccion de partidos</h4>
+        <p>
+            Las predicciones serán del marcador del partido al terminar los 90 minutos reglamentarios, o 120 minutos en caso de alargue. Si el partido se va a penales esos goles <strong>no contaran</strong> para las predicciones.
+        </p>
+        <ul type="none">
+            <li>
+                Acertar ganador <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                <strong><i> +2 puntos</i></strong>
+            </li>
+            <li>
+                Acertar marcador final <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                <strong><i> +2 puntos</i></strong>
+            </li>
+        </ul>
+        <p>
+            <i>
+                Se podrán realizar o modificar predicciones de un partido hasta las 23:59h (hora Colombia) del día anterior a que sea jugado.
+            </i>
+        </p>
+        <h4>Prediccion de Clasifictoria</h4>
+        <p>
+            Antes del inicio del mundial se deberá predecir la clasifictoria desde fase de grupos hasta la final. Esta predicción <strong>no</strong> se podrá modificar una vez hecha. 
+        </p>
+        <p>
+            Al terminar cada ronda los jugadores que hayan acertado recibirán puntos acorde a sus predicciones. 
+        </p>
+        <ul type="none">
+            <li>
+                Acertar ganadores fase de grupos <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                <strong><i> +3 puntos</i></strong> por cada grupo
+            </li>
+            <li>
+                Acertar ganadores fase de 16 <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                <strong><i> +6 puntos</i></strong>
+            </li>
+            <li>
+                Acertar ganadores Octavos de final <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                <strong><i> +6 puntos</i></strong>
+            </li>
+            <li>
+                Acertar ganadores Semi final <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                <strong><i> +12 puntos</i></strong>
+            </li>
+            <li>
+                Acertar ganador Final <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                <strong><i> +20 puntos</i></strong>
+            </li>
+        </ul>
+    </div>
+{% endblock %}

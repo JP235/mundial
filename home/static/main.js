@@ -125,3 +125,15 @@ $(leaderboardTable).scroll(function () {
 		down_arrow_leaderboard.removeClass("hide");
 	}
 });
+
+
+$(menudropdown).hover(
+  () => { //hover
+    $(menu_logo_open).removeClass("hide-display");
+    $(menu_logo_closed).addClass("hide-display");
+  }, 
+  () => { //out
+    $(menu_logo_open).addClass("hide-display");
+    $(menu_logo_closed).removeClass("hide-display");
+  }
+)

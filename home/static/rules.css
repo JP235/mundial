@@ -1,0 +1,18 @@
+.rulesContainer {
+    margin: 3vw;
+    margin-top: 0;
+}
+
+.rulesContainer ul {
+    margin-top: 1vh;
+    padding-left: 2vw
+}
+
+.rulesContainer ul li {
+    padding: 1vw;
+}
+
+h4 {
+    margin-top: 3vh;
+    margin-bottom: 1vh;
+}

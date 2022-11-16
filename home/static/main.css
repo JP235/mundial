@@ -2,13 +2,15 @@
 	--light-blue: #13232f9a;
 	--dark-blue: #13232f;
 	--dark-blue-40: #3098e840;
-	--dark-blue-80: #13232f80;
+	--dark-blue-80: #13232f80; 
+    --dark-dark: #0f1c26;
 	--white: #ffffff;
 	--white-80: #ffffff80;
 	--main: #0b6eb9;
 	--main-light: #3887c4;
 	--main-dark: #12588e;
-	--gray-light: #89959e;
+	/* --gray-light: #89959e; */
+    --gray-light: #656d70;;
 	--gray-light-40: #89959e40;
 	--gray1: #ebe6e2;
 	--gray2: #d6cdcd;
@@ -128,11 +130,6 @@ header {
 	margin: 0; /* Important for vertical align on mobile phones */
 }
 
-/* Add a red background color to navbar links on hover */
-.navbar a:hover,
-.dropdown:hover .dropbtn {
-	background-color: var(--main);
-}
 
 /* Dropdown content (hidden by default) */
 .dropdown-content {
@@ -155,8 +152,10 @@ header {
 }
 
 /* Add a grey background color to dropdown links on hover */
+.navbar a:hover,
 .dropdown-content a:hover {
-	background-color: #ddd;
+    background-color: var(--main);
+	/* background-color: #ddd; */
 }
 
 /* Show the dropdown menu on hover */
@@ -215,13 +214,16 @@ table {
 }
 .fa.up-arrow {
     transform: translateY(-33vh);
-    filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));}
+    filter: drop-shadow(3px 3px 2px rgb(0 0 0 / 0.4));}
 .fa.down-arrow {
     transform: translateY(-8vh);
-    filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
+    filter: drop-shadow(3px 3px 2px rgb(0 0 0 / 0.4));
 }
 .fa.hide {
     opacity: 0;
+}
+.fa.hide-display {
+    display: none;
 }
 .fixedHeader {
 	position: sticky;
