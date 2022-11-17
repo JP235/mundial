@@ -1,19 +1,19 @@
 async function get_game_predictions() {
-	const rawResponse = await fetch(["/API/predictions",window.location.pathname.split("/")[2]].join("/"), {
-		method: "GET",
-		headers: {
-			"Content-Type": "application/json",
-		},
-	});
-	// console.log(rawResponse)
-	let data = rawResponse.json();
-	return data;
+  const rawResponse = await fetch(["/API/predictions", window.location.pathname.split("/")[2]].join("/"), {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  // console.log(rawResponse)
+  let data = rawResponse.json();
+  return data;
 }
 // const loc = window.location.pathname
 // console.log(loc)
 const predictions_data = get_game_predictions()
 predictions_data.then((d) => {
-	var main = d3.select("#predictionsTable tbody");
+  var main = d3.select("#predictionsTable tbody");
   main.attr("class", "scrollcontent");
 	var t = main
 		.selectAll("tr.row")
@@ -32,25 +32,28 @@ predictions_data.then((d) => {
 		.append("span")
 		.text(({ predicted_score }) => predicted_score);
 
-}).catch(e => {console.log(e)})
+  if ( $(predictionsTable).height() < $(predictions_scroll).height()) {
+    down_arrow_predictions.removeClass("hide");
+  }
+}).catch(e => {
+  console.log(e)
+})
 
 const up_arrow_predictions = $(up_predictions);
 const down_arrow_predictions = $(down_predictions);
 
-if ($(predictions_scroll).height() > 1.1 * $(predictionsTable).height()) {
-	down_arrow_predictions.removeClass("hide");
-}
+
 
 $(predictionsTable).scroll(function () {
-	const scroll_pt = $(predictionsTable).scrollTop();
-	if (scroll_pt > 0.2 * $(predictionsTable).height()) {
-		up_arrow_predictions.removeClass("hide");
-	} else {
-		up_arrow_predictions.addClass("hide");
-	}
-	if (scroll_pt + $(predictionsTable).height() > 1.1*$(predictions_scroll).height()) {
-		down_arrow_predictions.addClass("hide");
-	} else {
-		down_arrow_predictions.removeClass("hide");
-	}
+  const scroll_pt = $(predictionsTable).scrollTop();
+  if (scroll_pt > 0.2 * $(predictionsTable).height()) {
+    up_arrow_predictions.removeClass("hide");
+  } else {
+    up_arrow_predictions.addClass("hide");
+  }
+  if (scroll_pt + $(predictionsTable).height() > 1.1 * $(predictions_scroll).height()) {
+    down_arrow_predictions.addClass("hide");
+  } else {
+    down_arrow_predictions.removeClass("hide");
+  }
 });
