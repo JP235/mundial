@@ -51,7 +51,7 @@ $(predictionsTable).scroll(function () {
   } else {
     up_arrow_predictions.addClass("hide");
   }
-  if (scroll_pt + $(predictionsTable).height() > 1.1 * $(predictions_scroll).height()) {
+  if (scroll_pt + $(predictionsTable).height() > 0.2*$(predictionsTable).height() + $(predictions_scroll).height()) {
     down_arrow_predictions.addClass("hide");
   } else {
     down_arrow_predictions.removeClass("hide");
