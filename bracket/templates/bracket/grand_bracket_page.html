@@ -1,0 +1,62 @@
+{% extends "base_bootstrap.html" %}
+{% block head %}
+    {% load static %}
+    <link rel="stylesheet"
+          type="text/css"
+          href="{% static 'grand_bracket_page.css' %}"/>
+    <script src="{% static 'grand_bracket_buttons.js' %}" defer></script>
+    <script src="{% static 'grand_bracket_selects.js' %}" defer></script>
+{% endblock %}
+{% block content %}
+    <div class="game">
+        <h2>Clasificatoria</h2>
+        {% comment %} <br/> {% endcomment %}
+        <form action="{% url 'API:predict_bracket' %}"
+              id="bracketForm"
+              method="post">
+            {% csrf_token %}
+            <div class="caption"></div>
+            <div class="ClasificatoriaLanding"></div>
+            <button type="button" id="start">Comenzar</button>
+            <div class="Groups">
+                <h3 id="Grupos_h3">Fase de Grupos</h3>
+                {% include "bracket/group_12.html" with group="A" data_list=A %}
+                {% include "bracket/group_12.html" with group="B" data_list=B %}
+                {% include "bracket/group_12.html" with group="C" data_list=C %}
+                {% include "bracket/group_12.html" with group="D" data_list=D %}
+                {% include "bracket/group_12.html" with group="E" data_list=E %}
+                {% include "bracket/group_12.html" with group="F" data_list=F %}
+                {% include "bracket/group_12.html" with group="G" data_list=G %}
+                {% include "bracket/group_12.html" with group="H" data_list=H %} 
+            </div>
+            <div class="sixteen">
+                <h3 class="16_h3">Fase de 16</h3>
+                {% include "bracket/one_v_one.html" with match="A1B2" %}
+                {% include "bracket/one_v_one.html" with match="C1D2" %}
+                {% include "bracket/one_v_one.html" with match="E1F2" %}
+                {% include "bracket/one_v_one.html" with match="G1H2" %}
+                {% include "bracket/one_v_one.html" with match="B1A2" %}
+                {% include "bracket/one_v_one.html" with match="D1C2" %}
+                {% include "bracket/one_v_one.html" with match="F1E2" %}
+                {% include "bracket/one_v_one.html" with match="H1G2" %}
+            </div>
+            <div class="eight">
+                <h3 class="eight_h3">Octavos de Final</h3>
+                {% include "bracket/one_v_one.html" with match="AD" %}
+                {% include "bracket/one_v_one.html" with match="EH" %}
+                {% include "bracket/one_v_one.html" with match="BC" %}
+                {% include "bracket/one_v_one.html" with match="FG" %}
+            </div>
+            <div class="semi">
+                <h3 class="semi_h3">Semi Final</h3>
+                {% include "bracket/one_v_one.html" with match="AH" %}
+                {% include "bracket/one_v_one.html" with match="BG" %}
+            </div>
+            <div class="Final">
+                <h3 class="Final_h3">Final</h3>
+                {% include "bracket/one_v_one.html" with match="winner" %}
+            </div>
+            <input type="submit"/>
+        </form>
+    </div>
+{% endblock %}

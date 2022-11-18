@@ -1,0 +1,18 @@
+<div id="match_{{match}}" class="one_on_one_{{ match }} hide">
+    <div class="one_on_one_input">
+        <div class="flags flags_counties_{{ match }}">
+            <div class="options_1 {{ match }}"></div>
+            <div class="options_2 {{ match }}"></div>
+        </div>
+        <label for="{{match}}">Ganador:</label>
+        <select name="{{match}}" title="{{ match }}" id="{{match}}">
+            <option value=""></option>
+            <option id="{{match}}1" value="1"></option>
+            <option id="{{match}}2" value="2"></option>
+        </select>
+    </div>
+    <div class="prev_next_buttons_container">
+        <button type="button" id="prev_{{match}}">Anterior</button>
+        <button type="button" id="next_{{match}}">Siguiente</button>
+    </div>
+</div>

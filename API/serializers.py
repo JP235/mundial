@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from bracket.views import number_to_fase
-from bracket.models import Game, UsersPoints, Prediction, Country
+from bracket.models import Game, Prediction, Country, BracketPrediction
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -37,6 +37,10 @@ class GameSerializer(serializers.ModelSerializer):
         data = super().to_internal_value(data)
         return data
 
+class CountrySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Country
+        fields = ["name","abbr","group","flag_fifa_url"]
 
 class PredictionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -66,3 +70,12 @@ class PredictionSerializer(serializers.ModelSerializer):
         data_out["team_1"] = Game.objects.get(pk=data_out.get("game")).team_1.name
         data_out["team_2"] = Game.objects.get(pk=data_out.get("game")).team_2.name
         return data_out
+
+class BracketPredictionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BracketPrediction
+        fields = "__all__"
+    def to_internal_value(self, instance):
+        data = super().to_internal_value(instance)
+        # print(data)
+        return data

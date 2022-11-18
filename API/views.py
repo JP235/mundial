@@ -9,9 +9,9 @@ from django.contrib import messages
 from django.views import View
 from django.contrib.auth.models import User
 
-from .forms import NewUserForm, PredictionForm
-from .serializers import GameSerializer, UserSerializer, PredictionSerializer
-from bracket.models import Game, UsersPoints, Prediction
+from .forms import NewUserForm
+from .serializers import CountrySerializer, GameSerializer, UserSerializer, PredictionSerializer, BracketPredictionSerializer
+from bracket.models import Country, Game, Prediction, BracketPrediction
 
 
 class UsersAPIView(APIView):
@@ -45,6 +45,34 @@ class GamePredictionsAPIView(APIView):
         game_predictions_serial = self.serializer(game_predictions, many=True).data
         return Response(data=game_predictions_serial, status=status.HTTP_200_OK)
 
+class CountriesAPIView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer = CountrySerializer
+    
+    def get(self, request):
+        """Get countries"""
+        countries = Country.objects.all().order_by('group')
+        countries_serial = self.serializer(countries, many=True).data
+        return Response(data=countries_serial, status=status.HTTP_200_OK)
+    
+
+class BracketPredictionAPIView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer = BracketPredictionSerializer
+
+    def post(self, request):
+        """Make Bracket prediction"""
+        
+        new_prediction = BracketPrediction.format_request(request)
+        prediction_serial = self.serializer(data=new_prediction)
+        print(prediction_serial)
+        if prediction_serial.is_valid():
+            prediction_serial.save()
+            if next_url := request.POST.get("next"):
+                return redirect(next_url)
+            return Response(prediction_serial.data, status=status.HTTP_200_OK)
+
+        return Response(prediction_serial.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class PredictionAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated]
