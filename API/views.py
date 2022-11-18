@@ -132,7 +132,7 @@ def login_request(request):
     user = authenticate(request, username=username, password=password)
     if user is not None:
         login(request, user)
-        return redirect("home:home")
+        return redirect("home:landing")
     messages.error(request, "Informacion Incorrecta.")
     return redirect("id:id")
 
@@ -145,6 +145,6 @@ def register_request(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect("home:home")
+            return redirect("home:landing")
     messages.error(request, "Informacion Incorrecta.")
     return redirect("id:id")

@@ -6,6 +6,7 @@ from bracket import views as br_views
 app_name='home'
 urlpatterns = [
     path('', views.LandingView.as_view(),name="home"),
+    path('bienvenidos', TemplateView.as_view(template_name="main/welcome.html"),name="landing"),
     path('reglas', TemplateView.as_view(template_name="main/rules.html"),name="rules"),
     path('mis_predicciones', br_views.PredListView.as_view(), name='my_predictions'),
     path('predicciones/<str:username>', br_views.PredListView.as_view(), name='predictions_by_user'),
