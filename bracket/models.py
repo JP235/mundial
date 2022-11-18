@@ -139,7 +139,7 @@ class Prediction(models.Model):
             "game": game_id,
             "predicted_winner": pred_winner,
             "predicted_score": "-".join(
-                [request.data.get("score_team_1"), request.data.get("score_team_2")]
+                [str(int(request.data.get("score_team_1"))), str(int(request.data.get("score_team_2")))]
             ),
         }
         return new_prediction

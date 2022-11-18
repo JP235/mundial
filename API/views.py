@@ -104,8 +104,9 @@ class PredictionAPIView(APIView):
             if next_url := request.POST.get("next"):
                 return redirect(next_url)
             return redirect(f"/partido/{game_id+1}")
-
-        return Response(prediction_serial.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        messages.error("Informacion Erronea")
+        return redirect(f"/partido/{game_id}")
 
     def put(self, request, pred_id, to_predictions=True):
         """Change prediction"""
