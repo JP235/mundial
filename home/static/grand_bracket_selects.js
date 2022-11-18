@@ -169,12 +169,12 @@ $(match_FG).change(function () {
  */
 
 $(match_AH).change(function () {
-  const selected_team = $("#BC option:selected")[0].innerText
+  const selected_team = $("#AH option:selected")[0].innerText
   change_option("winner", selected_team, 1)
 });
 
 $(match_BG).change(function () {
-  const selected_team = $("#FG option:selected")[0].innerText
+  const selected_team = $("#BG option:selected")[0].innerText
   change_option("winner", selected_team, 2)
 })
 

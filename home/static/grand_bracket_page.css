@@ -91,7 +91,7 @@ form {
     background-color: var(--dark-blue-40);
     margin: 5vh;
     width: 60vw;
-    max-width: 65vw;
+    max-width: 700px;
     margin-top: 0;
     border-spacing: 0 1rem;
     padding: 2vh;
