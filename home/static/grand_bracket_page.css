@@ -32,6 +32,7 @@ h3 {
     margin-top: 0;
 }
 .game {
+    display: flex;
     background-color: var(--dark-blue);
     max-width: 700px;
 }
@@ -58,7 +59,10 @@ h3 {
     flex-direction: column;
     align-items: center;
 }
-
+#bracketForm{
+    margin: 5vh;
+    padding: 3vh;
+}
 .prev_next_buttons_container {
     margin: 3vh;
     display: flex;
