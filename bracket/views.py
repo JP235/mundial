@@ -29,7 +29,11 @@ class GameView(ListView):
                 "id": game.id,
                 "fase": number_to_fase[game.wc_round],
                 "team_1": game.team_1,
+                "flag_1":game.team_1.flag_fifa_url,
+                "abbr_1":game.team_1.abbr,
                 "team_2": game.team_2,
+                "flag_2":game.team_2.flag_fifa_url,
+                "abbr_2":game.team_2.abbr,
             }
             return render(request, self.template_name, ctx)
         return redirect("home:my_predictions")

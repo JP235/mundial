@@ -30,7 +30,7 @@ form .caption {
 }
 
 input[title="Goles"] {
-    width: 2.5vw;
+    width: 3vw;
     text-align: center;
 }
 input[title="Submit"] {
@@ -44,18 +44,22 @@ input[type=number]::-webkit-outer-spin-button {
 .match {
     display: flex;
     align-items: center;
+    justify-content: center;
     padding: 1vh
 }
 #match_container{
     display: flex;
     justify-content: center;
-    padding: 0.5vh;
-    margin-top: 1vh;
     flex-wrap: wrap;
+    flex-direction: column;
+    padding: 0.5vh;
+    margin-bottom: 2vh;
  }
+
 .team_plus_score {
     display: flex;
     align-items: center;
+    flex-direction: column;
     margin-right: 2vw;
     margin-left: 2vw;
 }
@@ -64,4 +68,23 @@ input[type=number]::-webkit-outer-spin-button {
     margin-right: 1em;
     margin-left: 1em;
     text-align: center;
+    padding: 1vh 0;
+}
+.submint_buttons_container {
+    display: flex;
+    justify-content: space-evenly;
+}
+.flag_score {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+.flag_abbr {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-block-start: 1vh;
+    justify-content: space-between;
+    padding-block-end: 3vh;
 }

@@ -3,7 +3,6 @@
     flex-direction: column;
     max-width: 75vw;
 }
-
 .group_input {
     display: flex;
     justify-content: center;
@@ -22,25 +21,11 @@
     flex-wrap: nowrap;
 }
 
-.flag_abbr {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1vh
-}
 .selected1 {
     background: rgba(190, 250, 181, 0.333);
 }
 .selected2 {
     background: rgba(250, 236, 181, 0.333);
-}
-.flags {
-    display: flex;
-    justify-content: space-around;
-}
-.flag {
-    width: 50px;
-    height: 45px;
 }
 select {
     margin: 0 1vh;

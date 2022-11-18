@@ -15,44 +15,56 @@
             </div>
             <div id="match_container">
                 <div class="match">
-                    <div class="team_plus_score">
-                        <div class="name_team team_1">{{ team_1 }}</div>
-                        {{"&nbsp;" }}
-                        <div>
-                            <input title="Goles"
-                                   type="number"
-                                   name="score_team_1"
-                                   required="true"
-                                   placeholder="-"
-                                   autocomplete="off"
-                                   min="0"/>
+                    <div class="flags flags_counties_{{ group }}">
+                        <div class="flag_abbr {{ abbr_1 }}">
+                            <div class="name_team team_1">{{ team_1 }}</div>
+                            <div class="flag_score">
+                                <div class="flag"
+                                     style="background:url({{ flag_1 }}) center center / 100% no-repeat"></div>
+                                {% comment %} <div class="abbr">{{abbr_1}}</div> {% endcomment %}
+                                <div class="team_plus_score">
+                                    <input title="Goles"
+                                           type="number"
+                                           name="score_team_1"
+                                           required="true"
+                                           placeholder="-"
+                                           autocomplete="off"
+                                           min="0"/>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <span>-</span>
-                    <div class="team_plus_score">
-                        <input title="Goles"
-                               type="number"
-                               name="score_team_2"
-                               required="true"
-                               placeholder="-"
-                               autocomplete="off"
-                               min="0"/>
-                        <div class="name_team team_2">{{ team_2 }}</div>
+                        <div class="flag_abbr {{ abbr_2 }}">
+                            <div class="name_team team_2">{{ team_2 }}</div>
+                            <div class="flag_score">
+                                <div class="team_plus_score">
+                                    <input title="Goles"
+                                           type="number"
+                                           name="score_team_2"
+                                           required="true"
+                                           placeholder="-"
+                                           autocomplete="off"
+                                           min="0"/>
+                                </div>
+                                <div class="flag"
+                                     style="background:url({{ flag_2 }}) center center / 100% no-repeat"></div>
+                                {% comment %} <div class="abbr">{{abbr_2}}</div> {% endcomment %}
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="submint_buttons_container">
                     <input id="next_home" type="hidden" value="" />
-                    <input type="submit" value="Enviar y siguiente" />
                     <input type="submit"
                            value="Cancelar"
                            onclick="window.location.href='{% url 'home:home' %}';return false;"/>
+                    <input type="submit" value="Siguiente" />
                 </div>
             </div>
         </form>
     </div>
     <div class="tableContainer">
         <table id="gamePredictionsTable">
-            <caption style="text-transform:none">
+            <caption>
                 Predicciones del partido
             </caption>
             <thead class="fixedHeader">
