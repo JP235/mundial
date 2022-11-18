@@ -3,6 +3,12 @@
 // based on: D3 Table - F1 Leaderboard by: Jonathan
 // https://codepen.io/jonakirke94/pen/NWzreGM
 
+console.log("btn")
+$("#btn-msg").click(function(){
+  $(".MensajeInicial").addClass("hide")
+})
+
+
 $(menudropdown).hover(
   () => { //hover
     $(menu_logo_open).removeClass("hide-display");

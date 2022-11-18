@@ -1,6 +1,8 @@
 .rulesContainer {
-    margin: 3vw;
+    margin: 9vw;
+    padding: 3vh;
     margin-top: 0;
+    background: var(--dark-blue);
 }
 
 .rulesContainer ul {

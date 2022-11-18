@@ -1,18 +1,22 @@
 :root {
     --light-blue: #13232f9a;
-    --dark-blue: #13232f;
-    --dark-blue-40: #3098e840;
+    --dark-blue: #13232fbe;
+    --dark-blue-40: #3098e897;
     --dark-blue-80: #13232f80;
-    --dark-dark: #0f1c26;
-    --white: #ffffff;
+    --dark-dark: #0f1c26d7;
+    --white: #f8f8f8;
     --white-80: #ffffff80;
-    --main: #0b6eb9;
-    --main-light: #3887c4;
-    --main-dark: #12588e;
+    --main: #0b6db9cc;
+    --main-80: #0b6db963;
+    --main-90: #0b6eb990;
+    --main-light: #3887c490;
+    --main-green: #c6ffce;
+    --main-dark: #12588ed7;
     /* --gray-light: #89959e; */
     --gray-light: #656d70;
     ;
     --gray-light-40: #89959e40;
+    --gray-light-80: #89959e80;
     --gray1: #ebe6e2;
     --gray2: #d6cdcd;
     --thin: 300;
@@ -35,12 +39,37 @@ html {
 body {
     font-family: var(--font);
     color: var(--white);
+    text-shadow: #0f1c26;
     font-size: min(var(--font-avg-width), var(--size-avg));
     background-color: var(--dark-blue-80);
     margin: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background: url("/static/img/grass-field-background.jpg") 50% 0 no-repeat fixed;
+}
+.MensajeInicial {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 60vw;
+    background: var(--dark-blue);
+    padding: 5vh;
+    padding-block-start: 2vh;
+    margin-block-end: 5vh;
+    margin-block-start: 0;
+    max-width: 700px;
+}
+.btn-msg{
+    display: flex;
+    width: fit-content;
+}
+.rulesLink {
+    color: lightblue;
+}
+
+.hide {
+    display: none;
 }
 
 .alert {
@@ -61,7 +90,7 @@ body {
 }
 
 #SiteName a:hover {
-    color: var(--main-light);
+    color: var(--main-green);
 }
 
 header {
@@ -102,7 +131,7 @@ header {
 /* Navbar container */
 .navbar {
     overflow: hidden;
-    background-color: #333;
+    background-color: rgba(51, 51, 51, 0.89);
 }
 
 /* Links inside the navbar */
@@ -134,6 +163,7 @@ header {
 /* Dropdown button */
 .dropdown .dropbtn {
     font-size: 16px;
+    margin-left: 2vw;
     border: none;
     outline: none;
     color: white;
@@ -150,7 +180,9 @@ header {
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: var(--main-dark);
+    background-color: var(--dark-dark);
+    font-weight: var(--bold);
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.805);
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
@@ -159,17 +191,16 @@ header {
 /* Links inside the dropdown */
 .dropdown-content a {
     float: none;
-    color: black;
+    color: var(--white);
     padding: 12px 16px;
     text-decoration: none;
     display: block;
     text-align: left;
 }
 
-/* Add a grey background color to dropdown links on hover */
 .navbar a:hover,
 .dropdown-content a:hover {
-    background-color: var(--main);
+    background-color: var(--main-80);
     /* background-color: #ddd; */
 }
 
@@ -203,7 +234,7 @@ h2 {
 .container {
     /* margin: 0 auto; */
     padding: 3vh 0 3vh 0vh;
-    background-color: var(--gray-light);
+    background-color: var(--gray-light-80);
     display: flex;
     width: 90vw;
     max-width: 800px;
@@ -211,6 +242,7 @@ h2 {
     justify-content: center;
     flex-wrap: wrap;
     align-content: flex-start;
+    /* background: url("/static/img/Lusail-Iconic-Stadium.webp") 10% 0 no-repeat; */
 }
 
 table {
@@ -222,7 +254,7 @@ table {
     margin: 0 5vh;
     margin-top: 0;
     border-spacing: 0 0.5rem;
-    border: 2vh solid var(--dark-blue);
+    border: 2vh solid #0f1c2600;
     padding-block-end: 1vh;
 }
 

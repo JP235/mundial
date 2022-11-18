@@ -14,15 +14,14 @@ a:hover {
 }
 
 .form {
-  background: var(--dark-blue);
+  background: #13232fec;
   padding: var(--size-big);;
   width: 70vw; 
   max-width: 500px;
   margin: auto;
   margin-top: 0;
   border-radius: 1vh;
-  box-shadow: 0 4px 10px 4px var(--dark-blue-40);
-}
+ }
 
 .tab-group {
   list-style: none;

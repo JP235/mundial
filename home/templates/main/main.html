@@ -1,38 +1,71 @@
-{% extends "base_bootstrap.html" %} {% block head %} {% load static %}
-<script src="{% static 'main.js' %}" defer></script>
-{% endblock %} {% block content %}
-<div class="tableContainer">
-    <table id="partidosTable">
-        <caption>
-            Proximos partidos
-		</caption>
-		<thead class="fixedHeader">
-            <th></th>
-			<th>Fecha</th>
-			<th>Hora</th>
-		</thead>
-		<tbody id="partidos_scroll" class="scrollContent"></tbody>
-	</table>
-    <i id="up_partidos" class="up-arrow fa fa-sort-asc fa-2x hide"aria-hidden="true"></i>
-    <i id="down_partidos" class="down-arrow fa fa-sort-desc fa-2x hide"aria-hidden="true"></i>
-</div>
-
-<div class="tableContainer">
-	<table id="leaderboardTable">
-		<caption>
-			Ranking
-		</caption>
-		<thead class="fixedHeader">
-			<tr>
-				<th>#</th>
-				<th>Jugador</th>
-				<th>Puntos</th>
-			</tr>
-		</thead>
-		<tbody id="leaderboard_scroll"class="scrollContent"></tbody>
-	</table>
-    <i id="up_leaderboard" class="up-arrow fa fa-sort-asc fa-2x hide"aria-hidden="true"></i>
-    <i id="down_leaderboard" class="down-arrow fa fa-sort-desc fa-2x hide"aria-hidden="true"></i>
-</div>
- 
+{% extends "base_bootstrap.html" %}
+{% block head %}
+    {% load static %}
+    <script src="{% static 'main.js' %}" defer></script>
+{% endblock %}
+{% block content %}
+    <div class="MensajeInicial">
+        <h3>¡Bienvenidos al juego del mundial de fútbol 2022!</h3>
+        <h5>
+            Su participación en este juego esta supeditada a que Ud. haga un “buen” uso de
+            sus conocimientos en materia del futbol mundial y sus preferencias en esta
+            materia.
+        </h5>
+        <p>
+            El juego consiste en tratar de acertar los resultados de los partidos, (pestaña
+            próximos partidos), o editar sus resultados antes de que se juegan (ver reglas de
+            juego) en mis predicciones.
+        </p>
+        <p>
+            De igual forma, es necesario dar desde el comienzo,
+            la apuesta mas compleja: la clasificación, en la fase de grupos de los 2 primeros
+            equipos de cada grupo, como los resultados subsiguientes de los partidos que
+            se derivan hasta llegar a la final del campeonato, antes de que se inicie el
+            mundial. Esto ultimo debe hacerse en la pestaña denominada clasificatoria.
+        </p>
+        <p>Antes de comenzar a llenar resultados y definir la clasificatoria lea las <a href="{% url 'home:rules' %}"> <strong class="rulesLink">reglas del juego</strong> </a></p>
+        <button tyle="button" id="btn-msg">Cerrar</button>
+    </div>
+    <div class="tableContainer">
+        <table id="partidosTable">
+            <caption>
+                Proximos partidos
+            </caption>
+            <thead class="fixedHeader">
+                <th></th>
+                <th>Fecha</th>
+                <th>Hora</th>
+            </thead>
+            <tbody id="partidos_scroll" class="scrollContent">
+            </tbody>
+        </table>
+        <i id="up_partidos"
+           class="up-arrow fa fa-sort-asc fa-2x hide"
+           aria-hidden="true"></i>
+        <i id="down_partidos"
+           class="down-arrow fa fa-sort-desc fa-2x hide"
+           aria-hidden="true"></i>
+    </div>
+    <div class="tableContainer">
+        <table id="leaderboardTable">
+            <caption>
+                Ranking
+            </caption>
+            <thead class="fixedHeader">
+                <tr>
+                    <th>#</th>
+                    <th>Jugador</th>
+                    <th>Puntos</th>
+                </tr>
+            </thead>
+            <tbody id="leaderboard_scroll"class="scrollContent">
+            </tbody>
+        </table>
+        <i id="up_leaderboard"
+           class="up-arrow fa fa-sort-asc fa-2x hide"
+           aria-hidden="true"></i>
+        <i id="down_leaderboard"
+           class="down-arrow fa fa-sort-desc fa-2x hide"
+           aria-hidden="true"></i>
+    </div>
 {% endblock %}
