@@ -3,6 +3,20 @@
     flex-direction: column;
     max-width: 75vw;
 }
+.Group h2{
+    color: var(--white);
+    text-shadow: 4px 0px 4px var(--main-dark)
+}
+h3 {
+    text-align: center;
+    color: var(--dark-dark);
+}
+h2 {
+    margin-top: 0;
+}
+.fase-activa {
+    color: var(--white)
+}
 .group_input {
     display: flex;
     justify-content: center;
@@ -31,6 +45,44 @@ select {
     margin: 0 1vh;
     width: max-content;
 }
+#start-button {
+    margin-top: 2vh;
+}
+
 .hide {
     display: none;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--dark-blue-40);
+    margin: 5vh;
+    width: 60vw;
+    max-width: 65vw;
+    margin-top: 0;
+    border-spacing: 0 1rem;
+    padding: 2vh;
+    padding-block-end: 1vh;
+}
+
+#partidosTable {
+	min-width: 40vw;
+}
+#leaderboardTable {
+	min-width: 28vw;
+}
+form .caption {
+    text-transform: uppercase;
+    text-align: center;
+    vertical-align: middle;
+	font-size: var(--size-avg-plus);
+	background-color: var(--main-dark);
+	padding: 1.5vh;
+    align-items: center;
+    min-width: 30vw;
+}
+.done {
+    color: #9cd081;
 }

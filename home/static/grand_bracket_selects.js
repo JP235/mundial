@@ -10,6 +10,9 @@ function change_option(next_group, team, opt) {
     // }
   }
 }
+function remove_not(g,opt){
+  $(g).parent().parent().siblings().children().removeClass(`not_${opt}`)
+}
 /** **/
 
 $(group_A1).change(function () {
