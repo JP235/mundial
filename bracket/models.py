@@ -30,15 +30,14 @@ class Country(models.Model):
 
 class GroupError(Exception):
     def __init__(self, group: str, T1: Country, T2: Country):
-        self.message = f"Group {group} recieved teams: \
-                \n {T1.name} - {T1.group} \
-                \n {T2.name} - {T2.group}"
+        self.message = \
+                f"Grupo {group} recivió equipos: Primero: {T1.name} Segundo: {T2.name}"
         super().__init__(self.message)
 
 
 def check_group(group: str, T1: Country, T2: Country):
     if T1 == T2:
-        raise ValueError("Can't use same team for first and second")
+        raise GroupError(group, T1, T2)
     if not ((T1.group == group) and (T2.group == group)):
         raise GroupError(group, T1, T2)
     return T1, T2
@@ -47,7 +46,7 @@ def check_group(group: str, T1: Country, T2: Country):
 def validate_winners_input(*args):
     for w in args:
         if w not in (1, 2):
-            raise ValueError(f"Winners must be 1 or 2. {args}")
+            raise ValueError(f"Hay que seleccionar ganador para todos los partidos. {args}")
     return args
 
 
@@ -291,12 +290,12 @@ class BracketPrediction(models.Model):
         return new_prediction
 
     def save(self, *args, **kwargs):
+
         self._validate_groups()
         self._validate_sixteen()
         self._validate_eight()
         self._validate_semi()
         self._validate_final()
-
         super().save(*args, **kwargs)
 
     def get_bracket(self):
@@ -340,8 +339,13 @@ class BracketPrediction(models.Model):
             "BG": [semi["BC"], semi["FG"]][self.BG - 1],
         }
         winner = {"winner": [final["AH"], final["BG"]][self.winner - 1]}
-
-        return sixteen, eight, semi, final, winner
+        return {
+            "sixteen": sixteen,
+            "eight": eight,
+            "semi": semi,
+            "final": final,
+            "winner": winner,
+        }
 
     def _validate_groups(self):
         self.A1, self.A2 = check_group("A", self.A1, self.A2)

@@ -1,0 +1,48 @@
+<div class="Groups">
+    <h3 id="Grupos_h3">Fase de Grupos</h3>
+    <div class="groups_display">
+        {% include "bracket/disp_group.html" with group="A" T1=data.sixteen.A1 T2=data.sixteen.A2 %}
+        {% include "bracket/disp_group.html" with group="B" T1=data.sixteen.B1 T2=data.sixteen.B2 %}
+        {% include "bracket/disp_group.html" with group="C" T1=data.sixteen.C1 T2=data.sixteen.C2 %}
+        {% include "bracket/disp_group.html" with group="D" T1=data.sixteen.D1 T2=data.sixteen.D2 %}
+        {% include "bracket/disp_group.html" with group="E" T1=data.sixteen.E1 T2=data.sixteen.E2 %}
+        {% include "bracket/disp_group.html" with group="F" T1=data.sixteen.F1 T2=data.sixteen.F2 %}
+        {% include "bracket/disp_group.html" with group="G" T1=data.sixteen.G1 T2=data.sixteen.G2 %}
+        {% include "bracket/disp_group.html" with group="H" T1=data.sixteen.H1 T2=data.sixteen.H2 %}
+    </div>
+</div>
+<div class="sixteen">
+    <h3 id="16_h3">Fase de 16</h3>
+    <div class="groups_display">
+        {% include "bracket/disp_onevone.html" with winner=data.eight.A1B2 T1=data.sixteen.A1 T2=data.sixteen.B2 %}
+        {% include "bracket/disp_onevone.html" with winner=data.eight.C1D2 T1=data.sixteen.C1 T2=data.sixteen.D2 %}
+        {% include "bracket/disp_onevone.html" with winner=data.eight.E1F2 T1=data.sixteen.E1 T2=data.sixteen.F2 %}
+        {% include "bracket/disp_onevone.html" with winner=data.eight.G1H2 T1=data.sixteen.G1 T2=data.sixteen.H2 %}
+        {% include "bracket/disp_onevone.html" with winner=data.eight.B1A2 T1=data.sixteen.B1 T2=data.sixteen.A2 %}
+        {% include "bracket/disp_onevone.html" with winner=data.eight.D1C2 T1=data.sixteen.D1 T2=data.sixteen.C2 %}
+        {% include "bracket/disp_onevone.html" with winner=data.eight.F1E2 T1=data.sixteen.F1 T2=data.sixteen.E2 %}
+        {% include "bracket/disp_onevone.html" with winner=data.eight.H1G2 T1=data.sixteen.H1 T2=data.sixteen.G2 %}
+    </div>
+</div>
+<div class="eight">
+    <h3 id="eight_h3">Octavos de Final</h3>
+    <div class="groups_display">
+        {% include "bracket/disp_onevone.html" with winner=data.semi.AD T1=data.eight.A1B2 T2=data.eight.C1D2 %}
+        {% include "bracket/disp_onevone.html" with winner=data.semi.EH T1=data.eight.E1F2 T2=data.eight.G1H2 %}
+        {% include "bracket/disp_onevone.html" with winner=data.semi.BC T1=data.eight.B1A2 T2=data.eight.D1C2 %}
+        {% include "bracket/disp_onevone.html" with winner=data.semi.FG T1=data.eight.F1E2 T2=data.eight.H1G2 %}
+    </div>
+</div>
+<div class="semi">
+    <h3 id="semi_h3">Semi Final</h3>
+    <div class="groups_display">
+        {% include "bracket/disp_onevone.html" with winner=data.final.AH T1=data.semi.AD T2=data.semi.EH %}
+        {% include "bracket/disp_onevone.html" with winner=data.final.BG T1=data.semi.BC T2=data.semi.FG %}
+    </div>
+</div>
+<div class="Final">
+    <h3 id="Final_h3">Final</h3>
+    <div class="groups_display">
+        {% include "bracket/disp_onevone.html" with winner=data.winner.winner T1=data.final.AH T2=data.final.BG %}
+    </div>
+</div>

@@ -3,24 +3,51 @@
     flex-direction: column;
     max-width: 75vw;
 }
-.Group h2{
+
+.Group h2 {
     color: var(--white);
     text-shadow: 4px 0px 4px var(--main-dark)
 }
+
+.groups_display {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 60vw;
+}
+.groups_display .Group{
+    margin-block-end: 3vh;
+    margin-left: 2vh;
+    margin-right: 2vh;
+}
+
 h3 {
     text-align: center;
-    color: var(--dark-dark);
+    text-transform: uppercase;
+    color: var(--gray1);
+    text-shadow: 0px -0.5px 3px #c21818
 }
-h2 {
+
+.game h2 {
     margin-top: 0;
 }
+
+.flag_abbr h4 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
 .fase-activa {
     color: var(--white)
+}
+.match .flags {
+    opacity: .7;
 }
 .group_input {
     display: flex;
     justify-content: center;
 }
+
 .pos_input {
     padding-block-start: 3vh;
     padding-block-end: 3vh;
@@ -28,6 +55,7 @@ h2 {
     flex-direction: column;
     align-items: center;
 }
+
 .prev_next_buttons_container {
     margin: 3vh;
     display: flex;
@@ -38,13 +66,16 @@ h2 {
 .selected1 {
     background: rgba(190, 250, 181, 0.333);
 }
+
 .selected2 {
     background: rgba(250, 236, 181, 0.333);
 }
+
 select {
     margin: 0 1vh;
     width: max-content;
 }
+
 #start-button {
     margin-top: 2vh;
 }
@@ -68,21 +99,25 @@ form {
 }
 
 #partidosTable {
-	min-width: 40vw;
+    min-width: 40vw;
 }
+
 #leaderboardTable {
-	min-width: 28vw;
+    min-width: 28vw;
 }
+
 form .caption {
     text-transform: uppercase;
     text-align: center;
     vertical-align: middle;
-	font-size: var(--size-avg-plus);
-	background-color: var(--main-dark);
-	padding: 1.5vh;
+    font-size: var(--size-avg-plus);
+    background-color: var(--main-dark);
+    padding: 1.5vh;
     align-items: center;
     min-width: 30vw;
 }
+
 .done {
     color: #9cd081;
+    text-shadow: 1px 0px 1px black
 }

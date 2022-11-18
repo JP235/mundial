@@ -27,7 +27,7 @@
                                            type="number"
                                            name="score_team_1"
                                            required="true"
-                                           placeholder="-"
+                                           placeholder="0"
                                            autocomplete="off"
                                            min="0"/>
                                 </div>
@@ -41,7 +41,7 @@
                                            type="number"
                                            name="score_team_2"
                                            required="true"
-                                           placeholder="-"
+                                           placeholder="0"
                                            autocomplete="off"
                                            min="0"/>
                                 </div>
@@ -54,6 +54,9 @@
                 </div>
                 <div class="submint_buttons_container">
                     <input id="next_home" type="hidden" value="" />
+                    <input type="submit"
+                           value="Volver"
+                           onclick="window.location.href='{% url 'home:game_by_id' id|add:"-1" %}';return false;"/>
                     <input type="submit"
                            value="Cancelar"
                            onclick="window.location.href='{% url 'home:home' %}';return false;"/>

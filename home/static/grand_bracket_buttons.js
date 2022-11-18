@@ -234,6 +234,7 @@ $(prev_winner).click(function () {
 
 $(next_winner).click(function () {
   $("#submit-button").removeClass("hide")
+  $(next_winner).addClass("hide")
   $(Final_h3).addClass("done")
 })
 

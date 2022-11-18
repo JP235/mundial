@@ -6,12 +6,12 @@ from rest_framework import permissions
 from django.shortcuts import redirect
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
-from django.views import View
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import User
 
 from .forms import NewUserForm
 from .serializers import CountrySerializer, GameSerializer, UserSerializer, PredictionSerializer, BracketPredictionSerializer
-from bracket.models import Country, Game, Prediction, BracketPrediction
+from bracket.models import Country, Game, Prediction, BracketPrediction, GroupError
 
 
 class UsersAPIView(APIView):
@@ -63,16 +63,20 @@ class BracketPredictionAPIView(APIView):
     def post(self, request):
         """Make Bracket prediction"""
         
-        new_prediction = BracketPrediction.format_request(request)
-        prediction_serial = self.serializer(data=new_prediction)
-        print(prediction_serial)
-        if prediction_serial.is_valid():
-            prediction_serial.save()
-            if next_url := request.POST.get("next"):
-                return redirect(next_url)
-            return Response(prediction_serial.data, status=status.HTTP_200_OK)
+        try:
+            new_prediction = BracketPrediction.format_request(request)
+            prediction_serial = self.serializer(data=new_prediction)
+            print(prediction_serial)
+            if prediction_serial.is_valid():
+                    prediction_serial.save()
+        except GroupError as e:
+            messages.error(request,e)
+        except ValueError as e:
+            messages.error(request,e)
+        except ObjectDoesNotExist as e:
+            messages.error(request,"No se pueden dejar opciones sin equipo elegido")
 
-        return Response(prediction_serial.errors, status=status.HTTP_400_BAD_REQUEST)
+        return redirect("/clasificatoria")
 
 class PredictionAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated]

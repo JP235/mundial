@@ -1,0 +1,25 @@
+<div id="{{ winner }}" class="Group Group_{{ group }}">
+    <div class="match">
+        <div class="flags flags_counties_{{ group }}">
+            <div class="flag_abbr {{ T1.abbr }}">
+                <div class="flag"
+                style="background:url({{ T1.flag_fifa_url }}) center center / 100% no-repeat"></div>
+                <div class="abbr">{{ T1.abbr }}</div>
+            </div>
+            <h2>vs.</h2>
+            <div class="flag_abbr {{ T2.abbr }}">
+                <div class="flag"
+                     style="background:url({{ T2.flag_fifa_url }}) center center / 100% no-repeat"></div>
+                <div class="abbr">{{ T2.abbr }}</div>
+            </div>
+        </div>
+        <div class="winner">
+            <div class="flag_abbr {{ winner.abbr }}">
+                <h4>Ganador</h4>
+                <div class="flag"
+                     style="background:url({{ winner.flag_fifa_url }}) center center / 100% no-repeat"></div>
+                <div class="abbr">{{ winner.abbr }}</div>
+            </div>
+        </div>
+    </div>
+</div>
