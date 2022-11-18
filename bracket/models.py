@@ -388,3 +388,6 @@ class BracketPrediction(models.Model):
 
     def _validate_final(self):
         self.winner = validate_winners_input(self.winner)[0]
+
+    def __str__(self) -> str:
+        return f'{self.owner}, {self.get_bracket()["winner"]["winner"]}'
