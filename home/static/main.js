@@ -14,6 +14,8 @@ $(menudropdown).hover(
   }
 )
 
+
+
 async function get_games() {
   const rawResponse = await fetch("/API/games", {
     method: "GET",

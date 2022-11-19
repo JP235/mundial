@@ -1,6 +1,6 @@
 :root {
     --light-blue: #13232f9a;
-    --dark-blue: #13232fbe;
+    --dark-blue: #13232fd0;
     --dark-blue-40: #3098e897;
     --dark-blue-80: #13232f80;
     --dark-dark: #0f1c26d7;
@@ -25,10 +25,10 @@
     --br: 4px;
     --font: "Titillium Web", sans-serif;
     --size-big: 5.5vh;
-    --size-avg: 2vh;
-    --font-avg-width: 3vw;
-    --size-avg-plus: 2.1vh;
-    --size-avg-min: 1.8vh;
+    --size-avg: 2.3vh;
+    --font-avg-width: 3.1vw;
+    --size-avg-plus: 2.5vh;
+    --size-avg-min: 2vh;
 }
 
 html {
@@ -116,7 +116,7 @@ header {
 
 .top-row {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .sec-row {
@@ -262,6 +262,7 @@ table {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-block-end: 3vh;
 }
 
 .fa.up-arrow {
@@ -290,15 +291,15 @@ table {
 .scrollcontent {
     z-index: 0;
 }
-
+/* 
 ::-webkit-scrollbar {
     width: 0;
-    background: transparent;
-}
+    background: var(--dark-blue);
+
+} */
 
 table caption {
     position: sticky;
-    top: 0;
     /* padding: 0vh 0.5vh; */
     text-transform: uppercase;
     text-align: left;

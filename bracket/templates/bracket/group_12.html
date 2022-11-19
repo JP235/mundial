@@ -1,36 +1,40 @@
 <div id="{{ group }}" class="Group Group_{{ group }} hide">
-    <h2>Groupo {{ group }}
-    </h2>
+    <h2>Grupo {{ group }}</h2>
     <div class="flags flags_counties_{{ group }}">
         {% for option in data_list %}
-        <div class="flag_abbr {{option.abbr}}">
-            <div class="flag" style="background:url({{option.flag_fifa_url}}) center center / 100% no-repeat"></div>
-            <div class="abbr">{{option.abbr}}</div>
-        </div>
+            <div class="flag_abbr {{ option.abbr }}">
+                <div class="flag"
+                     style="background:url({{ option.flag_fifa_url }}) center center / 100% no-repeat"></div>
+                <div class="abbr">{{ option.abbr }}</div>
+            </div>
         {% endfor %}
     </div>
     <div class="group_input">
         <div class="pos_input">
             <label for="{{ group }}1">Primero:</label>
             <select name="{{ group }}1" title="{{ group }}1" id="group_{{ group }}1">
-                <option value=""></option>
+                <option value="">
+                </option>
                 {% for option in data_list %}
-                <option value={{option.abbr}}>{{option.abbr}}</option>
+                    <option value={{ option.abbr }}>{{ option.abbr }}
+                    </option>
                 {% endfor %}
             </select>
         </div>
         <div class="pos_input">
             <label for="{{ group }}2">Segundo:</label>
             <select name="{{ group }}2" title="{{ group }}2" id="group_{{ group }}2">
-                <option value=""></option>
+                <option value="">
+                </option>
                 {% for option in data_list %}
-                <option value={{option.abbr}}>{{option.abbr}}</option>
+                    <option value={{ option.abbr }}>{{ option.abbr }}
+                    </option>
                 {% endfor %}
             </select>
         </div>
     </div>
     <div class="prev_next_buttons_container">
-        <button type="button" id="prev_{{group}}">Anterior</button>
-        <button type="button" class="not_1 not_2" id="next_{{group}}">Siguiente</button>
+        <button type="button" id="prev_{{ group }}">Anterior</button>
+        <button type="button" class="not_1 not_2" id="next_{{ group }}">Siguiente</button>
     </div>
 </div>
