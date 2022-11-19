@@ -305,6 +305,5 @@ $(next_winner).click(function () {
   if (is_empty($("#winner option:selected")[0].innerText)) return
 
   $("#submit-button").removeClass("hide")
-  $(next_winner).addClass("hide")
   $(Final_h3).addClass("done")
 })
