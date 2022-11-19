@@ -244,7 +244,7 @@ $(next_EH).click(function () {
 
 $(prev_BC).click(function () {
   $(match_BC).addClass("hide")
-  $(EH).removeClass("hide")
+  $(match_EH).removeClass("hide")
 })
 $(next_BC).click(function () {
   if (is_empty($("#BC option:selected")[0].innerText)) return
