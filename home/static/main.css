@@ -367,6 +367,11 @@ u {
     color: var(--gray2);
 }
 
+#partidos_scroll a,
+#predictions_scroll a{
+    text-decoration: underline;
+}
+
 a:visited {
     color: var(--gray2);
 }
