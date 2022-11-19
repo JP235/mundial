@@ -75,7 +75,9 @@ class BracketPredictionAPIView(APIView):
             messages.error(request,e)
         except ObjectDoesNotExist as e:
             messages.error(request,"No se pueden dejar opciones sin equipo elegido")
-
+    
+        return redirect("/clasificatoria")
+    def get(self,request,*args,**kwargs):
         return redirect("/clasificatoria")
 
 class PredictionAPIView(APIView):

@@ -6,7 +6,7 @@ from bracket.models import UsersPoints, Prediction
 class NewUserForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ("username", "password1", "password2")
+        fields = ("username","first_name","last_name", "password1", "password2")
 
     def save(self, commit=True):
         user = super(NewUserForm, self).save(commit=False)

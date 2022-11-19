@@ -2,26 +2,26 @@
 {% block content %}
     <div class="MensajeInicial">
         <h3>¡Bienvenidos al juego del mundial de fútbol 2022!</h3>
+     
         <p>
-            Su participación en este juego esta supeditada a que Ud. haga un “buen” uso de
-            sus conocimientos en materia del futbol mundial y sus preferencias en esta
-            materia.
+            El juego consiste ganar puntos acertando la clasificatoria general del mundial, y los resultados de partidos puntuales.
         </p>
         <p>
-            El juego consiste en tratar de acertar los resultados de los partidos, (pestaña
-            próximos partidos), o editar sus resultados antes de que se juegan (ver reglas de
-            juego) en mis predicciones.
+            En la clasificatoria de deben elegir los ganadores de cada fase del mundial: Primero y segundo de la fase de grupos, y ganadores de cada partido en las fases siguientes hasta la final.
+            En los partidos se debe elegir el marcador final.
         </p>
         <p>
-            De igual forma, es necesario dar desde el comienzo,
-            la apuesta mas compleja: la clasificación, en la fase de grupos de los 2 primeros
-            equipos de cada grupo, como los resultados subsiguientes de los partidos que
-            se derivan hasta llegar a la final del campeonato, antes de que se inicie el
-            mundial. Esto ultimo debe hacerse en la pestaña denominada clasificatoria.
+            En la pestaña <a class="rulesLink" href="{% url 'home:my_predictions' %}"><i>Mis predicciones</i></a> se pueden ver todos los marcadores ya ingresados, y se puede acceder a los partidos para cambiar la predicción.
         </p>
         <p>
-            Antes de comenzar a llenar resultados y definir la clasificatoria lea las <a href="{% url 'home:rules' %}"> <strong class="rulesLink">reglas del juego</strong> </a>
+            En la pestaña <a class="rulesLink" href="{% url 'home:bracket' %}"><i>Clasificatoria</i></a> se ingresa la clasificatoria general y, una vez enviada, se puede revisar el resultado ingresado.
         </p>
+        <p>
+            Recomendamos leer las <a class="rulesLink" href="{% url 'home:rules' %}">reglas de juego</a> antes de ingresar resultados para conocer como se otorgarán los puntos.
+        </p>
+        <h4> ¡Buena suerte!
+        </h4>
+        <br/>
         <a href="{% url "home:home" %}">Página Principal</a>
     </div>
 {% endblock %}

@@ -56,8 +56,8 @@ class PredListView(ListView):
 class BracketView(View):
     context_object_name = "ctx"
 
-    def get(self, request):
-        if len(pred := BracketPrediction.objects.filter(owner=request.user)) > 0:
+    def get(self, request, username=None):
+        if len(pred := BracketPrediction.objects.filter(owner=username if username else request.user)) > 0:
             full_bracket = pred[0].get_bracket()
 
             ctx = {"completed": True, "bracket": full_bracket}
