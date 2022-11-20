@@ -1,4 +1,6 @@
 from datetime import datetime
+import pytz
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -33,8 +35,11 @@ class GamesAPIView(APIView):
 
     def get(self, request):
         """list games"""
-        future_games = Game.objects.filter(game_date__gt = datetime.today().date())
-        today_games = Game.objects.filter(game_date= datetime.today().date())
+
+        tz = pytz.timezone('America/Bogota')
+        future_games = Game.objects.filter(game_date__gt = datetime.now(tz).date())
+        today_games = Game.objects.filter(game_date= datetime.now(tz).date())
+
 
         serialized_future_games = self.serializer(future_games, many=True).data
         serialized_today_games = self.serializer(today_games, many=True).data
