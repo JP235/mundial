@@ -258,6 +258,14 @@ table {
     padding-block-end: 1vh;
 }
 
+.second_row_main,
+.first_row_main{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 .tableContainer {
     display: flex;
     flex-direction: column;
@@ -363,13 +371,7 @@ table td.gap span {
 
 a,
 u {
-    text-decoration: none;
-    color: var(--gray2);
-}
-
-#partidos_scroll a,
-#predictions_scroll a{
-    text-decoration: underline;
+     color: var(--gray2);
 }
 
 a:visited {
@@ -396,4 +398,7 @@ a:hover {
 .flag {
     width: 50px;
     height: 45px;
+}
+tr:first-child{
+    min-width: 10em
 }

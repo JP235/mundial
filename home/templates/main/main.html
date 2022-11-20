@@ -4,46 +4,53 @@
     <script src="{% static 'main.js' %}" defer></script>
 {% endblock %}
 {% block content %}
-    <div class="tableContainer">
-        <table id="partidosTable">
-            <caption>
-                Proximos partidos
-            </caption>
-            <thead class="fixedHeader">
-                <th></th>
-                <th>Fecha</th>
-                <th>Hora</th>
-            </thead>
-            <tbody id="partidos_scroll" class="scrollContent">
-            </tbody>
-        </table>
-        {% comment %} <i id="up_partidos"
-           class="up-arrow fa fa-sort-asc fa-2x hide"
-           aria-hidden="true"></i>
-        <i id="down_partidos"
-           class="down-arrow fa fa-sort-desc fa-2x hide"
-           aria-hidden="true"></i> {% endcomment %}
+    <div class="first_row_main">
+        <div class="tableContainer">
+            <table id="partidosTable">
+                <caption>
+                    Proximos partidos
+                </caption>
+                <thead class="fixedHeader">
+                    <th>Partido</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                </thead>
+                <tbody  class="scrollContent partidos_scroll">
+                </tbody>
+            </table>
+        </div>
+        <div class="tableContainer">
+            <table id="partidosHoyTable">
+                <caption>
+                    Partidos de hoy
+                </caption>
+                <thead class="fixedHeader">
+                    <tr>
+                        <th>Partido</th>
+                        <th>Hora</th>
+                    </tr>
+                </thead>
+                <tbody class="scrollContent partidos_scroll">
+                </tbody>
+            </table>
+        </div>
     </div>
-    <div class="tableContainer">
-        <table id="leaderboardTable">
-            <caption>
-                Ranking
-            </caption>
-            <thead class="fixedHeader">
-                <tr>
-                    <th>#</th>
-                    <th>Jugador</th>
-                    <th>Puntos</th>
-                </tr>
-            </thead>
-            <tbody id="leaderboard_scroll"class="scrollContent">
-            </tbody>
-        </table>
-        {% comment %} <i id="up_leaderboard"
-           class="up-arrow fa fa-sort-asc fa-2x hide"
-           aria-hidden="true"></i>
-        <i id="down_leaderboard"
-           class="down-arrow fa fa-sort-desc fa-2x hide"
-           aria-hidden="true"></i> {% endcomment %}
+    <div class="second_row_main">
+        <div class="tableContainer">
+            <table id="leaderboardTable">
+                <caption>
+                    Ranking
+                </caption>
+                <thead class="fixedHeader">
+                    <tr>
+                        <th>#</th>
+                        <th>Jugador</th>
+                        <th>Puntos</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboard_scroll"class="scrollContent">
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endblock %}
