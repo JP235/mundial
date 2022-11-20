@@ -155,6 +155,9 @@ def login_request(request):
 
 
 def register_request(request):
+    messages.error(request, "No se aceptan nuevos jugadores. \n Contacta con un administrador si queres ingresar.")
+    return redirect("id:id")
+
     if request.user.is_authenticated:
         return redirect("home:home")
     if request.method == "POST":
