@@ -34,9 +34,11 @@ class GameView(ListView):
                 "team_1": game.team_1,
                 "flag_1": game.team_1.flag_fifa_url,
                 "abbr_1": game.team_1.abbr,
+                "score_team_1":game.score_team_1,
                 "team_2": game.team_2,
                 "flag_2": game.team_2.flag_fifa_url,
                 "abbr_2": game.team_2.abbr,
+                "score_team_2":game.score_team_2
             }
             return render(request, self.template_name, ctx)
         return redirect("home:my_predictions")

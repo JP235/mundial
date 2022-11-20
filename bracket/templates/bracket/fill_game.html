@@ -1,0 +1,60 @@
+<form action="{% url 'API:prediction_by_id' game_id=id %}"
+      id="partidoForm"
+      method="post">
+    {% csrf_token %}
+    {% comment %} <div class="caption">
+        <span>{{ fase }}</span>
+    </div> {% endcomment %}
+    <div id="match_container">
+        <div class="match">
+            <div class="flags flags_counties_{{ group }}">
+                <div class="flag_abbr {{ abbr_1 }}">
+                    <div class="name_team team_1">{{ team_1 }}</div>
+                    <div class="flag_score">
+                        <div class="flag"
+                             style="background:url({{ flag_1 }}) center center / 100% no-repeat"></div>
+                        {% comment %} <div class="abbr">{{abbr_1}}</div> {% endcomment %}
+                        <div class="team_plus_score">
+                            <input title="Goles"
+                                   type="number"
+                                   name="score_team_1"
+                                   required="true"
+                                   placeholder="-"
+                                   autocomplete="off"
+                                   min="0"
+                                   max="15"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="flag_abbr {{ abbr_2 }}">
+                    <div class="name_team team_2">{{ team_2 }}</div>
+                    <div class="flag_score">
+                        <div class="team_plus_score">
+                            <input title="Goles"
+                                   type="number"
+                                   name="score_team_2"
+                                   required="true"
+                                   placeholder="-"
+                                   autocomplete="off"
+                                   min="0"
+                                   max="15"/>
+                        </div>
+                        <div class="flag"
+                             style="background:url({{ flag_2 }}) center center / 100% no-repeat"></div>
+                        {% comment %} <div class="abbr">{{abbr_2}}</div> {% endcomment %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="submint_buttons_container">
+            <input id="next_home" type="hidden" value="" />
+            <input type="submit"
+                   value="Anterior"
+                   onclick="window.location.href='{% url 'home:game_by_id' id|add:"-1" %}';return false;"/>
+            {% comment %} <input type="submit"
+                   value="Cancelar"
+                   onclick="window.location.href='{% url 'home:home' %}';return false;"/> {% endcomment %}
+            <input type="submit" value=" Enviar " />
+        </div>
+    </div>
+</form>

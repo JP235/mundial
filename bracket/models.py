@@ -85,7 +85,7 @@ class Game(models.Model):
     score_team_2 = models.IntegerField(blank=True, null=True)
 
     def __str__(self) -> str:
-        return f'{self.team_1} - {self.team_2} {"fase de " if self.wc_round<=2 else "" }{self.ROUNDS[self.wc_round][1]}'
+        return f'{self.team_1} - {self.team_2} {"fase de " if self.wc_round<2 else "" }{self.ROUNDS[self.wc_round][1]}'
 
 
 class UsersPoints(models.Model):
@@ -161,8 +161,7 @@ def update_points(instance: Prediction, **kwargs):
     """
     1: Acertar quien gana el partido sin el marcador 2 puntos.
     2: Acertar el marcador 4 puntos por partido.
-    3: Acertar el orden de clasificación en cada grupo 3 puntos por cada grupo al finalizar la ronda de grupos.
-    Duplicar esos puntos para cada la siguiente fase (16 avos) y hacer lo mismo para las semifinales y finales."""
+    3: Acertar el orden de clasificación en cada grupo 3 puntos por cada grupo al finalizar la ronda de grupos."""
     # print("triggered update_points")
     if not instance.correct in (0, 1, 2):
         return
