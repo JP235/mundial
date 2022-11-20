@@ -6,7 +6,7 @@
 {% endblock %}
 {% block content %}
     <div class="game">
-        {% if score_team_1 %}
+        {% if score_team_1 != None %}
             {% include "bracket/disp_game.html" %}
         {% else %}
             {% include "bracket/fill_game.html" %}
