@@ -3,6 +3,7 @@
     padding: 3vh;
     margin-top: 0;
     background: var(--dark-blue);
+    border-radius: var(--border-radius);
 }
 
 .rulesContainer ul {

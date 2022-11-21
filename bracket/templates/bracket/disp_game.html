@@ -12,11 +12,11 @@
                                      style="background:url({{ flag_1 }}) center center / 100% no-repeat"></div>
                                 {% comment %} <div class="abbr">{{abbr_1}}</div> {% endcomment %}
                                 <div class="team_plus_score">
-                                    {% if score_team_2 %}
-                                        <h4>{{ score_team_1 }}</h4>
-                                    {% else %}
+                                    {% comment %} {% if score_team_2 %} {% endcomment %}
+                                    <h4>{{ score_team_1 }}</h4>
+                                    {% comment %} {% else %}
                                         <h4>TBD</h4>
-                                    {% endif %}
+                                    {% endif %} {% endcomment %}
                                 </div>
                             </div>
                         </div>
@@ -25,11 +25,11 @@
                             <div class="name_team team_2">{{ team_2 }}</div>
                             <div class="flag_score">
                                 <div class="team_plus_score">
-                                    {% if score_team_2 %}
-                                        <h4>{{ score_team_2 }}</h4>
-                                    {% else %}
+                                    {% comment %} {% if score_team_2 %} {% endcomment %}
+                                    <h4>{{ score_team_2 }}</h4>
+                                    {% comment %} {% else %}
                                         <h4>TBD</h4>
-                                    {% endif %}
+                                    {% endif %} {% endcomment %}
                                 </div>
                                 <div class="flag"
                                      style="background:url({{ flag_2 }}) center center / 100% no-repeat"></div>

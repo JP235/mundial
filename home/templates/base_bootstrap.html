@@ -6,15 +6,15 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <title>Copa del Mundo</title>
 		{% load static %}        
-        <link rel="shortcut icon" type="image/ico" href="{% static 'favicon.ico' %}"/>
-		<link rel="stylesheet" type="text/css" href="{% static 'main.css' %}" />
-		<script type="text/js" src="{% static 'main.js' %}"></script>
+        <link rel="shortcut icon" type="image/ico" href="{% static "favicon.ico" %}"/>
+		<link rel="stylesheet" type="text/css" href="{% static "main.css" %}?version=1" />
+		<script type="text/js" src="{% static "main.js" %}?version=1"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		{% block head %} {% endblock %}
 	</head>
 	<body>
-        {% block header %} {% include "_items/header.html" %} {% endblock %}
         <div class="container">
+            {% block header %} {% include "_items/header.html" %} {% endblock %}
 			 {% block welcome %} {% endblock %}
              {% block content %} {% endblock %}
              {% block messages %} {% if messages %}

@@ -50,20 +50,3 @@ game_predictions_data.then((d) => {
     down_arrow_pred_partidos.removeClass("hide");
   }
 });
-const up_arrow_pred_partidos = $(up_pred_partidos);
-const down_arrow_pred_partidos = $(up_pred_partidos);
-
-$(gamePredictionsTable).scroll(function () {
-  const scroll = $(gamePredictionsTable).scrollTop();
-
-  if (scroll > 0.2 * $(gamePredictionsTable).height()) {
-    up_arrow_partidos.removeClass("hide");
-  } else {
-    up_arrow_partidos.addClass("hide");
-  }
-  if (scroll + $(gamePredictionsTable).height() > 0.2 * $(gamePredictionsTable).height() + $(gamePredictions_scroll).height()) {
-    down_arrow_partidos.addClass("hide");
-  } else {
-    down_arrow_partidos.removeClass("hide");
-  }
-});

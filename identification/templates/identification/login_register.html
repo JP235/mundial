@@ -1,9 +1,9 @@
 {% extends "base_bootstrap.html" %}
 {% block head %}
     {% load static %}
-    <link rel="stylesheet" href="{% static 'login_register.css' %}" />
+    <link rel="stylesheet" href="{% static 'login_register.css' %}?version=1" />
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="{% static 'login_register.js' %}" defer></script>
+    <script src="{% static 'login_register.js' %}?version=1" defer></script>
 {% endblock %}
 {% block content %}
     <div class="form">

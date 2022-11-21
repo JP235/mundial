@@ -3,10 +3,10 @@
     {% load static %}
     <link rel="stylesheet"
           type="text/css"
-          href="{% static 'grand_bracket_page.css' %}"/>
+          href="{% static 'grand_bracket_page.css' %}?version=1"/>
     {% if not completed %}
-        <script src="{% static 'grand_bracket_buttons.js' %}" defer></script>
-        <script src="{% static 'grand_bracket_selects.js' %}" defer></script>
+        <script src="{% static 'grand_bracket_buttons.js' %}?version=1" defer></script>
+        <script src="{% static 'grand_bracket_selects.js' %}?version=1" defer></script>
     {% endif %}
 {% endblock %}
 {% block content %}

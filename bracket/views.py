@@ -1,3 +1,6 @@
+from datetime import datetime
+import pytz
+
 from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
@@ -16,18 +19,17 @@ number_to_fase = {
 }
 
 
-class GameView(ListView):
+class GameView(LoginRequiredMixin, ListView):
     """"""
-
+    
+    login_url = "/id"
     model = Game
     template_name = "bracket/game_page.html"
 
     def get(self, request, game_id):
-        print(game_id)
-        if game_id == 0:
-            return redirect("home:home")
         if len(game := Game.objects.filter(id=game_id)) > 0:
             game = game[0]
+            
             ctx = {
                 "id": game.id,
                 "fase": number_to_fase[game.wc_round],
@@ -40,13 +42,18 @@ class GameView(ListView):
                 "abbr_2": game.team_2.abbr,
                 "score_team_2":game.score_team_2
             }
+            if game.game_date == datetime.now(pytz.timezone('America/Bogota')).date() and (game.score_team_1 == None or game.score_team_2 == None):
+                
+                ctx["score_team_1"] = "TBD"
+                ctx["score_team_2"] = "TBD"
+
             return render(request, self.template_name, ctx)
         return redirect("home:my_predictions")
 
 
-class PredListView(ListView):
+class PredListView(LoginRequiredMixin,ListView):
     """"""
-
+    login_url = "/id"
     model = Prediction
     template_name: str = "bracket/prediction_list.html"
 
@@ -55,9 +62,9 @@ class PredListView(ListView):
         return render(request, self.template_name, ctx)
 
 
-class BracketView(View):
+class BracketView(LoginRequiredMixin, View):
     context_object_name = "ctx"
-
+    login_url = "/id"
     def get(self, request, username=None):
         if len(pred := BracketPrediction.objects.filter(owner=username if username else request.user)) > 0:
             full_bracket = pred[0].get_bracket()

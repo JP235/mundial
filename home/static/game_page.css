@@ -3,17 +3,23 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
 }
 form {
     background-color: var(--dark-blue);
     margin: 5vh;
     max-width: 65vw;
+    height: -moz-max-content;
+    height: fit-content;
     margin-top: 0;
     border-spacing: 0 1rem;
     padding: 2vh;
     padding-block-end: 1vh;
+    border-radius: var(--border-radius);
+    -webkit-box-shadow: -4px -3px 55px 1px rgba(0,0,0,0.35);
+    -moz-box-shadow: -4px -3px 55px 1px rgba(0,0,0,0.35);
+    box-shadow: -4px -3px 55px 1px rgba(0,0,0,0.35);
 }
-
 #partidosTable {
 	min-width: 40vw;
 }
@@ -100,6 +106,10 @@ input[type=number]::-webkit-outer-spin-button {
 .result-display{
     background: var(--dark-blue);
     padding:  0vh 2vh 3vh;
+    border-radius: var(--border-radius);
+    -webkit-box-shadow: -4px -3px 55px 1px rgba(0,0,0,0.35);
+    -moz-box-shadow: -4px -3px 55px 1px rgba(0,0,0,0.35);
+    box-shadow: -4px -3px 55px 1px rgba(0,0,0,0.35);
 }
 .result-container {
     display: flex;
