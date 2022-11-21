@@ -23,7 +23,6 @@ predictions_data.then((d) => {
     .append("tr")
     .attr("class", "row");
   if (d) {
-
     t.append("td")
       .html(
         ({
@@ -34,15 +33,21 @@ predictions_data.then((d) => {
         }) =>
         `<a href=/partido/${game}>${team_1} - ${team_2}</a>    <i>${round}</i>`
       )
-      .attr("class", "Prediccion");
+      .attr("class", "partido");
     t.append("td")
-      .attr("class", "P")
+      .attr("class", "resultado")
+      .append("span")
+      .text(({
+        score
+      }) => score);
+    t.append("td")
+      .attr("class", "prediccion")
       .append("span")
       .text(({
         predicted_score
       }) => predicted_score);
     t.append("td")
-      .attr("class", "P")
+      .attr("class", "points")
       .append("span")
       .text(({
         correct
@@ -51,20 +56,3 @@ predictions_data.then((d) => {
 }).catch(e => {
   console.log(e)
 })
-
-// const up_arrow_predictions = $(up_predictions);
-// const down_arrow_predictions = $(down_predictions);
-
-// $(predictionsTable).scroll(function () {
-//   const scroll_pt = $(predictionsTable).scrollTop();
-//   if (scroll_pt > 0.2 * $(predictionsTable).height()) {
-//     up_arrow_predictions.removeClass("hide");
-//   } else {
-//     up_arrow_predictions.addClass("hide");
-//   }
-//   if (scroll_pt + $(predictionsTable).height() > 0.2*$(predictionsTable).height() + $(predictions_scroll).height()) {
-//     down_arrow_predictions.addClass("hide");
-//   } else {
-//     down_arrow_predictions.removeClass("hide");
-//   }
-// });

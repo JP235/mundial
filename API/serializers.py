@@ -67,8 +67,10 @@ class PredictionSerializer(serializers.ModelSerializer):
         data_out["round"] = number_to_fase[
             int(Game.objects.get(pk=data_out.get("game")).wc_round.__str__())
         ]
-        data_out["team_1"] = Game.objects.get(pk=data_out.get("game")).team_1.name
-        data_out["team_2"] = Game.objects.get(pk=data_out.get("game")).team_2.name
+        g = Game.objects.get(pk=data_out.get("game"))
+        data_out["team_1"] = g.team_1.name
+        data_out["team_2"] = g.team_2.name
+        data_out["score"] = "-".join([str(g.score_team_1),str(g.score_team_2)]) if g.score_team_2 != None else "-"
         return data_out
 
 class BracketPredictionSerializer(serializers.ModelSerializer):

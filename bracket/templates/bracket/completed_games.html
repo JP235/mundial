@@ -1,0 +1,56 @@
+{% extends "base_bootstrap.html" %}
+{% block head %}
+    {% load static %}
+    <link rel="stylesheet"
+          type="text/css"
+          href="{% static "completed_games.css" %}?version=1"/>
+{% endblock %}
+{% block content %}
+    {% if data %}
+        <div class="tableContainer">
+            <table id="completedGamesTable">
+                <caption>
+                    Resultados
+                </caption>
+                <thead class="fixedHeader">
+                    <tr>
+                        <th>PARTIDO</th>
+                        <th class="rf-head">RF</th>
+                        <th class="pred-head">|Pred|</th>
+                        <th>p(Ganador)</th>
+                        <th>p(Resultado)</th>
+                        <th>|Puntos|</th>
+                    </tr>
+                </thead>
+                <tbody id="completedGames_scroll" class="scrollContent">
+                    {% for date, games in data.items %}
+                        <tr class="row">
+                            <td class="game-date">{{ date }}</td>
+                            <td colspan="6" class="game-date"></td>
+                        </tr>
+                        {% for game in games %}
+                            <tr class="row">
+                                <td class="Partido">
+                                    <a href="{% url 'home:game_by_id' game.id %}">{{ game.team_1 }} - {{ game.team_2 }}</a>
+                                </td>
+                                <td class="RF">{{ game.score_team_1 }} - {{ game.score_team_2 }}</td>
+                                <td class="avg_pred">{{ game.avg_pred }}</td>
+                                <td class="n_winner">{{ game.p_winner }}</td>
+                                <td class="n_score">{{ game.p_score }}</td>
+                                <td class="avg_points">{{ game.avg_points }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% comment %} <div class="abbrs">
+            <p>RF = Resultado Final</p>
+            <p>|Pred| = Prediccion promedio</p>
+            <p>p(Ganador) = </p>
+            <p>p(Resultado)</p>
+            <p>p(Resultado)</p>
+            <p>|Puntos|</p>
+        </div> {% endcomment %}
+    {% endif %}
+{% endblock %}

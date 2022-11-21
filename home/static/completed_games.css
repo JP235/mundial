@@ -1,0 +1,36 @@
+table#completedGamesTable {
+    max-height: 40vh;
+    max-width: 90vw;
+}
+
+td.game-date{
+    background:  #8B9096 !important;
+    text-align: left;
+}
+table {
+    border-spacing: 0
+}
+table th {
+    text-transform: none;
+}
+table thead tr>:first-child {
+    position: sticky;
+    left: 0;
+
+}
+table tbody tr>:first-child {
+    position: sticky;
+    left: 0;
+    background: #3f6994f0;
+    z-index: 1;
+}
+p {
+    margin: 0;
+    text-align: left;
+}
+.rf-head{
+    min-width: 4em;
+}
+.pred-head {
+    min-width: 4em;
+}

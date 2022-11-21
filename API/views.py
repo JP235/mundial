@@ -24,7 +24,7 @@ class UsersAPIView(APIView):
 
     def get(self, request):
         """list users"""
-        users = User.objects.filter(~Q(username="admin")).order_by('-points__points')
+        users = User.objects.filter(~Q(username__in = ["admin","JP"])).order_by('-points__points')
         serialized_users = self.serializer(users, many=True).data
         return Response(data=serialized_users, status=status.HTTP_200_OK)
 

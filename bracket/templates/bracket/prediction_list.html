@@ -1,6 +1,7 @@
 {% extends "base_bootstrap.html" %}
 {% block head %}
     {% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static "prediction_page.css" %}?version=1" />
     <script src="{% static 'predictions_page.js' %}?version=1" defer></script>
 {% endblock %}
 {% block content %}
@@ -12,7 +13,8 @@
             <thead class="fixedHeader">
                 <tr>
                     <th>Partido</th>
-                    <th>Prediccion</th>
+                    <th>Final</th>
+                    <th>Pred</th>
                     <th>Puntos</th>
                 </tr>
             </thead>

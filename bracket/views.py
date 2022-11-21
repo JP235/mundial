@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import List
 import pytz
 
 from django.views.generic import ListView
@@ -7,6 +8,7 @@ from django.urls import reverse
 from django.utils.http import urlencode
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
+from django.db.models import Q
 
 from .models import Game, Prediction, Country, BracketPrediction
 
@@ -50,6 +52,40 @@ class GameView(LoginRequiredMixin, ListView):
             return render(request, self.template_name, ctx)
         return redirect("home:my_predictions")
 
+
+class FinishedGamesListView(LoginRequiredMixin,View):
+    """"""
+    login_url = "/id"
+    template_name: str = "bracket/completed_games.html"
+
+    def get(self, request):
+        games : List[Game] = Game.objects.filter(~Q(score_team_1=None) & ~Q(score_team_2=None)).order_by("game_date","game_time")
+        ctx = {"data":{}}
+        for g in games:
+            preds = g.game_predictions.all()
+            marcador = preds.filter(correct=2)
+            ganador = preds.filter(correct__gt=0)
+            t1,t2 = list(zip(*[p.predicted_score.split("-") for p in preds]))
+            avg_score_team = lambda t : str(round(sum(map(int,t))/len(t),2))
+            avg_score = " - ".join([avg_score_team(t1),avg_score_team(t2)])
+            game_data = {
+                "id":g.id,
+                "team_1":g.team_1,
+                "team_2":g.team_2,
+                "score_team_1":g.score_team_1,
+                "score_team_2":g.score_team_2,
+                "p_winner":round(len(ganador)/len(preds),2),
+                "p_score":round(len(marcador)/len(preds),2),
+                "avg_points": round((2*len(marcador)+2*len(ganador))/len(preds),2),
+                "avg_pred": avg_score
+            }
+            # print(game_data)
+            if len(ctx["data"]) == 0 or g.game_date not in ctx["data"].keys():
+               ctx["data"][g.game_date] = [game_data]
+            else:
+                ctx["data"][g.game_date].append(game_data)
+            
+        return render(request, self.template_name, ctx)
 
 class PredListView(LoginRequiredMixin,ListView):
     """"""

@@ -85,7 +85,7 @@ class Game(models.Model):
     score_team_2 = models.IntegerField(blank=True, null=True)
 
     def __str__(self) -> str:
-        return f'{self.team_1} - {self.team_2} {"fase de " if self.wc_round<2 else "" }{self.ROUNDS[self.wc_round][1]}'
+        return f'{self.team_1} - {self.team_2}'
 
 
 class UsersPoints(models.Model):
