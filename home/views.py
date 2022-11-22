@@ -10,4 +10,5 @@ class LandingView(LoginRequiredMixin, View):
 
     def get(self,request):
         print("landing")
+        print(request.user)
         return render(request, 'main/main.html')

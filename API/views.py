@@ -101,7 +101,6 @@ class PredictionAPIView(APIView):
     def get(self, request, user_name=None):
         """Get predictions from one user"""
         user_name = user_name if user_name else request.user
-        print(user_name)
         pred = User.objects.get(username = user_name).predictions.order_by('game__game_date', 'game__game_time')
         pred_serial = self.serializer(pred, many=True).data
         return Response(data=pred_serial, status=status.HTTP_200_OK)
