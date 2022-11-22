@@ -363,11 +363,11 @@ table tr>* {
 /* style the headings to have thin uppercase titles for the columns */
 table th {
     /* text-align: left; */
-    font-weight: 450;
+    /* font-weight: 450; */
     font-style: italic;
     /* font-size: var(--size-avg-plus); */
     color: #eee;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     background-color: #3f6994f0;
     margin-top: 0;
     /* border: solid;

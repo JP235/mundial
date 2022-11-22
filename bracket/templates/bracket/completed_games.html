@@ -3,7 +3,7 @@
     {% load static %}
     <link rel="stylesheet"
           type="text/css"
-          href="{% static "completed_games.css" %}?version=2"/>
+          href="{% static "completed_games.css" %}?version=3"/>
 {% endblock %}
 {% block content %}
     {% if data %}
@@ -14,18 +14,20 @@
                 </caption>
                 <thead class="fixedHeader">
                     <tr>
-                        <th>PARTIDO</th>
-                        <th class="rf-head">RF</th>
-                        <th class="pred-head">|Pred|</th>
-                        <th>p(Ganador)</th>
+                        <th>Partido</th>
+                        <th class="rf-head">Final</th>
+                        <th class="avg-pred-head">Pred</th>
+                        <th class="avg-points-head">Puntos</th> 
                         <th>p(Resultado)</th>
-                        <th>|Puntos|</th>
+                        <th>p(Marcador)</th>
                     </tr>
                 </thead>
                 <tbody id="completedGames_scroll" class="scrollContent">
                     {% for date, games in data.items %}
                         <tr class="row">
-                            <td class="game-date">{{ date }}</td>
+                            <td class="game-date">
+                                <i>{{ date }}</i>
+                            </td>
                             <td colspan="6" class="game-date"></td>
                         </tr>
                         {% for game in games %}
@@ -35,9 +37,9 @@
                                 </td>
                                 <td class="RF">{{ game.score_team_1 }} - {{ game.score_team_2 }}</td>
                                 <td class="avg_pred">{{ game.avg_pred }}</td>
+                                <td class="avg_points">{{ game.avg_points }}</td>
                                 <td class="n_winner">{{ game.p_winner }}</td>
                                 <td class="n_score">{{ game.p_score }}</td>
-                                <td class="avg_points">{{ game.avg_points }}</td>
                             </tr>
                         {% endfor %}
                     {% endfor %}
@@ -47,7 +49,7 @@
         {% comment %} <div class="abbrs">
             <p>RF = Resultado Final</p>
             <p>|Pred| = Prediccion promedio</p>
-            <p>p(Ganador) = </p>
+            <p>p(Ganador) =</p>
             <p>p(Resultado)</p>
             <p>p(Resultado)</p>
             <p>|Puntos|</p>

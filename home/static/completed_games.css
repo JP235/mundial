@@ -1,5 +1,5 @@
 table#completedGamesTable {
-    max-height: 40vh;
+    max-height: 85vh;
     max-width: 90vw;
 }
 
@@ -10,9 +10,10 @@ td.game-date{
 table {
     border-spacing: 0
 }
-table th {
-    text-transform: none;
+table caption{
+    padding: 1vh 0 3vh 0;
 }
+
 table thead tr>:first-child {
     position: sticky;
     left: 0;
@@ -21,7 +22,7 @@ table thead tr>:first-child {
 table tbody tr>:first-child {
     position: sticky;
     left: 0;
-    background: #3f6994f0;
+    background: #1b4a79f0;
     z-index: 1;
 }
 p {
@@ -31,6 +32,10 @@ p {
 .rf-head{
     min-width: 4em;
 }
-.pred-head {
-    min-width: 4em;
+.avg-pred-head {
+    min-width: 6em;
+    text-decoration:overline;
+}
+.avg-points-head {
+    text-decoration:overline
 }
