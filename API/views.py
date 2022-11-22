@@ -1,6 +1,6 @@
 from datetime import datetime,timedelta
 import pytz
-
+from math import inf
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -26,6 +26,17 @@ class UsersAPIView(APIView):
         """list users"""
         users = User.objects.filter(~Q(username__in = ["admin","JP"])).order_by('-points__points')
         serialized_users = self.serializer(users, many=True).data
+
+        pos = 0 
+        cur_points = inf
+        for n,s_user in enumerate(serialized_users):
+            if s_user["points"] < cur_points:
+                pos += 1
+                cur_points = s_user["points"] 
+                s_user["rank"] = pos
+            else:
+                s_user["rank"] = ""            
+
         return Response(data=serialized_users, status=status.HTTP_200_OK)
 
 

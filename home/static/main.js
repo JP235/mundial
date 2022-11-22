@@ -119,7 +119,7 @@ const users_data = get_users();
 users_data.then((d) => {
   var main = d3.select("#leaderboardTable tbody");
   main.attr("class", "scrollcontent");
-
+  // console.log(d)
   var t = main
     .selectAll("tr.row")
     .data(d)
@@ -127,7 +127,7 @@ users_data.then((d) => {
     .append("tr")
     .attr("class", "row");
   t.append("td")
-    .text((d, i) => i + 1)
+    .text(({rank}) => rank)
     .attr("class", "position");
   t.append("td")
     .html(({
