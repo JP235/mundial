@@ -11,12 +11,12 @@ table {
     border-spacing: 0
 }
 table caption{
-    padding: 1vh 0 3vh 0;
+    padding: 0vh 0 2vh 0;
 }
 
 table thead tr>:first-child {
     position: sticky;
-    left: 0;
+    left: 0
 
 }
 table tbody tr>:first-child {
@@ -34,8 +34,8 @@ p {
 }
 .avg-pred-head {
     min-width: 6em;
-    text-decoration:overline;
+    text-decoration:overline; 
 }
 .avg-points-head {
-    text-decoration:overline
+    text-decoration:overline; 
 }

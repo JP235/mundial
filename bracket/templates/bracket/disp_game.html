@@ -41,12 +41,19 @@
             </div>
             <div class="submint_buttons_container">
                 <input id="next_home" type="hidden" value="" />
+                <div class="prev-next-buttons">
+                    <input type="submit"
+                           value="Anterior"
+                           onclick="window.location.href='{% url 'home:game_by_id' id|add:"-1" %}';return false;"/>
+                    <input type="submit"
+                           value="Siguiente"
+                           onclick="window.location.href='{% url 'home:game_by_id' id|add:"1" %}';return false;"/>
+                </div>
                 <input type="submit"
-                       value="Anterior"
-                       onclick="window.location.href='{% url 'home:game_by_id' id|add:"-1" %}';return false;"/>
-                <input type="submit"
-                       value="Siguiente"
-                       onclick="window.location.href='{% url 'home:game_by_id' id|add:"1" %}';return false;"/>
+                       value="Todos los Resultados"
+                       onclick="window.location.href='{% url 'home:results' %}';return false;"/>
+                {% comment %} <div class="results-button">
+                </div> {% endcomment %}
             </div>
         </div>
     </div>

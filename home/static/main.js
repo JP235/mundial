@@ -3,7 +3,7 @@
 // based on: D3 Table - F1 Leaderboard by: Jonathan
 // https://codepen.io/jonakirke94/pen/NWzreGM
 
-$(menudropdown).hover(
+$("#menudropdown").hover(
   () => { //hover
     $(menu_logo_open).removeClass("hide-display");
     $(menu_logo_closed).addClass("hide-display");
@@ -127,7 +127,9 @@ users_data.then((d) => {
     .append("tr")
     .attr("class", "row");
   t.append("td")
-    .text(({rank}) => rank)
+    .text(({
+      rank
+    }) => rank)
     .attr("class", "position");
   t.append("td")
     .html(({

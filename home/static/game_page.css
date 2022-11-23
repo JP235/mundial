@@ -5,6 +5,7 @@
     justify-content: center;
     align-items: center;
 }
+
 form {
     background-color: var(--dark-blue);
     margin: 5vh;
@@ -16,24 +17,27 @@ form {
     padding: 2vh;
     padding-block-end: 1vh;
     border-radius: var(--border-radius);
-    -webkit-box-shadow: -4px -3px 55px 1px rgba(0,0,0,0.35);
-    -moz-box-shadow: -4px -3px 55px 1px rgba(0,0,0,0.35);
-    box-shadow: -4px -3px 55px 1px rgba(0,0,0,0.35);
+    -webkit-box-shadow: -4px -3px 55px 1px rgba(0, 0, 0, 0.35);
+    -moz-box-shadow: -4px -3px 55px 1px rgba(0, 0, 0, 0.35);
+    box-shadow: -4px -3px 55px 1px rgba(0, 0, 0, 0.35);
 }
+
 #partidosTable {
-	min-width: 40vw;
+    min-width: 40vw;
 }
+
 #leaderboardTable {
-	min-width: 28vw;
+    min-width: 28vw;
 }
+
 form .caption {
     display: flex;
-	text-transform: capitalize;
-	text-align: center;
+    text-transform: capitalize;
+    text-align: center;
     vertical-align: middle;
-	font-size: var(--size-avg-plus);
-	background-color: var(--main-dark);
-	padding: 1.5vh;
+    font-size: var(--size-avg-plus);
+    background-color: var(--main-dark);
+    padding: 1.5vh;
     align-items: center;
     min-width: 30vw;
 }
@@ -42,15 +46,18 @@ input[title="Goles"] {
     width: 3vw;
     text-align: center;
 }
+
 input[title="Submit"] {
     color: var(--dark-blue);
 }
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  appearance:none;
-  margin: 0; 
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
 }
+
 .match {
     display: flex;
     align-items: center;
@@ -58,13 +65,14 @@ input[type=number]::-webkit-outer-spin-button {
     flex-direction: column;
     padding: 1vh
 }
-#match_container{
+
+#match_container {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     flex-direction: column;
     margin-bottom: 2vh;
- }
+}
 
 .team_plus_score {
     display: flex;
@@ -80,16 +88,19 @@ input[type=number]::-webkit-outer-spin-button {
     text-align: center;
     padding: 1vh 0;
 }
+
 .submint_buttons_container {
     display: flex;
     justify-content: space-evenly;
 }
+
 .flag_score {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
 }
+
 .flag_abbr {
     display: flex;
     flex-direction: column;
@@ -98,23 +109,45 @@ input[type=number]::-webkit-outer-spin-button {
     justify-content: space-between;
     padding-block-end: 3vh;
 }
+
 .flags_countries_ {
     display: flex;
     width: max-content;
     flex-direction: column;
 }
-.result-display{
-    background: var(--dark-blue);
-    padding:  0vh 2vh 3vh;
-    border-radius: var(--border-radius);
-    -webkit-box-shadow: -4px -3px 55px 1px rgba(0,0,0,0.35);
-    -moz-box-shadow: -4px -3px 55px 1px rgba(0,0,0,0.35);
-    box-shadow: -4px -3px 55px 1px rgba(0,0,0,0.35);
-}
+
 .result-container {
     display: flex;
     align-items: center;
 }
+
+.result-display {
+    background: var(--dark-blue);
+    padding: 0vh 2vh 3vh;
+    border-radius: var(--border-radius);
+    -webkit-box-shadow: -4px -3px 55px 1px rgba(0, 0, 0, 0.35);
+    -moz-box-shadow: -4px -3px 55px 1px rgba(0, 0, 0, 0.35);
+    box-shadow: -4px -3px 55px 1px rgba(0, 0, 0, 0.35);
+}
+
+.result-display .match {
+    padding: 1vh 1vh 0vh 1vh;
+}
+.result-display .submint_buttons_container {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+}
+
+.prev-next-buttons {
+    display: flex;
+    width: inherit;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 0 0 2vh;
+}
+
 h2 {
     text-align: center;
     text-transform: uppercase;

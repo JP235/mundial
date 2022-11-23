@@ -6,20 +6,6 @@
 {% block content %}
     <div class="first_row_main">
         <div class="tableContainer">
-            <table id="partidosTable">
-                <caption>
-                    Proximos partidos
-                </caption>
-                <thead class="fixedHeader">
-                    <th>Partido</th>
-                    <th>Fecha</th>
-                    <th>Hora</th>
-                </thead>
-                <tbody  class="scrollContent partidos_scroll">
-                </tbody>
-            </table>
-        </div>
-        <div class="tableContainer">
             <table id="partidosHoyTable">
                 <caption>
                     Partidos de Mañana
@@ -34,8 +20,6 @@
                 </tbody>
             </table>
         </div>
-    </div>
-    <div class="second_row_main">
         <div class="tableContainer">
             <table id="leaderboardTable">
                 <caption>
@@ -52,5 +36,23 @@
                 </tbody>
             </table>
         </div>
+        <div class="tableContainer">
+            <table id="partidosTable">
+                <caption>
+                    Proximos partidos
+                </caption>
+                <thead class="fixedHeader">
+                    <th>Partido</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                </thead>
+                <tbody  class="scrollContent partidos_scroll">
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+    <div class="second_row_main">
+        
     </div>
 {% endblock %}

@@ -1,6 +1,6 @@
 var teams = document.getElementsByClassName("name_team");
 var w = [10 + Math.max(teams[0].offsetWidth, teams[1].offsetWidth), "px"].join(
-	""
+  ""
 );
 Object.entries(teams).forEach((element) => {
   element[1].style.width = w;
@@ -45,8 +45,4 @@ game_predictions_data.then((d) => {
     .text(({
       predicted_score
     }) => predicted_score);
-
-  if ($(gamePredictionsTable).height() < $(gamePredictions_scroll).height()) {
-    down_arrow_pred_partidos.removeClass("hide");
-  }
 });

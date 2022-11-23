@@ -49,9 +49,9 @@ body {
     height: 100%;
     background-position: center;
     background-size: cover;
-    overflow:hidden 
-    ;
+    overflow: hidden;
 }
+
 header {
     width: 100vw;
     max-width: 800px;
@@ -59,12 +59,14 @@ header {
     top: 0;
     z-index: 10;
 }
+
 .header {
     background: #000000c9;
     min-width: max-content;
     display: flex;
     flex-direction: column;
 }
+
 .container {
     background-color: var(--gray-light-80);
     display: flex;
@@ -84,7 +86,8 @@ header {
     width: 7px;
     height: 7px;
 }
-.container::-webkit-scrollbar  {
+
+.container::-webkit-scrollbar {
     width: 0px;
 }
 
@@ -104,9 +107,10 @@ header {
 ::-webkit-scrollbar-thumb:hover {
     background: #cac6c6a8;
 }
+
 ::-webkit-scrollbar-corner {
-    background: rgba(0,0,0,0);
-  }
+    background: rgba(0, 0, 0, 0);
+}
 
 .MensajeInicial {
     display: flex;
@@ -139,7 +143,7 @@ header {
 }
 
 #SiteName {
-    text-align: center; 
+    text-align: center;
     padding: 0;
     margin: auto;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.805);
@@ -210,6 +214,7 @@ header {
 .dropdown .dropbtn {
     font-size: 16px;
     margin-left: 2vw;
+    min-width: 80px;
     border: none;
     outline: none;
     color: white;
@@ -221,45 +226,96 @@ header {
     /* Important for vertical align on mobile phones */
 }
 
+.dropdown:hover {
+    background: var(--gray-light);
+}
 
 /* Dropdown content (hidden by default) */
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: var(--dark-dark);
     font-weight: var(--bold);
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.805);
+    /* text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.805); */
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
 }
 
 /* Links inside the dropdown */
 .dropdown-content a {
+    display: none;
     float: none;
+    opacity: 0;
+    background-color: var(--dark-dark);
     color: var(--white);
     padding: 12px 16px;
     text-decoration: none;
     display: block;
     text-align: left;
 }
+
+#menudropdown .dropbtn {
+    display: flex;
+    justify-content: flex-start;
+}
+
 #userdropdown .dropdown-content {
     right: 0
 }
 
-.navbar a:hover,
-.dropdown-content a:hover {
-    background-color: var(--main-80);
-    /* background-color: #ddd; */
+.dropdown-content .dropdown_item-1 {
+    transform-origin: top center;
+    animation: rotateX 200ms 40ms ease-in-out forwards;
 }
 
-/* Show the dropdown menu on hover */
+.dropdown-content .dropdown_item-2 {
+    transform-origin: top center;
+    animation: rotateX 200ms 80ms ease-in-out forwards;
+}
+
+.dropdown-content .dropdown_item-3 {
+    transform-origin: top center;
+    animation: rotateX 200ms 130ms ease-in-out forwards;
+}
+
+.dropdown-content .dropdown_item-4 {
+    transform-origin: top center;
+    animation: rotateX 200ms 180ms ease-in-out forwards;
+}
+
+.dropdown-content .dropdown_item-5 {
+    transform-origin: top center;
+    animation: rotateX 200ms 200ms ease-in-out forwards;
+}
+
+@keyframes rotateX {
+    0% {
+        opacity: 0;
+        transform: rotateX(-90deg);
+    }
+
+    50% {
+        transform: rotateX(-20deg);
+    }
+
+    100% {
+        opacity: 1;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.436);
+        transform: rotateX(0deg);
+    }
+}
+
+.dropdown-content a:hover {
+    background-color: #0b416ac9;
+    /* background-color: #0b416ae0; */
+
+}
+
+
+#userdropdown.dropdown:hover .dropdown-content,
 #menudropdown.dropdown:hover .dropdown-content {
     display: block;
 }
-#userdropdown.dropdown:hover .dropdown-content {
-    display: block;
-}
+
 
 .navbar-items {
     display: flex;
@@ -307,6 +363,7 @@ table {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
 }
 
 .tableContainer {
@@ -347,6 +404,7 @@ table {
 
 table caption {
     position: sticky;
+    left: 0;
     /* padding: 0vh 0.5vh; */
     text-transform: uppercase;
     text-align: left;
@@ -448,7 +506,7 @@ th:nth-child(1) {
     /* background: white; */
 }
 
-#leaderboardTable * th:nth-child(1){
+#leaderboardTable * th:nth-child(1) {
     min-width: 3em;
     /* background: white; */
 }
