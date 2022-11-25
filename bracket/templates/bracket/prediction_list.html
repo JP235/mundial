@@ -1,8 +1,11 @@
 {% extends "base_bootstrap.html" %}
 {% block head %}
     {% load static %}
-	<link rel="stylesheet" type="text/css" href="{% static "prediction_page.css" %}?version=2" />
-    <script src="{% static 'predictions_page.js' %}?version=2" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet"
+          type="text/css"
+          href="{% static "prediction_page.css" %}?version=3"/>
+    <script src="{% static 'predictions_page.js' %}?version=3" defer></script>
 {% endblock %}
 {% block content %}
     <div class="tableContainer">
@@ -22,12 +25,25 @@
             </tbody>
         </table>
     </div>
-    {% comment %} <div class="tableContainer">
-        <table id="predictionsTable">
-            <caption>
-                <a href="{% url 'home:bracket' user_id=username %}">Ver Prediccion Clasificatoria de {{username}}
-                Ver Prediccion Clasificatoria de {{ username }}
-            </caption>
-        </table>
-    </div> {% endcomment %}
+    <div class="chartsContainer">
+        <h4>Puntos</h4>
+        <div class="chartSelect">
+            <input id="pointsDay" type="submit" value="Por Dia" />
+            <input id="pointsGame" class="inactive" type="submit" value="Por Partido" />
+        </div>
+        <div class="chartsWrapper">
+            <div class="chartAreaWrapper">
+                <div class="chartContainer daysChart"
+                     style="width:max(75vw,max(450px,calc(40px * {{ day_labels|length }})))">
+                    <canvas id="daysChart"></canvas>
+                </div>
+                <div class="chartContainer gamesChart hide"
+                     style="width:max(450px,calc(40px * {{ game_labels|length }}))">
+                    <canvas id="gamesChart"></canvas>
+                </div>
+            </div>
+            {% include "bracket/drawChart.html" with id="daysChart" labels=day_labels user=user_day user_total=user_total_day avg=avg_day avg_total=avg_total_day %}
+            {% include "bracket/drawChart.html" with id="gamesChart" labels=game_labels user=user_game user_total=user_total_game avg=avg_game avg_total=avg_total_game %}
+        </div>
+    </div>
 {% endblock %}

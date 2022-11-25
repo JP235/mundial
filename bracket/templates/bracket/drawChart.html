@@ -1,0 +1,119 @@
+<script>
+new Chart(document.getElementById('{{id}}').getContext('2d'),  {
+     data: {
+        labels: [{% for item in labels %}"{{ item }}",{% endfor %}],
+        datasets: [
+            {
+                yAxisID: 'B', // <-- the Y axis to use for this data set
+                type: 'line',
+                label: 'Total Promedio',
+                data: [{% for item in avg_total %}{{ item }},{% endfor %}],
+                backgroundColor: '#d27c7cf9',
+                borderColor: '#d27c7cf9',
+                borderWidth: 1,
+            },
+            {
+                yAxisID: 'B', // <-- the Y axis to use for this data set
+                type: 'line',
+                label: 'Total {{username}}',
+                data: [{% for item in user_total %}{{ item }},{% endfor %}],
+                backgroundColor: '#fd5a5ad9',
+                borderColor: '#fd5a5ad9',
+                borderWidth: 1,
+                
+            },
+            {
+                yAxisID: 'A', // <-- the Y axis to use for this data set
+                type: 'bar',
+                label: 'Promedio',
+                data: [{% for item in avg %}{{ item }},{% endfor %}],
+                backgroundColor: '#75aad2d9',
+                borderColor: '#75aad2d9',
+                borderWidth: 1,
+                minBarLength:1
+            },
+            {
+                yAxisID: 'A', // <-- the Y axis to use for this data set
+                type: 'bar',
+                label: '{{username}}',
+                data: [{% for item in user %}{{ item }},{% endfor %}],
+                backgroundColor: '#3887c4d9',
+                borderColor: '#3887c4d9',
+                borderWidth: 1,
+                minBarLength:1
+            },
+            ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            A: {
+                type: 'linear',
+                position: 'left',
+                suggestedMax: '{{id}}' ==  'daysChart' ? 12:4,
+                ticks: { 
+                    beginAtZero: true, 
+                    color: '#75aad2d9',
+                    font: {
+                        size: 15
+                    }
+                },
+                grid: { display: true ,
+                    color: "#ffffff20"
+                },
+                border:{
+                    color: "#ffffff20"
+                }
+            },
+            B: {
+                type: 'linear',
+                position: 'right',
+                min:0,
+                suggestedMax: 25,
+                ticks: { 
+                    beginAtZero: true,  
+                    color: '#d27c7cf9',
+                    font: {
+                        size: 15
+                    }
+                },
+                grid: { display: false },
+                border:{
+                    color: "#ffffff20"
+                }
+            },
+            x: { grid: { 
+                display: false ,
+                color: "#ffffff40"
+                },
+                ticks: { 
+                    color: 'white',
+                    beginAtZero: true,
+                    autoSkip: false,
+                    font: {
+                        size: 14
+                    }
+                },
+             }
+            },
+        plugins: {
+            legend: {
+                display: true,
+                align: 'center',
+                position: '{{id}}' ==  'daysChart' ? 'bottom': 'top',
+                fullSize: '{{id}}' ==  'daysChart' ? false : true,
+                labels: {
+                    boxWidth: 30,
+                    boxHeight: 15,
+                    color: '#ffffffe0',
+                    font: {
+                        size: 16
+                    }
+                }
+            }
+        }
+    }
+});
+
+</script>

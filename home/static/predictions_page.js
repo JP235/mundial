@@ -56,3 +56,17 @@ predictions_data.then((d) => {
 }).catch(e => {
   console.log(e)
 })
+
+$(pointsGame).click(() => {
+  $(pointsDay).addClass("inactive")
+  $(pointsGame).removeClass("inactive")
+  $(".gamesChart").removeClass("hide")
+  $(".daysChart").addClass("hide")
+  
+})
+$(pointsDay).click(() => {
+  $(pointsDay).removeClass("inactive")
+  $(pointsGame).addClass("inactive")
+  $(".daysChart").removeClass("hide")
+  $(".gamesChart").addClass("hide")
+})

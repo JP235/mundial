@@ -1,3 +1,64 @@
 table {
     max-height: 50vh;
 }
+
+canvas {
+    padding: 3vh;
+}
+
+.hide {
+    display: none;
+}
+
+.chartsContainer {
+    background: var(--dark-blue);
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2.5vh;
+    margin-bottom: 3vh;
+    width: min(75vw,700px);
+}
+.chartsContainer h4{
+    font-size: var(--size-avg-plus);
+    font-weight: 350;
+    margin-bottom: 1vh;
+    margin-top: 0;
+}
+.chartSelect {
+    display: flex;
+    align-items: center;
+}
+.chartSelect>* {
+    width: 100px;
+    background: var(--dark-blue-80);
+    color:  var(--white);
+    padding: 1vh;
+    border: 0px
+}
+.chartSelect:hover {
+    cursor: pointer;
+}
+.inactive {
+    background: #87b2d33c;
+    color: #ffffffb0
+}
+.chartsWrapper {
+    position: relative;
+    height: max(350px,40vh);
+    background: var(--dark-blue-80);
+    width: min(75vw,700px);    
+}
+
+.chartAreaWrapper {
+    position: relative;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    height: max(350px,40vh);
+    margin-bottom: 5vh;
+}
+
+.chartContainer {
+    height: max(350px,40vh);
+}

@@ -29,6 +29,10 @@
     --font-avg-width: 3vw;
     --size-avg-plus: 2.1vh;
     --size-avg-min: 1.8vh;
+    --redish1: #d27c7cf9;
+    --redish2: #fd5a5ad9;
+    --blueish1: #75aad2d9;
+    --blueish2: #3887c4d9;
 }
 
 html {

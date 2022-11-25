@@ -1,3 +1,6 @@
+from datetime import datetime, timedelta
+import pytz
+from django.db.models import Q
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
@@ -25,13 +28,14 @@ class Country(models.Model):
         pass
 
     def __str__(self) -> str:
-        return f"{self.name} {self.finish_rank if self.finish_rank else ''}"
+        return f"{self.name}"
 
 
 class GroupError(Exception):
     def __init__(self, group: str, T1: Country, T2: Country):
-        self.message = \
-                f"Grupo {group} recivió equipos: Primero: {T1.name} Segundo: {T2.name}"
+        self.message = (
+            f"Grupo {group} recivió equipos: Primero: {T1.name} Segundo: {T2.name}"
+        )
         super().__init__(self.message)
 
 
@@ -46,7 +50,9 @@ def check_group(group: str, T1: Country, T2: Country):
 def validate_winners_input(*args):
     for w in args:
         if w not in (1, 2):
-            raise ValueError(f"Hay que seleccionar ganador para todos los partidos. {args}")
+            raise ValueError(
+                f"Hay que seleccionar ganador para todos los partidos. {args}"
+            )
     return args
 
 
@@ -85,13 +91,104 @@ class Game(models.Model):
     score_team_2 = models.IntegerField(blank=True, null=True)
 
     def __str__(self) -> str:
-        return f'{self.team_1} - {self.team_2}'
+        return f"{self.team_1} - {self.team_2} - {self.wc_round}"
 
 
 class UsersPoints(models.Model):
     owner = models.OneToOneField(User, on_delete=models.CASCADE, related_name="points")
     points = models.IntegerField(default=0)
-    # all_predictions_done = models.BooleanField(default=False)
+
+    @property
+    def points_per_game(self):
+        preds = self.owner_predictions()
+        gr = self.games_range()
+        game_range = {g: 0 for g in gr}
+
+        for p in preds:
+            if p.game.score_team_1 is None or p.game.score_team_2 is None:
+                continue
+            game_range[str(p.game)] = p.correct * 2
+
+        return game_range
+
+    @property
+    def points_per_day(self):
+        preds = self.owner_predictions()
+        dr = self.dates_range()
+        dates_range = {d: 0 for d in dr}
+        for p in preds:
+            if p.game.score_team_1 is None or p.game.score_team_2 is None:
+                continue
+            dates_range[str(p.game.game_date)] += p.correct * 2
+
+        return dates_range
+
+    @staticmethod
+    def avg_per_game():
+        gr = UsersPoints.games_range()
+        avg_game = {g: 0 for g in gr}
+
+        for g in gr:
+            game_preds = Game.objects.filter(
+                Q(team_1__name=g.split(" - ")[0])
+                & Q(team_2__name=g.split(" - ")[1])
+                & Q(wc_round=g.split(" - ")[2])
+            )[0].game_predictions.all()
+            if len(game_preds) == 0:
+                continue
+            avg_game[g] = sum([gm.correct * 2 for gm in game_preds]) / len(game_preds)
+
+        return avg_game
+
+    @staticmethod
+    def avg_per_day():
+        preds = Prediction.objects.filter(
+            Q(game__game_date__lte=datetime.now(pytz.timezone("America/Bogota")))
+            & ~Q(game__score_team_1=None)
+            & ~Q(game__score_team_2=None)
+        )
+        dr = UsersPoints.dates_range()
+        avg_day = {d: 0 for d in dr}
+        for d in dr:
+            day_preds = preds.filter(Q(game__game_date=d))
+            n_games = day_preds.values("game").distinct()
+            if len(day_preds) == 0:
+                continue
+            avg_day[d] = (
+                len(n_games) * sum([d.correct * 2 for d in day_preds]) / len(day_preds)
+            )
+
+        return avg_day
+
+    @staticmethod
+    def games_range():
+        gr = Game.objects.filter(
+            ~Q(score_team_1=None)
+            & ~Q(score_team_2=None)
+            & Q(game_date__lte=datetime.now(pytz.timezone("America/Bogota")))
+        ).order_by("game_date")
+        return [str(g) for g in gr if g.game_date <= datetime.now().date()]
+
+    @staticmethod
+    def dates_range():
+        start = datetime(2022, 11, 20, tzinfo=pytz.timezone("America/Bogota"))
+        return [
+            str((start + timedelta(days=t)).date())
+            for t in range(
+                0, 1 + (datetime.now(pytz.timezone("America/Bogota")) - start).days
+            )
+        ]
+
+    def owner_predictions(self):
+        preds = Prediction.objects.filter(
+            Q(owner=self.owner)
+            & Q(
+                game__game_date__lte=datetime.now(
+                    pytz.timezone("America/Bogota")
+                ).date()
+            )
+        ).order_by("game__game_date")
+        return preds
 
     def _add_points(self, points):
         self.points += points
@@ -139,7 +236,10 @@ class Prediction(models.Model):
             "game": game_id,
             "predicted_winner": pred_winner,
             "predicted_score": "-".join(
-                [str(int(request.data.get("score_team_1"))), str(int(request.data.get("score_team_2")))]
+                [
+                    str(int(request.data.get("score_team_1"))),
+                    str(int(request.data.get("score_team_2"))),
+                ]
             ),
         }
         return new_prediction
@@ -149,8 +249,6 @@ class Prediction(models.Model):
 
 
 def update_predition_correct(instance: Game, **kwargs):
-    # print("triggered update_predition_correct")
-    # print("------------------------------")
     if instance.score_team_1 is not None and instance.score_team_2 is not None:
         predictions = Prediction.objects.filter(game=instance)
         for pred in predictions:
@@ -162,7 +260,6 @@ def update_points(instance: Prediction, **kwargs):
     1: Acertar quien gana el partido sin el marcador 2 puntos.
     2: Acertar el marcador 4 puntos por partido.
     3: Acertar el orden de clasificación en cada grupo 3 puntos por cada grupo al finalizar la ronda de grupos."""
-    # print("triggered update_points")
     if not instance.correct in (0, 1, 2):
         return
     owner = instance.owner
@@ -185,25 +282,15 @@ def update_points(instance: Prediction, **kwargs):
 
 def calc_c(r1, r2, p1, p2) -> int:
     [r1, r2, p1, p2] = list(map(int, [r1, r2, p1, p2]))
-    # print(r1,r2,p1,p2,(r1 == p1),(r2 == p2))
     if (r1 == p1) and (r2 == p2):  # predicted everything
-        # print("predicted everything")
         return 2
     if (r1 == r2) and p1 == p2:  # predicted tie
-        # print("predicted tie")
         return 1
     if (r1 > r2) and (p1 > p2):  # predicted t1 wins
-        # print("predicted t1 wins")
         return 1
     if (r1 < r2) and (p1 < p2):  # predicted t2 wins
-        # print("predicted t2 wins")
         return 1
-    # print("predicted wrong")
     return 0  # predicted wrong
-
-
-post_save.connect(update_predition_correct, sender=Game)
-post_save.connect(update_points, sender=Prediction)
 
 
 class BracketPrediction(models.Model):
@@ -390,3 +477,7 @@ class BracketPrediction(models.Model):
 
     def __str__(self) -> str:
         return f'{self.owner}, {self.get_bracket()["winner"]["winner"]}'
+
+
+post_save.connect(update_predition_correct, sender=Game)
+post_save.connect(update_points, sender=Prediction)

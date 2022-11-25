@@ -91,7 +91,6 @@ class BracketPredictionAPIView(APIView):
         try:
             new_prediction = BracketPrediction.format_request(request)
             prediction_serial = self.serializer(data=new_prediction)
-            print(prediction_serial)
             if prediction_serial.is_valid():
                     prediction_serial.save()
         except GroupError as e:

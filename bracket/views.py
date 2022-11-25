@@ -1,13 +1,13 @@
 from datetime import datetime
 from typing import List
 import pytz
+from itertools import accumulate
 
-from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views import View
 
-from .models import Game, Prediction, Country, BracketPrediction
+from .models import Game, Prediction, Country, BracketPrediction, UsersPoints, User
 
 number_to_fase = {
     0: "Grupos",
@@ -18,10 +18,15 @@ number_to_fase = {
 }
 
 
-class GameView(LoginRequiredMixin, ListView):
+class LoggedInView(LoginRequiredMixin, View):
     """"""
 
     login_url = "/id"
+
+
+class GameView(LoggedInView):
+    """"""
+
     model = Game
     template_name = "bracket/game_page.html"
 
@@ -52,7 +57,7 @@ class GameView(LoginRequiredMixin, ListView):
         return redirect("home:my_predictions")
 
 
-class FinishedGamesListView(LoginRequiredMixin, View):
+class FinishedGamesListView(LoggedInView):
     """"""
 
     login_url = "/id"
@@ -65,26 +70,50 @@ class FinishedGamesListView(LoginRequiredMixin, View):
             preds = g.game_predictions.all()
             marcador = preds.filter(correct=2)
             ganador = preds.filter(correct__gt=0)
-            t1, t2 = list(
-                zip(*[p.predicted_score.split("-") for p in preds])
-            )  # ('1-2') ('0-0') ('6-3')-> ('1','0','6'),('2','0','3')
-            fstr_2_dec = lambda n: f'{n:.2f}'
-            str_avg_score_team = lambda t: fstr_2_dec(sum(map(int, t)) / len(t))
-            avg_score = " - ".join([str_avg_score_team(t1), str_avg_score_team(t2)])
             finished_game = g.score_team_1 is not None
-            game_data = {
-                "id": g.id,
-                "team_1": g.team_1,
-                "team_2": g.team_2,
-                "round": number_to_fase[g.wc_round],
-                "group": g.team_1.group,
-                "score_team_1": g.score_team_1 if finished_game else "",
-                "score_team_2": g.score_team_2 if finished_game else "",
-                "p_winner": fstr_2_dec(len(ganador) / len(preds)) if finished_game else "-",
-                "p_score": fstr_2_dec(len(marcador) / len(preds)) if finished_game else "-",
-                "avg_points": fstr_2_dec((2 * len(marcador) + 2 * len(ganador)) / len(preds)) if finished_game else "-",
-                "avg_pred": avg_score,
-            }
+
+            if len(preds) == 0:
+                game_data = {
+                    "id": g.id,
+                    "team_1": g.team_1,
+                    "team_2": g.team_2,
+                    "round": number_to_fase[g.wc_round],
+                    "group": g.team_1.group,
+                    "score_team_1": g.score_team_1 if finished_game else "",
+                    "score_team_2": g.score_team_2 if finished_game else "",
+                    "p_winner": "-",
+                    "p_score": "-",
+                    "avg_points": "-",
+                    "avg_pred": "-",
+                }
+            else:
+                t1, t2 = list(
+                    zip(*[p.predicted_score.split("-") for p in preds])
+                )  # ('1-2') ('0-0') ('6-3')-> ('1','0','6'),('2','0','3')
+                fstr_2_dec = lambda n: f"{n:.2f}"
+                str_avg_score_team = lambda t: fstr_2_dec(sum(map(int, t)) / len(t))
+                avg_pred = " - ".join([str_avg_score_team(t1), str_avg_score_team(t2)])
+                game_data = {
+                    "id": g.id,
+                    "team_1": g.team_1,
+                    "team_2": g.team_2,
+                    "round": number_to_fase[g.wc_round],
+                    "group": g.team_1.group,
+                    "score_team_1": g.score_team_1 if finished_game else "",
+                    "score_team_2": g.score_team_2 if finished_game else "",
+                    "p_winner": fstr_2_dec(len(ganador) / len(preds))
+                    if finished_game
+                    else "-",
+                    "p_score": fstr_2_dec(len(marcador) / len(preds))
+                    if finished_game
+                    else "-",
+                    "avg_points": fstr_2_dec(
+                        (2 * len(marcador) + 2 * len(ganador)) / len(preds)
+                    )
+                    if finished_game
+                    else "-",
+                    "avg_pred": avg_pred,
+                }
             if len(ctx["data"]) == 0 or g.game_date not in ctx["data"].keys():
                 ctx["data"][g.game_date] = [game_data]
             else:
@@ -93,19 +122,63 @@ class FinishedGamesListView(LoginRequiredMixin, View):
         return render(request, self.template_name, ctx)
 
 
-class PredListView(LoginRequiredMixin, ListView):
+class PredListView(LoggedInView):
     """"""
 
     login_url = "/id"
-    model = Prediction
     template_name: str = "bracket/prediction_list.html"
 
     def get(self, request, username=None):
-        ctx = {"username": username if username else request.user}
+        req_user = username if username else request.user
+
+        day_labels, avg_day = list(zip(*UsersPoints.avg_per_day().items()))
+        game_labels, avg_game = list(zip(*UsersPoints.avg_per_game().items()))
+
+        game_labels = [
+            # n 
+            " - ".join(g.split(" - ")[0:2]) 
+            for n,g in enumerate(game_labels)
+        ]  # remove round
+
+        user = User.objects.get(username=req_user)
+        _, user_day = list(zip(*user.points.points_per_day.items()))
+        _, user_game = list(zip(*user.points.points_per_game.items()))
+
+        user_total_day = accumulate(user_day)
+        user_total_game = accumulate(user_game)
+
+        avg_total_day = accumulate(avg_day)
+        avg_total_game = accumulate(avg_game)
+        
+        fstr_2_dec = lambda n: f"{n:.2f}"
+
+        avg_day = list(map(fstr_2_dec, avg_day))
+        avg_total_day = list(map(fstr_2_dec, avg_total_day))
+
+        avg_game = list(map(fstr_2_dec, avg_game))
+        avg_total_game = list(map(fstr_2_dec, avg_total_game))
+
+
+        ctx = {
+            "username": req_user,
+
+            "day_labels": day_labels,
+            "user_day": user_day,
+            "user_total_day":user_total_day,
+            "avg_day": avg_day,
+            "avg_total_day":avg_total_day,
+            
+            "game_labels": game_labels,
+            "user_game": user_game,
+            "avg_game": avg_game,
+            "user_total_game":user_total_game,
+            "avg_total_game":avg_total_game,
+        }
+        print(user_game)
         return render(request, self.template_name, ctx)
 
 
-class BracketView(LoginRequiredMixin, View):
+class BracketView(LoggedInView):
     context_object_name = "ctx"
     login_url = "/id"
 
