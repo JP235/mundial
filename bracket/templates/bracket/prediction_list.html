@@ -34,7 +34,7 @@
         <div class="chartsWrapper">
             <div class="chartAreaWrapper">
                 <div class="chartContainer daysChart"
-                     style="width:max(75vw,max(450px,calc(40px * {{ day_labels|length }})))">
+                     style="width:max(min(75vw,700px),max(450px,calc(40px * {{ day_labels|length }})))">
                     <canvas id="daysChart"></canvas>
                 </div>
                 <div class="chartContainer gamesChart hide"
