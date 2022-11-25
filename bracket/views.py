@@ -174,7 +174,6 @@ class PredListView(LoggedInView):
             "user_total_game":user_total_game,
             "avg_total_game":avg_total_game,
         }
-        print(user_game)
         return render(request, self.template_name, ctx)
 
 
