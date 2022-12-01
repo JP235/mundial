@@ -11,7 +11,7 @@ from .models import Game, Prediction, Country, BracketPrediction, UsersPoints, U
 
 number_to_fase = {
     0: "Grupos",
-    1: "Fase de 16",
+    1: "Octavos de Final",
     2: "Cuartos de Final",
     3: "Semi-Final",
     4: "Final",
