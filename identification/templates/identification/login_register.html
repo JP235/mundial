@@ -6,12 +6,7 @@
     <script src="{% static 'login_register.js' %}?version=2" defer></script>
 {% endblock %}
 {% block content %}
-    <div class="form">
-        <ul class="tab-group">
-            <li class="tab active">
-                <a href="#login">Iniciar Sesion</a>
-            </li>
-        </ul>
+    <div class="form">   
         <div class="tab-content">
             <div id="signup">
                 <h2 class="margin-0-0-40">Crea un usuario para jugar!</h2>
@@ -39,7 +34,7 @@
                 </form>
             </div>
             <div id="login">
-                <h2 class="margin-0-0-40">Bienvenido otra vez!</h2>
+                <h2 class="margin-0-0-40">Bienvenidos a la Polla del mundial</h2>
                 <form action="{% url 'API:login' %}" method="post">
                     {% csrf_token %}
                     <div class="field-wrap">
