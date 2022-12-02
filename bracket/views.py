@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import List
 import pytz
 from itertools import accumulate
@@ -53,9 +53,10 @@ class GameView(LoggedInView):
                 "abbr_2": game.team_2.abbr,
                 "score_team_2": game.score_team_2,
             }
-            if game.game_date == datetime.now(
-                pytz.timezone("America/Bogota")
-            ).date() and (game.score_team_1 == None or game.score_team_2 == None):
+            if (
+                game.game_date == datetime.now(pytz.timezone("America/Bogota")).date()
+                and game.game_time < (datetime.now(pytz.timezone("America/Bogota")) + timedelta(hours=1)).time()
+            ) and (game.score_team_1 == None or game.score_team_2 == None):
 
                 ctx["score_team_1"] = "TBD"
                 ctx["score_team_2"] = "TBD"
