@@ -1,0 +1,42 @@
+#octavos {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    width: inherit;
+    align-items: center;
+}
+
+.flags_counties_done,
+.flags_counties_octavos {
+    display: flex;
+    flex-wrap: wrap;
+    width: fit-content;
+    max-width: 550px;
+}
+.flag:hover{
+    cursor: pointer;
+}
+.game {
+    display: flex;
+    width: 90%;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+    background-color: var(--dark-blue);
+    border-radius: 6px;
+    padding: 1vh;
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+.game>* {
+    margin: 1vh;;
+    
+} 
+.flags_counties_ganador .flag{
+    width: 100px;
+    height: 90px;
+}
+.selected {
+    background: green;
+    border-radius: 6px;
+}

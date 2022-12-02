@@ -13,4 +13,5 @@ urlpatterns = [
     path("predict/<int:game_id>/", views.PredictionAPIView.as_view(), name="prediction_by_id" ),
     path("game_predictions/<int:game_id>", views.GamePredictionsAPIView.as_view(),name="predictions_by_game"),
     path("bracket_prediction", views.BracketPredictionAPIView.as_view(),name="predict_bracket"),
+    path("predict_winner", views.WinnerPredictionAPIView.as_view(), name="predict_winner" ),
 ]

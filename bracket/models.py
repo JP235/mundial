@@ -69,7 +69,7 @@ class Game(models.Model):
 
     ROUNDS = [
         (GR, "Grupos"),
-        (SECOND, "16"),
+        (SECOND, "Octavos de Final"),
         (THIRD, "Cuartos de Final"),
         (SEMI, "Semi-Final"),
         (FINAL, "Final"),
@@ -171,7 +171,7 @@ class UsersPoints(models.Model):
 
     @staticmethod
     def dates_range():
-        start = datetime(2022, 11, 20, tzinfo=pytz.timezone("America/Bogota"))
+        start = datetime(2022, 12, 2, tzinfo=pytz.timezone("America/Bogota"))
         return [
             str((start + timedelta(days=t)).date())
             for t in range(
@@ -477,6 +477,13 @@ class BracketPrediction(models.Model):
 
     def __str__(self) -> str:
         return f'{self.owner}, {self.get_bracket()["winner"]["winner"]}'
+
+class WinnerPrediction(models.Model):
+    owner = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name="winner_prediction"
+    )
+
+    winner = models.ForeignKey(Country, on_delete=models.CASCADE, related_name="winner")
 
 
 post_save.connect(update_predition_correct, sender=Game)

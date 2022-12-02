@@ -1,0 +1,69 @@
+{% extends "base_bootstrap.html" %}
+{% block head %}
+    {% load static %}
+    <link rel="stylesheet"
+          type="text/css"
+          href="{% static 'winner_prediction_page.css' %}?version=2"/>
+    {% if not completed %}
+        <script src="{% static 'winner_select.js' %}?version=2" defer></script>
+    {% endif %}
+{% endblock %}
+{% block content %}
+    <div class="game">
+        {% if completed %}
+            <div id="Ganador" class="Ganador">
+                <div class="flags flags_counties_ganador">
+                    <div class="flag_abbr {{ winner.abbr }}">
+                        <h3>Mi Ganador</h3>
+                        <div class="flag"
+                             style="background:url({{ winner.flag_fifa_url }}) center center / 100% no-repeat"></div>
+                        <div class="abbr">{{ winner.abbr }}</div>
+                    </div>
+                </div>
+            </div>
+            <div id="octavos" class="Group Group_octavos">
+                <h3>Clasificados</h3>
+                <div class="flags flags_counties_done">
+                    {% for T1 in countries %}
+                        <div class="flag_abbr {{ T1.abbr }}">
+                            <div class="flag"
+                                 style="background:url({{ T1.flag_fifa_url }}) center center / 100% no-repeat"></div>
+                            <div class="abbr">{{ T1.abbr }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            <div id="octavos" class="Group Group_octavos">
+                <h2>Clasificados</h2>
+                <div class="flags flags_counties_octavos ">
+                    {% for T1 in countries %}
+                        <div id="{{ T1.abbr }}" class="flag_abbr {{ T1.abbr }}">
+                            <div class="flag"
+                                 style="background:url({{ T1.flag_fifa_url }}) center center / 100% no-repeat"></div>
+                            <div class="abbr">{{ T1.abbr }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <h2>Ganador</h2>
+            <div class="selected-team">
+                <div class="flags flags_counties_winner">
+                    <div class="winner">
+                        <div class="flag_abbr ">
+                            <div class="flag"
+                                 style="background:url(https://upload.wikimedia.org/wikipedia/commons/1/1f/FIFA_Flag.svg) center center / 100% no-repeat">
+                            </div>
+                            <div class="abbr">{{ T1.abbr }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <form action="{% url 'API:predict_winner' %}"id="predict_winnerForm" method="post">
+                {% csrf_token %}
+                <input type="text" class="selected_winner hide" id="winner" name="winner" value=""/>
+                <button type="submit" id="sendButton" class="sendwinner" >Guardar</button>
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}

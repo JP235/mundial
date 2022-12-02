@@ -1,4 +1,4 @@
-from datetime import datetime,timedelta
+from datetime import datetime, timedelta
 import pytz
 from math import inf
 from rest_framework.views import APIView
@@ -14,8 +14,21 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 
 from .forms import NewUserForm
-from .serializers import CountrySerializer, GameSerializer, UserSerializer, PredictionSerializer, BracketPredictionSerializer
-from bracket.models import Country, Game, Prediction, BracketPrediction, GroupError
+from .serializers import (
+    CountrySerializer,
+    GameSerializer,
+    UserSerializer,
+    PredictionSerializer,
+    BracketPredictionSerializer,
+)
+from bracket.models import (
+    Country,
+    Game,
+    Prediction,
+    BracketPrediction,
+    GroupError,
+    WinnerPrediction,
+)
 
 
 class UsersAPIView(APIView):
@@ -24,18 +37,20 @@ class UsersAPIView(APIView):
 
     def get(self, request):
         """list users"""
-        users = User.objects.filter(~Q(username__in = ["admin","JP"])).order_by('-points__points')
+        users = User.objects.filter(~Q(username__in=["admin", "JP"])).order_by(
+            "-points__points"
+        )
         serialized_users = self.serializer(users, many=True).data
 
-        pos = 0 
+        pos = 0
         cur_points = inf
-        for n,s_user in enumerate(serialized_users):
+        for n, s_user in enumerate(serialized_users):
             if s_user["points"] < cur_points:
                 pos += 1
-                cur_points = s_user["points"] 
+                cur_points = s_user["points"]
                 s_user["rank"] = pos
             else:
-                s_user["rank"] = ""            
+                s_user["rank"] = ""
 
         return Response(data=serialized_users, status=status.HTTP_200_OK)
 
@@ -47,16 +62,19 @@ class GamesAPIView(APIView):
     def get(self, request):
         """list games"""
 
-        tz = pytz.timezone('America/Bogota')
-        future_games = Game.objects.filter(game_date__gt = datetime.now(tz).date()+timedelta(days=1))
-        today_games = Game.objects.filter(game_date= datetime.now(tz).date()+timedelta(days=1))
-
+        tz = pytz.timezone("America/Bogota")
+        future_games = Game.objects.filter(
+            game_date__gt=datetime.now(tz).date() + timedelta(days=1)
+        )
+        today_games = Game.objects.filter(
+            game_date=datetime.now(tz).date() + timedelta(days=1)
+        )
 
         serialized_future_games = self.serializer(future_games, many=True).data
         serialized_today_games = self.serializer(today_games, many=True).data
         data_out = {
-            "p_future":serialized_future_games,
-            "p_today":serialized_today_games
+            "p_future": serialized_future_games,
+            "p_today": serialized_today_games,
         }
         return Response(data=data_out, status=status.HTTP_200_OK)
 
@@ -70,16 +88,34 @@ class GamePredictionsAPIView(APIView):
         game_predictions_serial = self.serializer(game_predictions, many=True).data
         return Response(data=game_predictions_serial, status=status.HTTP_200_OK)
 
+
 class CountriesAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer = CountrySerializer
-    
+
     def get(self, request):
         """Get countries"""
-        countries = Country.objects.all().order_by('group')
+        countries = Country.objects.all().order_by("group")
         countries_serial = self.serializer(countries, many=True).data
         return Response(data=countries_serial, status=status.HTTP_200_OK)
-    
+
+
+class WinnerPredictionAPIView(APIView):
+    # permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        print(request.data)
+
+        if (winner := request.POST.get("winner")) == "":
+            messages.error(request,"selecciona un equipo")
+            return redirect("/campeon")
+
+        win_team = Country.objects.get(abbr=winner)
+        winnerPred = WinnerPrediction(owner=request.user, winner=win_team)
+        winnerPred.save()
+
+        return redirect("/campeon")
+
 
 class BracketPredictionAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -87,31 +123,35 @@ class BracketPredictionAPIView(APIView):
 
     def post(self, request):
         """Make Bracket prediction"""
-        
+
         try:
             new_prediction = BracketPrediction.format_request(request)
             prediction_serial = self.serializer(data=new_prediction)
             if prediction_serial.is_valid():
-                    prediction_serial.save()
+                prediction_serial.save()
         except GroupError as e:
-            messages.error(request,e)
+            messages.error(request, e)
         except ValueError as e:
-            messages.error(request,e)
+            messages.error(request, e)
         except ObjectDoesNotExist as e:
-            messages.error(request,"No se pueden dejar opciones sin equipo elegido")
-    
+            messages.error(request, "No se pueden dejar opciones sin equipo elegido")
+
         return redirect("/clasificatoria")
-    def get(self,request,*args,**kwargs):
+
+    def get(self, request, *args, **kwargs):
         return redirect("/clasificatoria")
+
 
 class PredictionAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated]
-    serializer = PredictionSerializer 
+    serializer = PredictionSerializer
 
     def get(self, request, user_name=None):
         """Get predictions from one user"""
         user_name = user_name if user_name else request.user
-        pred = User.objects.get(username = user_name).predictions.order_by('game__game_date', 'game__game_time')
+        pred = User.objects.get(username=user_name).predictions.order_by(
+            "game__game_date", "game__game_time"
+        )
         pred_serial = self.serializer(pred, many=True).data
         return Response(data=pred_serial, status=status.HTTP_200_OK)
 
@@ -129,7 +169,7 @@ class PredictionAPIView(APIView):
             if next_url := request.POST.get("next"):
                 return redirect(next_url)
             return redirect(f"/partido/{game_id+1}")
-        
+
         messages.error("Informacion Erronea")
         return redirect(f"/partido/{game_id}")
 
@@ -164,8 +204,8 @@ def login_request(request):
 
 
 def register_request(request):
-    messages.error(request, "No se aceptan nuevos jugadores. \n Contacta con un administrador si queres ingresar.")
-    return redirect("id:id")
+    # messages.error(request, "No se aceptan nuevos jugadores. \n Contacta con un administrador si queres ingresar.")
+    # return redirect("id:id")
 
     if request.user.is_authenticated:
         return redirect("home:home")

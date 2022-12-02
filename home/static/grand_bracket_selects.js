@@ -1,7 +1,5 @@
 function change_option(next_group, team, opt) {
   try {
-    // console.log(next_group, team, opt)
-    // console.log(`.options_${opt}.${next_group}`)
     $(`.options_${opt}.${next_group}`).children().remove()
     $(`.options_${opt}.${next_group}`).append($(`.${team}:first`).clone())
     $(`#${next_group}${opt}`)[0].innerText = team

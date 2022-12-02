@@ -7,7 +7,15 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views import View
 
-from .models import Game, Prediction, Country, BracketPrediction, UsersPoints, User
+from .models import (
+    Game,
+    Prediction,
+    Country,
+    BracketPrediction,
+    UsersPoints,
+    User,
+    WinnerPrediction,
+)
 
 number_to_fase = {
     1: "Octavos de Final",
@@ -134,9 +142,9 @@ class PredListView(LoggedInView):
         game_labels, avg_game = list(zip(*UsersPoints.avg_per_game().items()))
 
         game_labels = [
-            # n 
-            " - ".join(g.split(" - ")[0:2]) 
-            for n,g in enumerate(game_labels)
+            # n
+            " - ".join(g.split(" - ")[0:2])
+            for n, g in enumerate(game_labels)
         ]  # remove round
 
         user = User.objects.get(username=req_user)
@@ -148,7 +156,7 @@ class PredListView(LoggedInView):
 
         avg_total_day = accumulate(avg_day)
         avg_total_game = accumulate(avg_game)
-        
+
         fstr_2_dec = lambda n: f"{n:.2f}"
 
         avg_day = list(map(fstr_2_dec, avg_day))
@@ -157,23 +165,40 @@ class PredListView(LoggedInView):
         avg_game = list(map(fstr_2_dec, avg_game))
         avg_total_game = list(map(fstr_2_dec, avg_total_game))
 
-
         ctx = {
             "username": req_user,
-
             "day_labels": day_labels,
             "user_day": user_day,
-            "user_total_day":user_total_day,
+            "user_total_day": user_total_day,
             "avg_day": avg_day,
-            "avg_total_day":avg_total_day,
-            
+            "avg_total_day": avg_total_day,
             "game_labels": game_labels,
             "user_game": user_game,
             "avg_game": avg_game,
-            "user_total_game":user_total_game,
-            "avg_total_game":avg_total_game,
+            "user_total_game": user_total_game,
+            "avg_total_game": avg_total_game,
         }
         return render(request, self.template_name, ctx)
+
+
+class WinnerPredView(LoggedInView):
+    """ """
+
+    def get(self, request, username=None):
+        req_user = username if username else request.user
+
+        countries = Country.objects.all().order_by("group")
+
+        ctx = {"countries": countries}
+        if len(pred := WinnerPrediction.objects.filter(owner=req_user)) > 0:
+            user_winner = pred[0].winner
+            ctx["completed"] = True
+            ctx["winner"] = user_winner
+
+        else:
+            ctx["completed"] = False
+        print(ctx)
+        return render(request, "bracket/winner_prediction_page.html", context=ctx)
 
 
 class BracketView(LoggedInView):
