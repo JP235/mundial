@@ -203,7 +203,6 @@ class WinnerPredView(LoggedInView):
 
         else:
             ctx["completed"] = False
-        print(ctx)
         return render(request, "bracket/winner_prediction_page.html", context=ctx)
 
 
