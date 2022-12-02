@@ -10,7 +10,6 @@ from django.views import View
 from .models import Game, Prediction, Country, BracketPrediction, UsersPoints, User
 
 number_to_fase = {
-    0: "Grupos",
     1: "Octavos de Final",
     2: "Cuartos de Final",
     3: "Semi-Final",
