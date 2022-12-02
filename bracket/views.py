@@ -138,6 +138,12 @@ class PredListView(LoggedInView):
     def get(self, request, username=None):
         req_user = username if username else request.user
 
+        if not UsersPoints.avg_per_game():
+            ctx = {
+                "username": req_user,
+            }
+            return render(request, self.template_name, ctx)
+
         day_labels, avg_day = list(zip(*UsersPoints.avg_per_day().items()))
         game_labels, avg_game = list(zip(*UsersPoints.avg_per_game().items()))
 

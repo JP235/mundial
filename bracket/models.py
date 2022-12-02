@@ -127,7 +127,8 @@ class UsersPoints(models.Model):
     def avg_per_game():
         gr = UsersPoints.games_range()
         avg_game = {g: 0 for g in gr}
-
+        if len(gr) == 0:
+            return False
         for g in gr:
             game_preds = Game.objects.filter(
                 Q(team_1__name=g.split(" - ")[0])
