@@ -59,10 +59,16 @@
                     </div>
                 </div>
             </div>
-            <form action="{% url 'API:predict_winner' %}"id="predict_winnerForm" method="post">
+            <form action="{% url 'API:predict_winner' %}"
+                  id="predict_winnerForm"
+                  method="post">
                 {% csrf_token %}
-                <input type="text" class="selected_winner hide" id="winner" name="winner" value=""/>
-                <button type="submit" id="sendButton" class="sendwinner" >Guardar</button>
+                <input type="text"
+                       class="selected_winner hide"
+                       id="winner"
+                       name="winner"
+                       value=""/>
+                <button type="submit" id="sendButton" class="sendwinner">Guardar</button>
             </form>
         {% endif %}
     </div>
