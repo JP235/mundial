@@ -55,7 +55,7 @@ class GameView(LoggedInView):
             }
             if (
                 game.game_date == datetime.now(pytz.timezone("America/Bogota")).date()
-                and game.game_time < (datetime.now(pytz.timezone("America/Bogota")) + timedelta(hours=1)).time()
+                and game.game_time < datetime.now(pytz.timezone("America/Bogota")).time()
             ) and (game.score_team_1 == None or game.score_team_2 == None):
 
                 ctx["score_team_1"] = "TBD"
