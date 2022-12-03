@@ -100,7 +100,7 @@ class WinnerPredictionAPIView(APIView):
     # permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
-        messages.error(request, "La seleccion de campeon está cerrada. ")
+        messages.error(request, "La predicción de campeon está cerrada. ")
         return redirect("/campeon")
 
         if (winner := request.POST.get("winner")) == "":
