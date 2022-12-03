@@ -486,6 +486,8 @@ class WinnerPrediction(models.Model):
 
     winner = models.ForeignKey(Country, on_delete=models.CASCADE, related_name="winner")
 
+    def __str__(self) -> str:
+        return f'{self.owner} -> {self.winner}'
 
 post_save.connect(update_predition_correct, sender=Game)
 post_save.connect(update_points, sender=Prediction)
