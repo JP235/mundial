@@ -100,11 +100,11 @@ class WinnerPredictionAPIView(APIView):
     # permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
-        print(request.data)
 
         if (winner := request.POST.get("winner")) == "":
             messages.error(request, "selecciona un equipo")
             return redirect("/campeon")
+        print(request.user,request.POST.get("winner"),datetime.now(pytz.timezone("America/Bogota")))
 
         win_team = Country.objects.get(abbr=winner)
         winnerPred = WinnerPrediction(owner=request.user, winner=win_team)
