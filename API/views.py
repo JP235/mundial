@@ -63,12 +63,8 @@ class GamesAPIView(APIView):
         """list games"""
 
         tz = pytz.timezone("America/Bogota")
-        future_games = Game.objects.filter(
-            game_date__gt=datetime.now(tz).date() + timedelta(days=1)
-        )
-        today_games = Game.objects.filter(
-            game_date=datetime.now(tz).date() + timedelta(days=1)
-        )
+        future_games = Game.objects.filter(game_date__gte=datetime.now(tz).date()).order_by("game_date","game_time")
+        today_games = Game.objects.filter(game_date=datetime.now(tz).date()).order_by("game_date","game_time")
 
         serialized_future_games = self.serializer(future_games, many=True).data
         serialized_today_games = self.serializer(today_games, many=True).data
@@ -107,7 +103,7 @@ class WinnerPredictionAPIView(APIView):
         print(request.data)
 
         if (winner := request.POST.get("winner")) == "":
-            messages.error(request,"selecciona un equipo")
+            messages.error(request, "selecciona un equipo")
             return redirect("/campeon")
 
         win_team = Country.objects.get(abbr=winner)
