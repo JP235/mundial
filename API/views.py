@@ -84,10 +84,10 @@ class CountriesAPIView(APIView):
 class BracketPredictionAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer = BracketPredictionSerializer
-
     def post(self, request):
         """Make Bracket prediction"""
-        
+        messages.error(request,"No se aceptan nuevas predicciones")
+        return redirect("/clasificatoria")
         try:
             new_prediction = BracketPrediction.format_request(request)
             prediction_serial = self.serializer(data=new_prediction)
