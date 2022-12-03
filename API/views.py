@@ -100,9 +100,10 @@ class WinnerPredictionAPIView(APIView):
     # permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
+        messages.error(request, "La seleccion de campeon está cerrada. ")
+        return redirect("/campeon")
 
         if (winner := request.POST.get("winner")) == "":
-            messages.error(request, "selecciona un equipo")
             return redirect("/campeon")
         print(request.user,request.POST.get("winner"),datetime.now(pytz.timezone("America/Bogota")))
 
