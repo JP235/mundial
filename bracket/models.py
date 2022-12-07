@@ -101,34 +101,39 @@ class UsersPoints(models.Model):
     @property
     def points_per_game(self):
         preds = self.owner_predictions()
-        gr = self.games_range()
-        game_range = {g: 0 for g in gr}
+        avg_game = self.avg_per_game()
+
+        if not avg_game:
+            return {"null":[False,False]}
+    
+        ppg = {game: [val,0] for game,val in avg_game.items()}
 
         for p in preds:
             if p.game.score_team_1 is None or p.game.score_team_2 is None:
                 continue
-            game_range[str(p.game)] = p.correct * 2
+            ppg[str(p.game)][1] = p.correct * 2
 
-        return game_range
+        return ppg
 
     @property
     def points_per_day(self):
         preds = self.owner_predictions()
-        dr = self.dates_range()
-        dates_range = {d: 0 for d in dr}
+        avg_day = self.avg_per_day()
+        ppd = {day: [val,0] for day,val in avg_day.items()}
+
         for p in preds:
             if p.game.score_team_1 is None or p.game.score_team_2 is None:
                 continue
-            dates_range[str(p.game.game_date)] += p.correct * 2
-
-        return dates_range
+            ppd[str(p.game.game_date)][1] += p.correct * 2
+        print(ppd)
+        return ppd
 
     @staticmethod
     def avg_per_game():
         gr = UsersPoints.games_range()
-        avg_game = {g: 0 for g in gr}
         if len(gr) == 0:
             return False
+        avg_game = {g: 0 for g in gr}
         for g in gr:
             game_preds = Game.objects.filter(
                 Q(team_1__name=g.split(" - ")[0])
@@ -149,7 +154,7 @@ class UsersPoints(models.Model):
             & ~Q(game__score_team_2=None)
         )
         dr = UsersPoints.dates_range()
-        avg_day = {d: 0 for d in dr}
+        avg_day = {d: None for d in dr}
         for d in dr:
             day_preds = preds.filter(Q(game__game_date=d))
             n_games = day_preds.values("game").distinct()
@@ -159,7 +164,7 @@ class UsersPoints(models.Model):
                 len(n_games) * sum([d.correct * 2 for d in day_preds]) / len(day_preds)
             )
 
-        return avg_day
+        return {day:val for day,val in avg_day.items() if val != None}
 
     @staticmethod
     def games_range():
@@ -173,6 +178,7 @@ class UsersPoints(models.Model):
     @staticmethod
     def dates_range():
         start = datetime(2022, 12, 2, tzinfo=pytz.timezone("America/Bogota"))
+        #Can get games by date and pick first one... but this works for this application 
         return [
             str((start + timedelta(days=t)).date())
             for t in range(

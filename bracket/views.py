@@ -138,25 +138,22 @@ class PredListView(LoggedInView):
 
     def get(self, request, username=None):
         req_user = username if username else request.user
+        ctx = {"username": req_user}
 
-        if not UsersPoints.avg_per_game():
-            ctx = {
-                "username": req_user,
-            }
-            return render(request, self.template_name, ctx)
+        user = User.objects.get(username=req_user)
+        day_labels, day = list(zip(*user.points.points_per_day.items()))
+        game_labels, game  = list(zip(*user.points.points_per_game.items()))
+        avg_day, user_day = list(zip(*day))
+        avg_game, user_game = list(zip(*game))
 
-        day_labels, avg_day = list(zip(*UsersPoints.avg_per_day().items()))
-        game_labels, avg_game = list(zip(*UsersPoints.avg_per_game().items()))
+        if not avg_game[0]:
+           return render(request, self.template_name, ctx)
+
 
         game_labels = [
-            # n
             " - ".join(g.split(" - ")[0:2])
             for n, g in enumerate(game_labels)
         ]  # remove round
-
-        user = User.objects.get(username=req_user)
-        _, user_day = list(zip(*user.points.points_per_day.items()))
-        _, user_game = list(zip(*user.points.points_per_game.items()))
 
         user_total_day = accumulate(user_day)
         user_total_game = accumulate(user_game)
@@ -172,19 +169,18 @@ class PredListView(LoggedInView):
         avg_game = list(map(fstr_2_dec, avg_game))
         avg_total_game = list(map(fstr_2_dec, avg_total_game))
 
-        ctx = {
-            "username": req_user,
-            "day_labels": day_labels,
-            "user_day": user_day,
-            "user_total_day": user_total_day,
-            "avg_day": avg_day,
-            "avg_total_day": avg_total_day,
-            "game_labels": game_labels,
-            "user_game": user_game,
-            "avg_game": avg_game,
-            "user_total_game": user_total_game,
-            "avg_total_game": avg_total_game,
-        }
+        ctx["username"] = req_user
+        ctx["day_labels"] = day_labels
+        ctx["user_day"] = user_day
+        ctx["user_total_day"] = user_total_day
+        ctx["avg_day"] = avg_day
+        ctx["avg_total_day"] = avg_total_day
+        ctx["game_labels"] = game_labels
+        ctx["user_game"] = user_game
+        ctx["avg_game"] = avg_game
+        ctx["user_total_game"] = user_total_game
+        ctx["avg_total_game"] = avg_total_game
+
         return render(request, self.template_name, ctx)
 
 
@@ -197,6 +193,7 @@ class WinnerPredView(LoggedInView):
         countries = Country.objects.all().order_by("group")
 
         ctx = {"countries": countries}
+
         if len(pred := WinnerPrediction.objects.filter(owner=req_user)) > 0:
             user_winner = pred[0].winner
             ctx["completed"] = True
