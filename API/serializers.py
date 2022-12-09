@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from bracket.views import number_to_fase
-from bracket.models import Game, Prediction, Country, BracketPrediction
+from bracket.models import Game, Prediction, Country, BracketPrediction, WinnerPrediction
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -12,6 +12,12 @@ class UserSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         data = super().to_representation(instance)
         data["points"] = User.objects.filter(id=data["id"])[0].points.points
+        try:
+            data["winner_abbr"] = WinnerPrediction.objects.filter(owner=data["id"])[0].winner.abbr
+            data["winner_flag"] = WinnerPrediction.objects.filter(owner=data["id"])[0].winner.flag_fifa_url
+        except IndexError:
+            data["winner_abbr"] = "FIFA" 
+            data["winner_flag"] = "https://upload.wikimedia.org/wikipedia/commons/1/1f/FIFA_Flag.svg"
         return data
 
 

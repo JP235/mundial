@@ -504,7 +504,17 @@ a:hover {
     width: 50px;
     height: 45px;
 }
-
+.flag-mini{
+    width: 2.3em;
+    height: 2em;
+    margin-right: 0.5em;
+}
+.jugador {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+}
 th:nth-child(1) {
     min-width: 10em;
     /* background: white; */

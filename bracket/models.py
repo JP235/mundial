@@ -100,18 +100,35 @@ class UsersPoints(models.Model):
 
     @property
     def points_per_game(self):
-        preds = self.owner_predictions()
-        avg_game = self.avg_per_game()
+        # preds = self.owner_predictions()
+        # avg_game = self.avg_per_game()
 
-        if not avg_game:
-            return {"null":[False,False]}
+        # if not avg_game:
+        #     return {"null":[False,False]}
     
-        ppg = {game: [val,0] for game,val in avg_game.items()}
+        # ppg = {game: [val,0] for game,val in avg_game.items()}
 
-        for p in preds:
-            if p.game.score_team_1 is None or p.game.score_team_2 is None:
+        # for p in preds:
+        #     if p.game.score_team_1 is None or p.game.score_team_2 is None:
+        #         continue
+        #     ppg[str(p.game)][1] = p.correct * 2
+
+        past_games = UsersPoints.games_range()
+        if len(past_games) == 0:
+            return {"null":[False,False]}
+
+        ppg = {g:[0,0] for g in past_games}
+        for game in past_games:
+            all_game_preds = Game.objects.filter(
+                Q(team_1__name=game.split(" - ")[0])
+                & Q(team_2__name=game.split(" - ")[1])
+                & Q(wc_round=game.split(" - ")[2])
+            )[0].game_predictions.all()
+            if len(all_game_preds) == 0:
                 continue
-            ppg[str(p.game)][1] = p.correct * 2
+            ppg[game][0] = sum([gm.correct * 2 for gm in all_game_preds]) / len(all_game_preds)
+            if len(user_game_pred := all_game_preds.filter(owner=self.owner))>0:
+                ppg[game][1] = user_game_pred[0].correct * 2
 
         return ppg
 

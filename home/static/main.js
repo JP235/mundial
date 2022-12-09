@@ -7,7 +7,10 @@ async function get_games() {
       "Content-Type": "application/json",
     },
   });
-  const {p_future,p_today} = await rawResponse.json();
+  const {
+    p_future,
+    p_today
+  } = await rawResponse.json();
   set_games_future(p_future)
   set_games_today(p_today)
 }
@@ -20,6 +23,7 @@ async function get_users() {
     },
   });
   let users = await rawResponse.json();
+  // console.log(users);
   set_users_rank(users)
 }
 
@@ -55,8 +59,10 @@ function set_users_rank(d) {
     .attr("class", "position");
   t.append("td")
     .html(({
-      username
-    }) => `<a href=/predicciones/${username}>${username}</a>`)
+      username,winner_flag,winner_abbr
+    }) => `<div class="flag-mini"
+    style="background:url(${winner_flag}) center center / 100% no-repeat"></div>
+<a href=/predicciones/${username}>${username}</a>`)
     .attr("class", "jugador");
   t.append("td")
     .attr("class", "P")
@@ -65,6 +71,7 @@ function set_users_rank(d) {
       points
     }) => points);
 }
+
 function set_games_today(p_today) {
   let tableToday = d3.select("#partidosHoyTable tbody");
   tableToday.attr("class", "scrollcontent");
@@ -91,6 +98,7 @@ function set_games_today(p_today) {
       game_time
     }) => game_time.slice(0, -3));
 }
+
 function set_games_future(p_future) {
   let tableFuture = d3.select("#partidosTable tbody");
   tableFuture.attr("class", "scrollcontent");

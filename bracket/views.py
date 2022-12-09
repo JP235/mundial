@@ -149,25 +149,21 @@ class PredListView(LoggedInView):
         if not avg_game[0]:
            return render(request, self.template_name, ctx)
 
-
         game_labels = [
             " - ".join(g.split(" - ")[0:2])
             for n, g in enumerate(game_labels)
-        ]  # remove round
+        ]  # remove round numbers
+
+        fstr_2_dec = lambda n: f"{n:.2f}"
 
         user_total_day = accumulate(user_day)
         user_total_game = accumulate(user_game)
 
-        avg_total_day = accumulate(avg_day)
-        avg_total_game = accumulate(avg_game)
-
-        fstr_2_dec = lambda n: f"{n:.2f}"
-
+        avg_total_day = list(map(fstr_2_dec,accumulate(avg_day)))
         avg_day = list(map(fstr_2_dec, avg_day))
-        avg_total_day = list(map(fstr_2_dec, avg_total_day))
 
+        avg_total_game = list(map(fstr_2_dec,accumulate(avg_game)))
         avg_game = list(map(fstr_2_dec, avg_game))
-        avg_total_game = list(map(fstr_2_dec, avg_total_game))
 
         ctx["username"] = req_user
         ctx["day_labels"] = day_labels
